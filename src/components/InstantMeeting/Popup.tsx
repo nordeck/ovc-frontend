@@ -1,5 +1,3 @@
-'use client'
-
 import { useAuthLoggedUser } from '@/contexts/Auth/AuthProvider';
 import { isPopupBlocked } from '@/lib/isPopupBlocked';
 import { COLORS } from '@/utils/constants/theme.constants';
