@@ -14,16 +14,10 @@
  * limitations under the License.
  */
 
-import {CategoryEntry} from "@/components/opendesk/NavigationTopBar/types";
-import Image from "next/image";
+import jsonFile from './navigation.json';
 
-export default function NavigationMenuItem ({ icon_url, display_name, link, target } : CategoryEntry) {
-    return (
-        <div className="flex align-center gap-1 p-1 text-sx">
-            <Image src={icon_url} height={0} width={0} alt={display_name} style={{width: "30px", height: "30px"}}/>
-            <a href={link} target={target} className={'no-underline font-normal text-slate-900 pl-1 pt-2'}>
-                {display_name}
-            </a>
-        </div>
-    )
-};
+function useNavigationFromJsonFile() {
+        return jsonFile
+}
+
+export default useNavigationFromJsonFile;
