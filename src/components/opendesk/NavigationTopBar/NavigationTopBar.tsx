@@ -1,6 +1,21 @@
+/*
+ * Copyright 2024 Nordeck IT + Consulting GmbH
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 'use client'
 
-import navigation from '../../../lib/opendesk/navigation.json';
 import {Button, Link} from "@mui/material";
 import Image from "next/image";
 import menuIcon from '../../../../public/icons/opendesk-menu.svg';
@@ -8,7 +23,8 @@ import domainIcon from '../../../../public/icons/opendesk-domain.svg';
 import NavigationMenuItem from "@/components/opendesk/NavigationTopBar/NavigationMenuItem";
 import React, { useState } from "react";
 import {useAuth} from "@/contexts/Auth/AuthProvider";
-import {CategoryEntry} from "@/lib/opendesk/types";
+import {CategoryEntry} from "@/components/opendesk/NavigationTopBar/types";
+import useNavigationJson from "@/components/opendesk/NavigationTopBar/useNavigationJson";
 
 
 export default function NavigationTopBar() {
@@ -17,48 +33,23 @@ export default function NavigationTopBar() {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         user: isAuth,
         clientEnv: {
-            //NEXT_PUBLIC_ICS_DOMAIN,
-            //NEXT_PUBLIC_PORTAL_DOMAIN,
+            NEXT_PUBLIC_ICS_DOMAIN,
+            NEXT_PUBLIC_PORTAL_DOMAIN,
         },
     } = useAuth();
 
-    //const ICS_DOMAIN: string = NEXT_PUBLIC_ICS_DOMAIN;          //"https://ics.nightly.opendesk.qa"
-    //const PORTAL_DOMAIN: string = NEXT_PUBLIC_PORTAL_DOMAIN;    //"https://portal.nightly.opendesk.qa"
+    const navigation = useNavigationJson();
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const ICS_DOMAIN: string = NEXT_PUBLIC_ICS_DOMAIN;          //"https://ics.nightly.opendesk.qa"
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const PORTAL_DOMAIN: string = NEXT_PUBLIC_PORTAL_DOMAIN;    //"https://portal.nightly.opendesk.qa"
 
     const [ menuOpen, setMenuOpen ] = useState(false);
 
     const menuDisplayClass: string = menuOpen ? 'block' : 'hidden';
 
     const portal_link : string  = '';
-
-    /*
-
-    let ics_link : string = '';
-
-    async function read_portal_link() {
-        try {
-            const url = PORTAL_DOMAIN + "/static/url-portal";
-            const res = await fetch(url);
-            portal_link = await res.text();
-        } catch (error) {
-            console.log('PORTAL URL could not be loaded. Error: ' + error);
-        }
-    }
-
-    async function read_ics_link() {
-        try {
-            const url = ICS_DOMAIN + "/static/url-ics";
-            const res = await fetch(url);
-            ics_link = await res.text();
-        } catch (error) {
-            console.log('ICS URL could not be loaded. Error: ' + error);
-        }
-    }
-
-    read_ics_link();
-    read_portal_link();
-
-    */
 
     function toggleMenu() {
         setMenuOpen(!menuOpen);
@@ -75,21 +66,23 @@ export default function NavigationTopBar() {
             >
                 <Image src={menuIcon} alt={'openDesk menu'} className={'align-center'} loading={"lazy"}/>
                 <div id="opendeskMenu"
-                     className={`absolute top-12 left-2 z-10 p-2 bg-white text-slate-900 rounded border-slate-300 shadow-lg text-left ${menuDisplayClass}`}
+                     className={`absolute top-10 left-6 z-10 p-2 bg-white text-slate-900 rounded border-slate-300 shadow-lg text-left ${menuDisplayClass}`}
                 >
-                    { navigation.categories.map((category, key) => {
-                        return (
-                            <div className="text-base font-bold tracking-wider pt-4 pr-16 pb-1 pl-2" key={key}>
-                                {category.display_name}
-                            </div>
-                        )})
-                    }
+                    {
+                        // loop over categories
+                        navigation.categories.map((category, key) => {
+                            return (
+                                <div className="text-xs font-bold tracking-wider pt-4 pr-16 pb-2 pl-2" key={key}>
+                                    { category.display_name }
 
-                    { navigation.categories?.[0].entries.map((categoryEntry, key) => {
-                        return(
-                            <NavigationMenuItem { ...categoryEntry as CategoryEntry } key={key}/>
-                            )
-                        })
+                                    { category.entries.map((categoryEntry, key) => {
+                                        // loop over category entries
+                                        return(
+                                            <NavigationMenuItem { ...categoryEntry as CategoryEntry } key={key}/>
+                                        )
+                                    })}
+                                </div>
+                            )})
                     }
                 </div>
             </Button>
