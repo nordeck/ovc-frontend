@@ -40,17 +40,6 @@ export function getMeetingText(t: TFunction, meeting: Meeting): MeetingText {
     sip_jibri_link,
   } = meeting;
 
-  /* IMPORTANT: This comments define the nested keys used below and are used to
-     extract them via i18next-parser
-
-    t('copy.baseMeetingInformation_normal', '{{owner_id}} has invited you to a meeting.</br></br>\n\n<b>Title</b>: {{name}}</br></br>\n\n<b>Time</b>: from {{start}} to {{end}}</br></br>\n\nTo participate please use the following meeting link: <a href="{{meetingLink}}">{{meetingLink}}</a></br></br>\n\nThe meeting password is: <b>{{password}}</b></br></br>\n\n')
-    t('copy.baseMeetingInformation_static', '{{owner_id}} has invited you to a room.</br></br>\n\n<b>Title</b>: {{name}}</br></br>\n\nTo participate please use the following room link: <a href="{{meetingLink}}">{{meetingLink}}</a></br></br>\n\nThe room password is: <b>{{password}}</b></br></br>\n\n')
-    t('copy.baseMeetingInformation_instant', 'Your access data for the instant meeting from {{owner_id}}:</br></br>\n\nMeeting Link: <a href="{{meetingLink}}">{{meetingLink}}</a></br></br>\n\nMeeting Password: <b>{{password}}</b></br></br>\n\n')
-
-    t('copy.phoneInfo', 'To <b>participate by telephone</b> please use the following dial-in number: <b>{{phone_number}}</b></br>\nConference ID: <b>{{conference_pin}}</b></br></br>\n\n')
-    t('copy.roomkit', `To <b>participate with a Cisco Roomkit</b> please use the following Cisco Roomkit (Video) link: <b>{{sip_jibri_link}}</b></br>\nConference ID: <b>{{conference_pin}}</b>`)
-  */
-
   const message = t(
     'copy.meetingInformation',
     `$t(copy.baseMeetingInformation_instant, {"context": "{{baseMeetingInformationContext}}"})$t(copy.phoneInfo)$t(copy.roomkit)`,
