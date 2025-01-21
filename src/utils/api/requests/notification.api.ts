@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 
-import { makeUrlSearch } from '@/lib/makeUrlSearch';
 import { API, CatchAxiosError, Response } from '@/utils/api/api';
-import { Notification } from '@/types/types';
+import {makeUrlSearch, Notification} from '@/types/types';
 
 type NotificationsPage = {
   content: Notification[];

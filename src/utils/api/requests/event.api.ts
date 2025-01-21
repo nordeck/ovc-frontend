@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { SendEventOpts } from '@/lib/SendEventOpts';
 import { API, CatchAxiosError, Response } from '@/utils/api/api';
+import {SendEventOpts} from "@/types/types";
 
 /**
  * API to send events

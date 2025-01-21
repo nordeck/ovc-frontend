@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import {encodeParams} from "@/lib/encodeParams";
+
 export type Meeting = {
   id: string;
   type: MeetingType;
@@ -136,3 +138,40 @@ export type UserType = {
   name: string;
   email: string;
 };
+
+export type SendEventOpts<T> = {
+  clientIds?: string[];
+  type: string;
+  sender: string;
+  content: T;
+};
+
+/**
+ * User's session token.
+ */
+export type SessionToken = {
+    name: string;
+    email: string;
+    decoded: SessionAccessToken;
+    access_token: string;
+    id_token: string;
+    expires_at: number;
+    refresh_token: string;
+    refresh_token_expired?: boolean;
+};
+
+/**
+ * Access token part stored in a session token.
+ */
+export type SessionAccessToken = {
+  realm_access?: {
+    roles?: string[];
+  };
+};
+
+export function makeUrlSearch(
+    params: Record<string, string | number | boolean | undefined>,
+): string {
+  const urlParams = encodeParams(params);
+  return urlParams.length > 0 ? `?${urlParams}` : '';
+}
