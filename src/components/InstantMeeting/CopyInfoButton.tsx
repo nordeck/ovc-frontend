@@ -48,8 +48,11 @@ export function CopyInfoButton({
 
   const { showSnackbar } = useSnackbar();
 
-  const handleCopy = useCallback(async () => {
-    const { plain, html } = getMeetingText(t, meeting);
+  const handleCopy = async () => {
+    // const { plain, html } = getMeetingText(t, meeting);
+    const { plain, html } = {
+      plain: "dd", html: "dd"
+    }
 
     const textBlob = new Blob([plain], {
       type: 'text/plain',
@@ -71,54 +74,52 @@ export function CopyInfoButton({
       autoHideDuration: 3000,
       type: 'info',
     });
-  }, [meeting, showSnackbar]);
+  };
 
   return (
-    small ? (
-      <IconButton
-        id={meeting.id}
-        sx={{ alignSelf: 'center', ...sx }}
-        onClick={handleCopy}
-      >
-        <Image color={'info'} width={1} height={1} alt="CopyInfoButton"
-          style={{
-            height: '1rem',
-            width: '1rem',
-          }}
-          src={color === COLORS.STAR_COMMAND_BLUE ? '/icons/copy-light-blue.svg' : '/icons/copy-dark-blue.svg'}
-        />
-      </IconButton >
-    ) : (
-      <Button
-        aria-label={"t('copy.meetingInfoCopy', 'Copy meeting information')"}
-        id={meeting.id}
-        size="large"
-        sx={{ color }}
-        onClick={handleCopy}
-        variant={'outlined'}
-      >
-        <Image height={1} width={1} alt="CopyInfoButton"
-          style={{
-            marginRight: 8,
-            height: '1rem',
-            width: '1rem',
-          }}
-          src={color === COLORS.STAR_COMMAND_BLUE ? '/icons/copy-light-blue.svg' : '/icons/copy-dark-blue.svg'}
-        />
-        <Typography
-          flexShrink={1}
-          variant="subtitle2"
-          sx={{
-            color,
-            lineHeight: '1rem',
-            fontSize: '1rem',
-            fontWeight: 700,
-            textTransform: 'none',
-          }}
-        >
-          {"t('copy.meetingInfoCopy', 'Copy meeting information')"}
-        </Typography>
-      </Button>
-    )
+      <>
+          {small && <IconButton id={meeting.id} sx={{ alignSelf: 'center', ...sx }}
+              onClick={handleCopy}
+          >
+              <Image color={'info'} width={1} height={1} alt="CopyInfoButton"
+                     style={{
+                         height: '1rem',
+                         width: '1rem',
+                     }}
+                     src={color === COLORS.STAR_COMMAND_BLUE ? '/icons/copy-light-blue.svg' : '/icons/copy-dark-blue.svg'}
+              />
+          </IconButton >}
+
+          {!small && <Button
+              aria-label={"t('copy.meetingInfoCopy', 'Copy meeting information')"}
+              id={meeting.id}
+              size="large"
+              sx={{ color }}
+              onClick={handleCopy}
+              variant={'outlined'}
+          >
+              <Image height={1} width={1} alt="CopyInfoButton"
+                     style={{
+                         marginRight: 8,
+                         height: '1rem',
+                         width: '1rem',
+                     }}
+                     src={color === COLORS.STAR_COMMAND_BLUE ? '/icons/copy-light-blue.svg' : '/icons/copy-dark-blue.svg'}
+              />
+              <Typography
+                  flexShrink={1}
+                  variant="subtitle2"
+                  sx={{
+                      color,
+                      lineHeight: '1rem',
+                      fontSize: '1rem',
+                      fontWeight: 700,
+                      textTransform: 'none',
+                  }}
+              >
+                  {"t('copy.meetingInfoCopy', 'Copy meeting information')"}
+              </Typography>
+          </Button>}
+    </>
   )
 }
