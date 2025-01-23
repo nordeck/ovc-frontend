@@ -16,22 +16,26 @@
 
 'use client'
 
-import React, {useCallback, useState} from "react";
-import {Button} from "@mui/material";
-import {Popup} from "@/components/InstantMeeting/Popup";
+import React, {MouseEvent, useCallback, useState} from "react";
+import Popup from "@/components/InstantMeeting/Popup";
+import { Button } from "@mui/material";
 
 export default function InstantMeetingButton() {
 
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-    // @ts-expect-error: no error will be thrown
+
     const handleClick = useCallback((event: MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget as HTMLButtonElement);
+        setAnchorEl(event.currentTarget);
     }, []);
+
+    function onClose() {
+        return () => setAnchorEl(null);
+    }
 
     return (
         <>
             {anchorEl && (
-                <Popup anchor={anchorEl} onClose={() => setAnchorEl(null)} />
+                <Popup anchor={ anchorEl } onClose={ onClose } />
             )}
             <Button
                 variant="contained"

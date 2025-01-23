@@ -63,4 +63,5 @@ export function getMeetingText(t: TFunction, meeting: Meeting): MeetingText {
     plain: message.replace(/<[^>]+>/g, ''),
     html: message,
   };
+
 }

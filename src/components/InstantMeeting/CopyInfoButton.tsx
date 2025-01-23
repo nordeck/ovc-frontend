@@ -15,36 +15,39 @@
  */
 
 import { useSnackbar } from '@/contexts/Snackbar/SnackbarContext';
-import { Meeting } from '@/types/types';
 import { COLORS } from '@/utils/constants/theme.constants';
-import {getMeetingText} from "@/components/InstantMeeting/getMeetingText";
+import { getMeetingText } from "@/components/InstantMeeting/getMeetingText";
 import { useCallback } from 'react';
 import Image from 'next/image';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
+import { Meeting } from "@/types/types";
+
 import {
   Button,
-  IconButton,
+  IconButton, SxProps,
   Tooltip,
   Typography,
-  type SxProps,
 } from '@mui/material';
 
+
 interface Props {
-  meeting: Meeting;
-  sx?: SxProps;
-  color?: string;
-  small?: boolean;
-  variant?: 'text' | 'outlined';
+  meeting: Meeting,
+  small?: boolean,
+  variant?: 'text' | 'outlined'
+  color?: string,
+  sx?: SxProps,
 }
 
-export function CopyInfoButton({
+export default function CopyInfoButton({
   meeting,
   sx,
-  small,
+  small = true,
   variant = 'text',
   color = COLORS.STAR_COMMAND_BLUE,
 }: Props) {
+
   const { t } = useTranslation();
+
   const { showSnackbar } = useSnackbar();
 
   const handleCopy = useCallback(async () => {
@@ -53,6 +56,7 @@ export function CopyInfoButton({
     const textBlob = new Blob([plain], {
       type: 'text/plain',
     });
+
     const htmlBlob = new Blob([html], {
       type: 'text/html',
     });
@@ -73,49 +77,43 @@ export function CopyInfoButton({
 
   return small ? (
     <Tooltip
-      title={t('copy.meetingInfoCopy', 'Copy meeting information')}
+      title={"t('copy.meetingInfoCopy', 'Copy meeting information')"}
       placement="top"
     >
-      <IconButton
+      < IconButton
         id={meeting.id}
         sx={{ alignSelf: 'center', ...sx }}
         onClick={handleCopy}
       >
-        <Image
-          color={'info'}
-          width={1}
-          height={1}
+        <Image color={'info'} width={1} height={1} alt="CopyInfoButton"
           style={{
             height: '1rem',
             width: '1rem',
           }}
-          alt="CopyInfoButton"
           src={
             color === COLORS.STAR_COMMAND_BLUE
               ? '/icons/copy-light-blue.svg'
               : '/icons/copy-dark-blue.svg'
           }
         />
-      </IconButton>
+      </IconButton >
+
     </Tooltip>
   ) : (
     <Button
-      aria-label={t('copy.meetingInfoCopy', 'Copy meeting information')}
+      aria-label={"t('copy.meetingInfoCopy', 'Copy meeting information')"}
       id={meeting.id}
       size="large"
       sx={{ color }}
       onClick={handleCopy}
       variant={variant}
     >
-      <Image
-        height={1}
-        width={1}
+      <Image height={1} width={1} alt="CopyInfoButton"
         style={{
           marginRight: 8,
           height: '1rem',
           width: '1rem',
         }}
-        alt="CopyInfoButton"
         src={
           color === COLORS.STAR_COMMAND_BLUE
             ? '/icons/copy-light-blue.svg'
@@ -133,7 +131,7 @@ export function CopyInfoButton({
           textTransform: 'none',
         }}
       >
-        {t('copy.meetingInfoCopy', 'Copy meeting information')}
+        {"t('copy.meetingInfoCopy', 'Copy meeting information')"}
       </Typography>
     </Button>
   );

@@ -15,7 +15,8 @@
  */
 
 import { API, CatchAxiosError, Response } from '@/utils/api/api';
-import {makeUrlSearch, Notification} from '@/types/types';
+import {Notification} from '@/types/types';
+import {makeUrlSearch} from "@/types/makeUrlSearch";
 
 type NotificationsPage = {
   content: Notification[];

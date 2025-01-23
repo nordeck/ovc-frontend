@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-import {encodeParams} from "@/lib/encodeParams";
-
 export type Meeting = {
   id: string;
   type: MeetingType;
@@ -168,10 +166,3 @@ export type SessionAccessToken = {
     roles?: string[];
   };
 };
-
-export function makeUrlSearch(
-    params: Record<string, string | number | boolean | undefined>,
-): string {
-  const urlParams = encodeParams(params);
-  return urlParams.length > 0 ? `?${urlParams}` : '';
-}
