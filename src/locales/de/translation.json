@@ -6,7 +6,8 @@
     "meetingInfoCopy": "Meetinginformationen kopieren",
     "meetingInformation": "$t(copy.baseMeetingInformation, {\"context\": \"{{baseMeetingInformationContext}}\"})$t(copy.phoneInfo)$t(copy.roomkit)",
     "phoneInfo": "Zur <b>Teilnahme über das Telefon</b> verwenden Sie bitte den folgende Einwahlnummer: <b>{{phone_number}}</b></br>\nKonferenz ID: <b>{{conference_pin}}</b></br></br>\n\n",
-    "roomkit": "Zur <b>Teilnahme mit einem Cisco Roomkit</b> verwenden Sie bitte den folgenden Cisco Roomkit (Video) Link: <b>{{sip_jibri_link}}</b></br>\nKonferenz ID: <b>{{conference_pin}}</b>"
+    "roomkit": "Zur <b>Teilnahme mit einem Cisco Roomkit</b> verwenden Sie bitte den folgenden Cisco Roomkit (Video) Link: <b>{{sip_jibri_link}}</b></br>\nKonferenz ID: <b>{{conference_pin}}</b>",
+    "clipboardSuccess": "In die Zwischenablage kopiert"
   },
   "meetingCard": {
     "meetingStart": "Meeting starten",

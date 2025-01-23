@@ -4,6 +4,7 @@ import {v4 as uuid} from "uuid";
 export function useCreateMeeting(userEmail: string): Meeting {
 
     const id = uuid();
+    
     const meeting: Meeting = {
         id: id ,
         type: MeetingType.Instant,

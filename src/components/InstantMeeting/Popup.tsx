@@ -14,37 +14,40 @@
  * limitations under the License.
  */
 
-import { useAuthLoggedUser } from '@/contexts/Auth/AuthProvider';
 import { isPopupBlocked } from '@/lib/isPopupBlocked';
 import { COLORS } from '@/utils/constants/theme.constants';
 import CloseIcon from '@mui/icons-material/Close';
 import { CopyInfoButton } from "@/components/InstantMeeting/CopyInfoButton";
-import { useCreateMeeting } from "@/components/InstantMeeting/useCreateMeeting";
 import { Button, IconButton, Popover, Stack, Tooltip, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useAuth } from '@/contexts/Auth/AuthProvider';
+import { Meeting } from '@/types/types';
 import "../../../i18n"
 
 
 interface Props {
+  meeting: Meeting,
   anchor: HTMLElement | null,
   onClose: () => void
 }
 
-export default function Popup({ anchor, onClose }: Props) {
+export default function Popup({ meeting, anchor, onClose }: Props) {
+
+  const {
+    clientEnv: {
+      NEXT_PUBLIC_JITSI_LINK,
+    },
+  } = useAuth();
 
   const { t } = useTranslation();
 
-  const isOpen = Boolean(anchor);
+  const isOpen: boolean = Boolean(anchor);
 
   const id = isOpen ? 'sofortmeeting-starten-popup' : undefined;
 
-  const user = useAuthLoggedUser();
-
-  const meeting = useCreateMeeting(user.email);
-
   const handleJoinMeeting = () => {
 
-    const link: string = 'https://jitsi-vkbund.devops.dev.nordeck.io/' + meeting?.id;
+    const link: string = NEXT_PUBLIC_JITSI_LINK + meeting?.id;
 
     if (link) {
       const w = window.open(link, '_blank');

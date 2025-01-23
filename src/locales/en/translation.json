@@ -6,7 +6,8 @@
     "meetingInfoCopy": "Copy meeting information",
     "meetingInformation": "$t(copy.baseMeetingInformation, {\"context\": \"{{baseMeetingInformationContext}}\"})$t(copy.phoneInfo)$t(copy.roomkit)",
     "phoneInfo": "To <b>participate by telephone</b> please use the following dial-in number: <b>{{phone_number}}</b></br>\nConference ID: <b>{{conference_pin}}</b></br></br>\n\n",
-    "roomkit": "To <b>participate with a Cisco Roomkit</b> please use the following Cisco Roomkit (Video) link: <b>{{sip_jibri_link}}</b></br>\nConference ID: <b>{{conference_pin}}</b>"
+    "roomkit": "To <b>participate with a Cisco Roomkit</b> please use the following Cisco Roomkit (Video) link: <b>{{sip_jibri_link}}</b></br>\nConference ID: <b>{{conference_pin}}</b>",
+    "clipboardSuccess": "Copied to clipboard"
   },
   "meetingCard": {
     "meetingStart": "Start meeting",

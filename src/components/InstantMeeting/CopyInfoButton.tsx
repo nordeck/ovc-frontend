@@ -47,13 +47,9 @@ export function CopyInfoButton({
   const handleCopy = async () => {
     const { plain, html } = useGetMeetingText(t, meeting);
 
-    const textBlob = new Blob([plain], {
-      type: 'text/plain',
-    });
+    const textBlob = new Blob([plain], { type: 'text/plain', });
 
-    const htmlBlob = new Blob([html], {
-      type: 'text/html',
-    });
+    const htmlBlob = new Blob([html], { type: 'text/html', });
 
     const clipboardItem = new ClipboardItem({
       [textBlob.type]: textBlob,
@@ -63,7 +59,7 @@ export function CopyInfoButton({
     await navigator.clipboard.write([clipboardItem]);
 
     showSnackbar({
-      message: 'In die Zwischenablage kopiert',
+      message: t('copy.clipboardSuccess', 'copy.clipboardSuccess'),
       autoHideDuration: 3000,
       type: 'info',
     });
