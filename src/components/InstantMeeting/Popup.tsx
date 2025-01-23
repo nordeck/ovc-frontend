@@ -18,7 +18,7 @@ import { useAuthLoggedUser } from '@/contexts/Auth/AuthProvider';
 import { isPopupBlocked } from '@/lib/isPopupBlocked';
 import { COLORS } from '@/utils/constants/theme.constants';
 import CloseIcon from '@mui/icons-material/Close';
-import CopyInfoButton from "@/components/InstantMeeting/CopyInfoButton";
+import { CopyInfoButton } from "@/components/InstantMeeting/CopyInfoButton";
 import { useCreateMeeting } from "@/components/InstantMeeting/useCreateMeeting";
 import { Button, IconButton, Popover, Stack, Tooltip, Typography } from "@mui/material";
 
@@ -82,10 +82,12 @@ export default function Popup({ anchor, onClose }: Props) {
           </Typography>
         </Stack>
         <Stack direction="row" justifyContent="space-between">
+
           <Stack direction="row">
-            {meeting && <CopyInfoButton meeting={meeting} />}
+            <CopyInfoButton meeting={meeting} />
           </Stack>
 
+          {/*
           <Tooltip title="Abbrechen" placement="top">
             <IconButton aria-label="abbrechen knopf" onClick={onClose}>
               <CloseIcon
@@ -94,6 +96,8 @@ export default function Popup({ anchor, onClose }: Props) {
               />
             </IconButton>
           </Tooltip>
+          */}
+
         </Stack>
         <Stack gap={2} direction="row">
           <Button
