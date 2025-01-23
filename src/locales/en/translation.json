@@ -14,5 +14,13 @@
     "open": "Open",
     "protectedByPasswordTooltip": "Protected by password",
     "seriesTooltip": "Series meeting"
+  },
+  "conference": {
+    "start_label": "Start conference",
+    "info_text": "The instant conference can only be started by you. Anyone can join the conference using the conference information."
+  },
+  "common": {
+    "cancel": "Cancel",
+    "close": "close"
   }
 }

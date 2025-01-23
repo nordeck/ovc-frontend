@@ -16,23 +16,20 @@
 
 import { useSnackbar } from '@/contexts/Snackbar/SnackbarContext';
 import { COLORS } from '@/utils/constants/theme.constants';
-import { getMeetingText } from "@/components/InstantMeeting/getMeetingText";
-import { useCallback } from 'react';
+import { useGetMeetingText } from "@/components/InstantMeeting/useGetMeetingText";
 import Image from 'next/image';
 import { useTranslation } from "react-i18next";
 import { Meeting } from "@/types/types";
 
 import {
-  Button,
-  IconButton, SxProps,
+  IconButton,
+  SxProps,
   Tooltip,
-  Typography,
 } from '@mui/material';
 
 
 interface Props {
   meeting: Meeting,
-  small?: boolean,
   color?: string,
   sx?: SxProps,
 }
@@ -40,19 +37,15 @@ interface Props {
 export function CopyInfoButton({
   meeting,
   sx,
-  small = true,
   color = COLORS.STAR_COMMAND_BLUE,
 }: Props) {
 
-  //const { t } = useTranslation();
+  const { t } = useTranslation();
 
   const { showSnackbar } = useSnackbar();
 
   const handleCopy = async () => {
-    // const { plain, html } = getMeetingText(t, meeting);
-    const { plain, html } = {
-      plain: "dd", html: "dd"
-    }
+    const { plain, html } = useGetMeetingText(t, meeting);
 
     const textBlob = new Blob([plain], {
       type: 'text/plain',
@@ -77,49 +70,21 @@ export function CopyInfoButton({
   };
 
   return (
-      <>
-          {small && <IconButton id={meeting.id} sx={{ alignSelf: 'center', ...sx }}
-              onClick={handleCopy}
-          >
-              <Image color={'info'} width={1} height={1} alt="CopyInfoButton"
-                     style={{
-                         height: '1rem',
-                         width: '1rem',
-                     }}
-                     src={color === COLORS.STAR_COMMAND_BLUE ? '/icons/copy-light-blue.svg' : '/icons/copy-dark-blue.svg'}
-              />
-          </IconButton >}
-
-          {!small && <Button
-              aria-label={"t('copy.meetingInfoCopy', 'Copy meeting information')"}
-              id={meeting.id}
-              size="large"
-              sx={{ color }}
-              onClick={handleCopy}
-              variant={'outlined'}
-          >
-              <Image height={1} width={1} alt="CopyInfoButton"
-                     style={{
-                         marginRight: 8,
-                         height: '1rem',
-                         width: '1rem',
-                     }}
-                     src={color === COLORS.STAR_COMMAND_BLUE ? '/icons/copy-light-blue.svg' : '/icons/copy-dark-blue.svg'}
-              />
-              <Typography
-                  flexShrink={1}
-                  variant="subtitle2"
-                  sx={{
-                      color,
-                      lineHeight: '1rem',
-                      fontSize: '1rem',
-                      fontWeight: 700,
-                      textTransform: 'none',
-                  }}
-              >
-                  {"t('copy.meetingInfoCopy', 'Copy meeting information')"}
-              </Typography>
-          </Button>}
+    <>
+      <Tooltip
+        title={t('conference.start_label', 'conference.start_label')}
+        placement="top"
+      >
+        <IconButton id={meeting.id} sx={{ alignSelf: 'center', ...sx }} onClick={handleCopy}>
+          <Image color={'info'} width={1} height={1} alt="CopyInfoButton"
+            style={{
+              height: '1rem',
+              width: '1rem',
+            }}
+            src={color === COLORS.STAR_COMMAND_BLUE ? '/icons/copy-light-blue.svg' : '/icons/copy-dark-blue.svg'}
+          />
+        </IconButton >
+      </Tooltip>
     </>
   )
 }

@@ -15,7 +15,7 @@
  */
 
 import InstantMeetingButton from "@/components/InstantMeeting/InstantMeetingButton";
-import {Metadata} from "next";
+import { Metadata } from "next";
 import NavigationTopBar from "@/components/opendesk/NavigationTopBar/NavigationTopBar";
 
 export const metadata: Metadata = {
@@ -23,16 +23,16 @@ export const metadata: Metadata = {
     description: 'openDesk Video Conference',
 };
 
-export default function Home() {
+export default function Conference() {
     return (
         <>
-            <NavigationTopBar/>
+            <NavigationTopBar />
             <main
                 className="flex flex-col h-screen max-h-[80vh] items-center justify-center m-4 font-[family-name:var(--font-geist-sans)]">
                 <div className="flex flex-1 items-center justify-center m-4">
-                    <InstantMeetingButton/>
+                    <InstantMeetingButton />
                 </div>
             </main>
         </>
-  );
+    );
 }

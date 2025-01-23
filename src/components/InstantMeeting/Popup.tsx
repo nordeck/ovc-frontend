@@ -21,6 +21,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { CopyInfoButton } from "@/components/InstantMeeting/CopyInfoButton";
 import { useCreateMeeting } from "@/components/InstantMeeting/useCreateMeeting";
 import { Button, IconButton, Popover, Stack, Tooltip, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import "../../../i18n"
 
 
 interface Props {
@@ -29,6 +31,8 @@ interface Props {
 }
 
 export default function Popup({ anchor, onClose }: Props) {
+
+  const { t } = useTranslation();
 
   const isOpen = Boolean(anchor);
 
@@ -76,9 +80,7 @@ export default function Popup({ anchor, onClose }: Props) {
       <Stack borderRadius={24} maxWidth={350} gap={2} m={2}>
         <Stack>
           <Typography fontSize={'0,85rem'} fontWeight={500}>
-            Das Sofortmeeting kann nur von Ihnen gestartet werden. Am
-            Sofortmeeting kann jeder mit Hilfe der Meetinginformationen
-            teilnehmen.
+            {t('conference.info_text', 'conference.info_text')}
           </Typography>
         </Stack>
         <Stack direction="row" justifyContent="space-between">
@@ -87,16 +89,15 @@ export default function Popup({ anchor, onClose }: Props) {
             <CopyInfoButton meeting={meeting} />
           </Stack>
 
-          {/*
-          <Tooltip title="Abbrechen" placement="top">
-            <IconButton aria-label="abbrechen knopf" onClick={onClose}>
+          <Tooltip
+            title={t('common.cancel', 'Cancel')} placement="top">
+            <IconButton aria-label="cancel button" onClick={onClose}>
               <CloseIcon
-                aria-label="schließen bild"
+                aria-label="close icon"
                 sx={{ color: COLORS.STAR_COMMAND_BLUE }}
               />
             </IconButton>
           </Tooltip>
-          */}
 
         </Stack>
         <Stack gap={2} direction="row">
@@ -105,7 +106,7 @@ export default function Popup({ anchor, onClose }: Props) {
             sx={{ width: '100%' }}
             onClick={handleJoinMeeting}
           >
-            Meeting starten
+            {t('conference.start_label', 'conference.start_label')}
           </Button>
         </Stack>
       </Stack>

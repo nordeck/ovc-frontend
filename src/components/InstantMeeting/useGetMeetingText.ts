@@ -25,17 +25,14 @@ export type MeetingText = {
   html: string;
 };
 
-export function getMeetingText(t: TFunction, meeting: Meeting): MeetingText {
+export function useGetMeetingText(t: TFunction, meeting: Meeting): MeetingText {
   const {
     id,
     type,
     name,
     owner_id,
-    password,
     end_time,
     start_time,
-    parent_id,
-    conference_pin,
     phone_number,
     sip_jibri_link,
   } = meeting;
@@ -46,15 +43,14 @@ export function getMeetingText(t: TFunction, meeting: Meeting): MeetingText {
     {
       baseMeetingInformationContext: type.toLowerCase(),
       owner_id,
-      password,
       name,
       start: start_time
         ? DateTime.fromISO(start_time).toFormat(FORMAT)
         : undefined,
       end: end_time ? DateTime.fromISO(end_time).toFormat(FORMAT) : undefined,
-      meetingLink: `${window.location.origin}/meetings/meeting/join/${parent_id || id}`,
+      meetingLink: `${window.location.origin}/meetings/meeting/join/${id}`,
       phone_number,
-      conference_pin,
+
       sip_jibri_link,
     },
   );

@@ -16,11 +16,15 @@
 
 'use client'
 
-import React, {MouseEvent, useCallback, useState} from "react";
+import React, { MouseEvent, useCallback, useState } from "react";
 import Popup from "@/components/InstantMeeting/Popup";
 import { Button } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import "../../../i18n"
 
 export default function InstantMeetingButton() {
+
+    const { t } = useTranslation();
 
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
@@ -28,14 +32,10 @@ export default function InstantMeetingButton() {
         setAnchorEl(event.currentTarget);
     }, []);
 
-    function onClose() {
-        return () => setAnchorEl(null);
-    }
-
     return (
         <>
             {anchorEl && (
-                <Popup anchor={ anchorEl } onClose={ onClose } />
+                <Popup anchor={anchorEl} onClose={() => setAnchorEl(null)} />
             )}
             <Button
                 variant="contained"
@@ -45,7 +45,7 @@ export default function InstantMeetingButton() {
                     minWidth: '20%',
                 }}
             >
-                Meeting starten
+                {t('conference.start_label', 'conference.start_label')}
             </Button>
         </>
     )

@@ -14,5 +14,13 @@
     "open": "Öffne",
     "protectedByPasswordTooltip": "Meeting durch Passwort geschützt",
     "seriesTooltip": "Serientermin"
+  },
+  "conference": {
+    "start_label": "Konferenz starten",
+    "info_text": "Das Sofortmeeting kann nur von Ihnen gestartet werden. Am Sofortmeeting kann jeder mit Hilfe der Meetinginformationen teilnehmen."
+  },
+  "common": {
+    "cancel": "Abbrechen",
+    "close": "Schließen"
   }
 }
