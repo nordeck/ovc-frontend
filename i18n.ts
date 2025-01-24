@@ -12,8 +12,8 @@ i18n
   .use(initReactI18next)
   .use(ChainedBackend)
   .init({
-    lng: 'en',
-    fallbackLng: 'de',
+    lng: 'de',
+    fallbackLng: 'en',
     defaultNS: 'translation_external', // use external translations to override
     fallbackNS: 'translation',
     debug: process.env.NODE_ENV === 'development',
@@ -31,7 +31,7 @@ i18n
       HttpBackend,
     },
 
-    supportedLngs: ['en', 'de'],
+    supportedLngs: ['de', 'en'],
   });
 
   export default i18n;

@@ -32,7 +32,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({ children, }: { children: React.ReactNode; }) {
   return (
-    <html lang="en">
+    <html>
       <body className={inter.className}>
         <LocalizationProvider>
           <SnackbarProvider>
