@@ -16,22 +16,34 @@
 
 'use client'
 
-import React, {useCallback, useState} from "react";
-import {Button} from "@mui/material";
-import {Popup} from "@/components/InstantMeeting/Popup";
+import React, { MouseEvent, useCallback, useState } from "react";
+import Popup from "@/components/InstantMeeting/Popup";
+import { Button } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { useCreateMeeting } from "./useCreateMeeting";
+import { useAuthLoggedUser } from "@/contexts/Auth/AuthProvider";
+import "../../../i18n"
+
 
 export default function InstantMeetingButton() {
 
+    const user = useAuthLoggedUser();
+
+    const { t } = useTranslation();
+
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-    // @ts-expect-error: no error will be thrown
+
+    const [meeting, setMeeting] = useState(useCreateMeeting(user.email));
+
     const handleClick = useCallback((event: MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget as HTMLButtonElement);
+        setMeeting(meeting);
+        setAnchorEl(event.currentTarget);
     }, []);
 
     return (
         <>
             {anchorEl && (
-                <Popup anchor={anchorEl} onClose={() => setAnchorEl(null)} />
+                <Popup meeting={meeting} anchor={anchorEl} onClose={() => setAnchorEl(null)} />
             )}
             <Button
                 variant="contained"
@@ -41,7 +53,7 @@ export default function InstantMeetingButton() {
                     minWidth: '20%',
                 }}
             >
-                Meeting starten
+                {t('conference.start_label', 'conference.start_label')}
             </Button>
         </>
     )

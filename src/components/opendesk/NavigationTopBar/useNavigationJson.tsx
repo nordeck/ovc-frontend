@@ -15,9 +15,11 @@
  */
 
 import jsonFile from './navigation.json';
+import {useState} from "react";
 
 function useNavigationFromJsonFile() {
-        return jsonFile
+        const [json, setJson] = useState(jsonFile);
+        return json;
 }
 
 export default useNavigationFromJsonFile;

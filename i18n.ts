@@ -1,17 +1,19 @@
 'use client';
 
 import i18n from 'i18next';
-import ChainedBackend from 'i18next-chained-backend';
 import HttpBackend from 'i18next-http-backend';
+import ChainedBackend from 'i18next-chained-backend';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import { initReactI18next } from 'react-i18next';
+import LanguageDetector from "i18next-browser-languagedetector";
 
 i18n
-  .use(ChainedBackend)
+  .use(LanguageDetector)
   .use(initReactI18next)
+  .use(ChainedBackend)
   .init({
     lng: 'de',
-    fallbackLng: 'de',
+    fallbackLng: 'en',
     defaultNS: 'translation_external', // use external translations to override
     fallbackNS: 'translation',
     debug: process.env.NODE_ENV === 'development',
@@ -23,13 +25,13 @@ i18n
     backend: {
       backends: [
         resourcesToBackend(
-          (lng: string, ns: string) => import(`./locales/${lng}/${ns}.json`),
+          (lng: string, ns: string) => import(`./src/locales/${lng}/${ns}.json`),
         ),
-        HttpBackend,
       ],
+      HttpBackend,
     },
 
-    supportedLngs: ['en', 'de'],
+    supportedLngs: ['de', 'en'],
   });
 
-export default i18n;
+  export default i18n;
