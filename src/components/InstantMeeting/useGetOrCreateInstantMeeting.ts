@@ -71,7 +71,6 @@ export function useGetOrCreateInstantMeeting(): {
           setData(newMeeting);
         }
       }
-
       setIsLoading(false);
     }
 
