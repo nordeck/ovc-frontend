@@ -17,6 +17,7 @@
 import { Meeting } from '@/types/types';
 import { TFunction } from 'i18next';
 import { DateTime } from 'luxon';
+import { useAuth } from '@/contexts/Auth/AuthProvider';
 
 const FORMAT = 'dd.MM.yyyy HH:mm:ss';
 
@@ -25,7 +26,8 @@ export type MeetingText = {
   html: string;
 };
 
-export function useGetMeetingText(t: TFunction, meeting: Meeting): MeetingText {
+export function useGetMeetingText(t: TFunction, meeting: Meeting, jitsiDomain: string): MeetingText {
+
   const {
     id,
     type,
@@ -35,11 +37,12 @@ export function useGetMeetingText(t: TFunction, meeting: Meeting): MeetingText {
     start_time,
     phone_number,
     sip_jibri_link,
+    conference_pin
   } = meeting;
 
   const message = t(
     'copy.meetingInformation',
-    `$t(copy.baseMeetingInformation_instant, {"context": "{{baseMeetingInformationContext}}"})$t(copy.phoneInfo)$t(copy.roomkit)`,
+    `$t(copy.baseMeetingInformation_instant, {"context": "{{baseMeetingInformationContext}}"})$t(copy.phoneInfo)`,
     {
       baseMeetingInformationContext: type.toLowerCase(),
       owner_id,
@@ -48,10 +51,10 @@ export function useGetMeetingText(t: TFunction, meeting: Meeting): MeetingText {
         ? DateTime.fromISO(start_time).toFormat(FORMAT)
         : undefined,
       end: end_time ? DateTime.fromISO(end_time).toFormat(FORMAT) : undefined,
-      meetingLink: `${window.location.origin}/meetings/meeting/join/${id}`,
+      meetingLink: `${jitsiDomain}${id}`,
       phone_number,
-
       sip_jibri_link,
+      conference_pin,
     },
   );
 
