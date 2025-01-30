@@ -35,7 +35,7 @@ export async function fetchWithAuth({
 
   const token = session?.access_token;
 
-  const fetchUrl = `${process.env.BACKEND_BASE_URL}/${relativeUrl}`;
+  const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/${relativeUrl}`;
   let response;
 
   try {

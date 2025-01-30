@@ -16,20 +16,22 @@
 
 import { useSnackbar } from '@/contexts/Snackbar/SnackbarContext';
 import { COLORS } from '@/utils/constants/theme.constants';
-import { useGetMeetingText } from "@/components/InstantMeeting/useGetMeetingText";
+import { makeMeetingText } from "@/components/InstantMeeting/makeMeetingText";
 import Image from 'next/image';
 import { useTranslation } from "react-i18next";
 import { Meeting } from "@/types/types";
 
 import {
   IconButton,
+  Stack,
   SxProps,
   Tooltip,
 } from '@mui/material';
+import { useAuth } from '@/contexts/Auth/AuthProvider';
 
 
 interface Props {
-  meeting: Meeting,
+  meeting: Meeting | undefined,
   color?: string,
   sx?: SxProps,
 }
@@ -40,12 +42,19 @@ export function CopyInfoButton({
   color = COLORS.STAR_COMMAND_BLUE,
 }: Props) {
 
+  const {
+    clientEnv: {
+      NEXT_PUBLIC_JITSI_LINK,
+    },
+  } = useAuth();
+
   const { t } = useTranslation();
 
   const { showSnackbar } = useSnackbar();
 
   const handleCopy = async () => {
-    const { plain, html } = useGetMeetingText(t, meeting);
+
+    const { plain, html } = meeting ? makeMeetingText(t, meeting, NEXT_PUBLIC_JITSI_LINK) : { plain: '', html: '' };
 
     const textBlob = new Blob([plain], { type: 'text/plain', });
 
@@ -71,15 +80,17 @@ export function CopyInfoButton({
         title={t('conference.start_label', 'conference.start_label')}
         placement="top"
       >
-        <IconButton id={meeting.id} sx={{ alignSelf: 'center', ...sx }} onClick={handleCopy}>
-          <Image color={'info'} width={1} height={1} alt="CopyInfoButton"
-            style={{
-              height: '1rem',
-              width: '1rem',
-            }}
-            src={color === COLORS.STAR_COMMAND_BLUE ? '/icons/copy-light-blue.svg' : '/icons/copy-dark-blue.svg'}
-          />
-        </IconButton >
+        <Stack>
+          <IconButton id={meeting?.id} sx={{ alignSelf: 'center', ...sx }} onClick={handleCopy} disabled={meeting === undefined}>
+            <Image color={'info'} width={1} height={1} alt="CopyInfoButton"
+              style={{
+                height: '1rem',
+                width: '1rem',
+              }}
+              src={color === COLORS.STAR_COMMAND_BLUE ? '/icons/copy-light-blue.svg' : '/icons/copy-dark-blue.svg'}
+            />
+          </IconButton >
+        </Stack>
       </Tooltip>
     </>
   )

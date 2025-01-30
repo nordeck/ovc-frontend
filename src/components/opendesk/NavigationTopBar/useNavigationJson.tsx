@@ -18,6 +18,7 @@ import jsonFile from './navigation.json';
 import {useState} from "react";
 
 function useNavigationFromJsonFile() {
+        /* eslint-disable @typescript-eslint/no-unused-vars */
         const [json, setJson] = useState(jsonFile);
         return json;
 }

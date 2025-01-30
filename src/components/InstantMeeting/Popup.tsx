@@ -17,21 +17,27 @@
 import { isPopupBlocked } from '@/lib/isPopupBlocked';
 import { COLORS } from '@/utils/constants/theme.constants';
 import CloseIcon from '@mui/icons-material/Close';
+import { useSnackbar } from '@/contexts/Snackbar/SnackbarContext';
 import { CopyInfoButton } from "@/components/InstantMeeting/CopyInfoButton";
 import { Button, IconButton, Popover, Stack, Tooltip, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useAuth } from '@/contexts/Auth/AuthProvider';
-import { Meeting } from '@/types/types';
 import "../../../i18n"
+import {Meeting, ResponseError} from "@/types/types";
 
 
 interface Props {
-  meeting: Meeting,
   anchor: HTMLElement | null,
-  onClose: () => void
+  onClose: () => void,
+  isLoading: boolean,
+  meeting?:Meeting,
+  error?:ResponseError
 }
 
-export default function Popup({ meeting, anchor, onClose }: Props) {
+export default function Popup({ anchor, onClose, isLoading, meeting, error }: Props) {
+
+  const { t } = useTranslation();
+  const { showSnackbar } = useSnackbar();
 
   const {
     clientEnv: {
@@ -39,11 +45,16 @@ export default function Popup({ meeting, anchor, onClose }: Props) {
     },
   } = useAuth();
 
-  const { t } = useTranslation();
+  const isOpen: boolean = !!anchor;
 
-  const isOpen: boolean = Boolean(anchor);
+  const id = isOpen ? 'sofortmeeting-starten-popup' : '';
 
-  const id = isOpen ? 'sofortmeeting-starten-popup' : undefined;
+  if (!isLoading && error) {
+    showSnackbar({
+      message: error.message,
+      type: 'error',
+    });
+  }
 
   const handleJoinMeeting = () => {
 
@@ -67,7 +78,7 @@ export default function Popup({ meeting, anchor, onClose }: Props) {
         vertical: 'bottom',
         horizontal: 'center',
       }}
-      sx={{ mt: 1 }}
+      sx={{ mt: -22 }}
       slotProps={{
         paper: {
           sx: {
@@ -92,8 +103,7 @@ export default function Popup({ meeting, anchor, onClose }: Props) {
             <CopyInfoButton meeting={meeting} />
           </Stack>
 
-          <Tooltip
-            title={t('common.cancel', 'Cancel')} placement="top">
+          <Tooltip title={t('common.cancel', 'Cancel')} placement="top">
             <IconButton aria-label="cancel button" onClick={onClose}>
               <CloseIcon
                 aria-label="close icon"
@@ -108,6 +118,7 @@ export default function Popup({ meeting, anchor, onClose }: Props) {
             variant="contained"
             sx={{ width: '100%' }}
             onClick={handleJoinMeeting}
+            disabled={meeting === undefined}
           >
             {t('conference.start_label', 'conference.start_label')}
           </Button>

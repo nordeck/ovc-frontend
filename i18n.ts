@@ -8,10 +8,10 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from "i18next-browser-languagedetector";
 
 i18n
-  .use(LanguageDetector)
-  .use(initReactI18next)
-  .use(ChainedBackend)
-  .init({
+.use(initReactI18next)
+.use(LanguageDetector)
+.use(ChainedBackend)
+.init({
     lng: 'de',
     fallbackLng: 'en',
     defaultNS: 'translation_external', // use external translations to override

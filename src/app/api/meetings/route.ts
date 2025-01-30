@@ -14,14 +14,21 @@
  * limitations under the License.
  */
 
-import { API, CatchAxiosError, Response } from '@/utils/api/api';
-import {SendEventOpts} from "@/types/types";
+import { fetchWithAuth } from '@/utils/api/fetchWithAuth';
+import { NextRequest } from 'next/server';
 
-/**
- * API to send events
- */
-export async function sendEvent<T>(
-  data: Omit<SendEventOpts<T>, 'sender'>,
-): Promise<Response<void>> {
-  return await CatchAxiosError(() => API.post<void>(`/event`, data));
+export async function POST(request: NextRequest) {
+  return fetchWithAuth({
+    relativeUrl: 'api/v1.0/meetings/',
+    requestInit: {
+      body: JSON.stringify(await request.json()),
+      method: 'POST',
+    },
+  });
+}
+
+export async function GET(request: NextRequest) {
+  return fetchWithAuth({
+    relativeUrl: 'api/v1.0/meetings/' + request.nextUrl.search,
+  });
 }

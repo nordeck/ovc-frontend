@@ -16,7 +16,7 @@
 
 import { useAuthLoggedUser } from '@/contexts/Auth/AuthProvider';
 import { createMeeting, getMeetings } from '@/utils/api/requests/meeting.api';
-import { useEffect, useState } from 'react';
+import { useState} from 'react';
 import {
   Meeting,
   MeetingType,
@@ -26,62 +26,60 @@ import {
 
 export function useGetOrCreateInstantMeeting(): {
   isLoading: boolean;
-  data?: Meeting;
+  meeting?: Meeting;
   error?: ResponseError;
+  getOrCreateMeeting: () => Promise<void>;
 } {
   const { email } = useAuthLoggedUser();
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState<Meeting | undefined>();
-  const [error, setError] = useState<ResponseError>();
+  const [meeting, setMeeting] = useState<Meeting | undefined>();
+  const [error, setError] = useState<ResponseError | undefined>();
 
-  useEffect(() => {
-    async function fetchData() {
-      const { data, error } = await getMeetings({
-        type: MeetingType.Instant,
-      });
-      const meeting = data?.content?.[0];
+  async function fetchData() {
+    const { data, error } = await getMeetings({
+      type: MeetingType.Instant,
+    });
+    const existingMeeting = data?.content?.[0];
 
-      if (error) {
-        setError(error);
-        setIsLoading(false);
-        return;
-      }
-
-      if (meeting) {
-        setData(meeting);
-      } else {
-        const { data: newMeeting, error: createError } = await createMeeting({
-          type: MeetingType.Instant,
-          name: '',
-          password: '',
-          lobby_enabled: false,
-          participants: [
-            {
-              role: Role.Moderator,
-              email,
-            },
-          ],
-        });
-
-        if (createError) {
-          setError(createError);
-        }
-
-        if (newMeeting) {
-          setData(newMeeting);
-        }
-      }
-
+    if (error) {
+      setError(undefined);
       setIsLoading(false);
+      return;
     }
 
-    setIsLoading(true);
-    fetchData();
-  }, [email]);
+    if (existingMeeting) {
+      setMeeting(existingMeeting);
+      setError(undefined);
+    } else {
+      const { data: newMeeting, error: createError } = await createMeeting({
+        type: MeetingType.Instant,
+        name: '',
+        password: '',
+        lobby_enabled: false,
+        participants: [
+          {
+            role: Role.Moderator,
+            email,
+          },
+        ],
+      });
+
+      if (createError) {
+        setError(createError);
+      }
+
+      if (newMeeting) {
+        setMeeting(newMeeting);
+        setError(undefined);
+      }
+    }
+    setIsLoading(false);
+  }
 
   return {
     isLoading,
-    data,
+    meeting,
     error,
+    getOrCreateMeeting: fetchData
   };
 }

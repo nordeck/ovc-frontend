@@ -16,35 +16,38 @@
 
 'use client'
 
-import React, { MouseEvent, useCallback, useState } from "react";
+import React, { MouseEvent, useState } from "react";
 import Popup from "@/components/InstantMeeting/Popup";
 import { Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useCreateMeeting } from "./useCreateMeeting";
-import { useAuthLoggedUser } from "@/contexts/Auth/AuthProvider";
 import "../../../i18n"
+import {useGetOrCreateInstantMeeting} from "@/components/InstantMeeting/useGetOrCreateInstantMeeting";
 
 
 export default function InstantMeetingButton() {
 
-    const user = useAuthLoggedUser();
+    const {meeting, isLoading, error, getOrCreateMeeting} = useGetOrCreateInstantMeeting();
 
     const { t } = useTranslation();
 
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-    const [meeting, setMeeting] = useState(useCreateMeeting(user.email));
-
-    const handleClick = useCallback((event: MouseEvent<HTMLButtonElement>) => {
-        setMeeting(meeting);
+    const handleClick = async (event: MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
-    }, []);
+        await getOrCreateMeeting();
+    }
 
     return (
         <>
             {anchorEl && (
-                <Popup meeting={meeting} anchor={anchorEl} onClose={() => setAnchorEl(null)} />
+                <Popup anchor={anchorEl}
+                       onClose={() => setAnchorEl(null)}
+                       meeting={meeting}
+                       isLoading={isLoading}
+                       error={error}
+                />
             )}
+
             <Button
                 variant="contained"
                 onClick={handleClick}
@@ -52,6 +55,7 @@ export default function InstantMeetingButton() {
                     width: '100%',
                     minWidth: '20%',
                 }}
+                disabled={!!anchorEl}
             >
                 {t('conference.start_label', 'conference.start_label')}
             </Button>
