@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth';
 import {SessionType} from "@/types/types";
+import {authOptions} from "@/app/api/auth/[...nextauth]/authOptions";
 
 export async function getAuthServerSession(): Promise<SessionType | undefined> {
   return (await getServerSession(authOptions)) ?? undefined;

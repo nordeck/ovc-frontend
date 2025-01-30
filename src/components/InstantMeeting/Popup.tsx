@@ -30,7 +30,7 @@ interface Props {
   anchor: HTMLElement | null,
   onClose: () => void,
   isLoading: boolean,
-  meeting:Meeting,
+  meeting?:Meeting,
   error?:ResponseError
 }
 

@@ -17,7 +17,6 @@
 import { Meeting } from '@/types/types';
 import { TFunction } from 'i18next';
 import { DateTime } from 'luxon';
-import { useAuth } from '@/contexts/Auth/AuthProvider';
 
 const FORMAT = 'dd.MM.yyyy HH:mm:ss';
 
@@ -26,7 +25,7 @@ export type MeetingText = {
   html: string;
 };
 
-export function useGetMeetingText(t: TFunction, meeting: Meeting, jitsiDomain: string): MeetingText {
+export function makeMeetingText(t: TFunction, meeting: Meeting, jitsiDomain: string): MeetingText {
 
   const {
     id,

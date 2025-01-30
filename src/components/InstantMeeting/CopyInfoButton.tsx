@@ -16,7 +16,7 @@
 
 import { useSnackbar } from '@/contexts/Snackbar/SnackbarContext';
 import { COLORS } from '@/utils/constants/theme.constants';
-import { useGetMeetingText } from "@/components/InstantMeeting/useGetMeetingText";
+import { makeMeetingText } from "@/components/InstantMeeting/makeMeetingText";
 import Image from 'next/image';
 import { useTranslation } from "react-i18next";
 import { Meeting } from "@/types/types";
@@ -54,7 +54,7 @@ export function CopyInfoButton({
 
   const handleCopy = async () => {
 
-    const { plain, html } = meeting ? useGetMeetingText(t, meeting, NEXT_PUBLIC_JITSI_LINK) : { plain: '', html: '' };
+    const { plain, html } = meeting ? makeMeetingText(t, meeting, NEXT_PUBLIC_JITSI_LINK) : { plain: '', html: '' };
 
     const textBlob = new Blob([plain], { type: 'text/plain', });
 

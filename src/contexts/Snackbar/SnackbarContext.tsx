@@ -58,7 +58,7 @@ const defaultState: SnackbarProviderState = {
   autoHideDuration: 5000,
 };
 
-export function SnackbarProvider({ children }: PropsWithChildren<{}>) {
+export function SnackbarProvider({ children }: PropsWithChildren) {
   const [{ open, anchorOrigin, type, message, autoHideDuration }, setSnackbar] =
     useState<SnackbarProviderState>(defaultState);
 

@@ -33,7 +33,7 @@ export function useGetOrCreateInstantMeeting(): {
   const { email } = useAuthLoggedUser();
   const [isLoading, setIsLoading] = useState(false);
   const [meeting, setMeeting] = useState<Meeting | undefined>();
-  const [error, setError] = useState<ResponseError>();
+  const [error, setError] = useState<ResponseError | undefined>();
 
   async function fetchData() {
     const { data, error } = await getMeetings({
@@ -42,14 +42,14 @@ export function useGetOrCreateInstantMeeting(): {
     const existingMeeting = data?.content?.[0];
 
     if (error) {
-      setError(error);
+      setError(undefined);
       setIsLoading(false);
       return;
     }
 
     if (existingMeeting) {
       setMeeting(existingMeeting);
-      setError(null);
+      setError(undefined);
     } else {
       const { data: newMeeting, error: createError } = await createMeeting({
         type: MeetingType.Instant,
@@ -70,7 +70,7 @@ export function useGetOrCreateInstantMeeting(): {
 
       if (newMeeting) {
         setMeeting(newMeeting);
-        setError(null);
+        setError(undefined);
       }
     }
     setIsLoading(false);
