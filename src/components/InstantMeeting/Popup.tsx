@@ -18,20 +18,23 @@ import { isPopupBlocked } from '@/lib/isPopupBlocked';
 import { COLORS } from '@/utils/constants/theme.constants';
 import CloseIcon from '@mui/icons-material/Close';
 import { useSnackbar } from '@/contexts/Snackbar/SnackbarContext';
-import { useGetOrCreateInstantMeeting } from "./useGetOrCreateInstantMeeting";
 import { CopyInfoButton } from "@/components/InstantMeeting/CopyInfoButton";
 import { Button, IconButton, Popover, Stack, Tooltip, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useAuth } from '@/contexts/Auth/AuthProvider';
 import "../../../i18n"
+import {Meeting, ResponseError} from "@/types/types";
 
 
 interface Props {
   anchor: HTMLElement | null,
-  onClose: () => void
+  onClose: () => void,
+  isLoading: boolean,
+  meeting:Meeting,
+  error?:ResponseError
 }
 
-export default function Popup({ anchor, onClose }: Props) {
+export default function Popup({ anchor, onClose, isLoading, meeting, error }: Props) {
 
   const { t } = useTranslation();
   const { showSnackbar } = useSnackbar();
@@ -42,11 +45,9 @@ export default function Popup({ anchor, onClose }: Props) {
     },
   } = useAuth();
 
-  const isOpen: boolean = Boolean(anchor);
+  const isOpen: boolean = !!anchor;
 
-  const id = isOpen ? 'sofortmeeting-starten-popup' : undefined;
-
-  const { isLoading, data: meeting, error } = useGetOrCreateInstantMeeting();
+  const id = isOpen ? 'sofortmeeting-starten-popup' : '';
 
   if (!isLoading && error) {
     showSnackbar({
