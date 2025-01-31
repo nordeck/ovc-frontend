@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.3](https://github.com/nordeck/ovc-frontend/compare/v1.2.2...v1.2.3) (2025-01-31)
+
+
+### Bug Fixes
+
+* added  build permissions ([5934c44](https://github.com/nordeck/ovc-frontend/commit/5934c44776750034d00584632d9aec74aebd1b41))
+* ci github action ([fc54418](https://github.com/nordeck/ovc-frontend/commit/fc544185721d2ab4dc0be661489c283ac32c3ed6))
+* use package_token ([4076d45](https://github.com/nordeck/ovc-frontend/commit/4076d45d9de706ef9866fb5f411fdf4c07e58d09))
+
 ## [1.2.2](https://github.com/nordeck/ovc-frontend/compare/v1.2.1...v1.2.2) (2025-01-31)
 
 
