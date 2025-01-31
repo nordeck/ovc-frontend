@@ -15,10 +15,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
     outputs:
       docker-tag: ${{ steps.meta.outputs.version }}
     steps:
@@ -50,7 +46,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.PACKAGE_TOKEN }}
 
       - name: Generate Docker metadata
         if: ${{ steps.release.outputs.RELEASE_VERSION }}
