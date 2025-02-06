@@ -16,11 +16,10 @@
 
 'use client'
 
-import {Button, Tooltip} from "@mui/material";
+import {Button} from "@mui/material";
 import { useTranslation } from "react-i18next";
 import {useAuth} from "@/contexts/Auth/AuthProvider";
 import "../../../i18n"
-
 
 export default function VideoTestButton() {
 
@@ -39,20 +38,17 @@ export default function VideoTestButton() {
     }
 
     return (
-        <>
-            <Tooltip title={t('videoTest.buttonTooltip', 'videoTest.buttonTooltip')}>
-                <Button
-                    variant="contained"
-                    onClick={handleClick}
-                    sx={{
-                        width: '100%',
-                        minWidth: '20%',
-                        backgroundColor: 'slategrey',
-                    }}
-                >
-                    {t('videoTest.buttonLabel', 'videoTest.buttonLabel')}
-                </Button>
-            </Tooltip>
-        </>
+            <Button
+                variant="contained"
+                onClick={handleClick}
+                sx={{
+                    alignSelf: 'center',
+                    minWidth: '20%',
+                    width: '100%',
+                    backgroundColor: 'slategrey',
+                }}
+            >
+                {t('videoTest.buttonLabel', 'videoTest.buttonLabel')}
+            </Button>
     )
 };
