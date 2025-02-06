@@ -16,12 +16,10 @@
 
 'use client'
 
-import React, { MouseEvent } from "react";
 import {Button, Tooltip} from "@mui/material";
 import { useTranslation } from "react-i18next";
-import "../../../i18n"
 import {useAuth} from "@/contexts/Auth/AuthProvider";
-import {isVarTrue} from "@/lib/isVarTrue";
+import "../../../i18n"
 
 
 export default function VideoTestButton() {
@@ -30,41 +28,31 @@ export default function VideoTestButton() {
 
     const {
         clientEnv: {
-            NEXT_PUBLIC_VIDEO_TEST_ENABLED,
             NEXT_PUBLIC_VIDEO_TEST_LINK,
         },
     } = useAuth();
 
-    const isVideoTestEnabled = isVarTrue(NEXT_PUBLIC_VIDEO_TEST_ENABLED);
-
     const handleClick = async () => {
-        window.location.href = NEXT_PUBLIC_VIDEO_TEST_LINK + 'callback=' + encodeURI(window.location.href);
+        const testAppUrl = new URL(NEXT_PUBLIC_VIDEO_TEST_LINK);
+        testAppUrl.searchParams.append('callback', encodeURI(window.location.href));
+        window.location.href = testAppUrl.href;
     }
 
-    // can only show the button, if the env. prop has been set
-    // otherwise, show nothing
-    if (!isVideoTestEnabled) {
-        return (
-            <></>
-        )
-    }
-    else {
-        return (
-            <>
-                <Tooltip title={t('videoTest.buttonTooltip', 'videoTest.buttonTooltip')}>
-                    <Button
-                        variant="contained"
-                        onClick={handleClick}
-                        sx={{
-                            width: '100%',
-                            minWidth: '20%',
-                            backgroundColor: 'slategrey',
-                        }}
-                    >
-                        {t('videoTest.buttonLabel', 'videoTest.buttonLabel')}
-                    </Button>
-                </Tooltip>
-            </>
-        )
-    }
+    return (
+        <>
+            <Tooltip title={t('videoTest.buttonTooltip', 'videoTest.buttonTooltip')}>
+                <Button
+                    variant="contained"
+                    onClick={handleClick}
+                    sx={{
+                        width: '100%',
+                        minWidth: '20%',
+                        backgroundColor: 'slategrey',
+                    }}
+                >
+                    {t('videoTest.buttonLabel', 'videoTest.buttonLabel')}
+                </Button>
+            </Tooltip>
+        </>
+    )
 };

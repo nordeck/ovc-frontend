@@ -19,6 +19,7 @@ import { Metadata } from "next";
 import NavigationTopBar from "@/components/opendesk/NavigationTopBar/NavigationTopBar";
 import VideoTestButton from "@/components/InstantMeeting/VideoTestButton";
 import {Stack} from "@mui/material";
+import {isVarTrue} from "@/lib/isVarTrue";
 
 export const metadata: Metadata = {
     title: 'openDesk Video Conference',
@@ -27,7 +28,8 @@ export const metadata: Metadata = {
 
 export default function Conference() {
 
-
+    const envVideoTestEnabled = process.env.NEXT_PUBLIC_VIDEO_TEST_ENABLED;
+    const isVideoTestEnabled = isVarTrue(envVideoTestEnabled);
 
     return (
         <>
@@ -37,9 +39,11 @@ export default function Conference() {
                     <Stack className="w-1/4">
                         <InstantMeetingButton />
                     </Stack>
-                    <Stack>
-                        <VideoTestButton />
-                    </Stack>
+                    { isVideoTestEnabled &&
+                        <Stack>
+                            <VideoTestButton />
+                        </Stack>
+                    }
                 </Stack>
             </main>
         </>
