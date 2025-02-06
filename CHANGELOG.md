@@ -1,5 +1,17 @@
 # Changelog
 
+# [1.3.0](https://github.com/nordeck/ovc-frontend/compare/v1.2.3...v1.3.0) (2025-02-06)
+
+
+### Bug Fixes
+
+* adjustments after review ([842dd7b](https://github.com/nordeck/ovc-frontend/commit/842dd7b40565aaaf83c441e8ad94896d48a49588))
+
+
+### Features
+
+* Startpage has videotest button ([ba2951f](https://github.com/nordeck/ovc-frontend/commit/ba2951faff75160ffb55afdca208ac756db41047))
+
 ## [1.2.3](https://github.com/nordeck/ovc-frontend/compare/v1.2.2...v1.2.3) (2025-01-31)
 
 
