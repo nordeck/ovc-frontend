@@ -7,7 +7,9 @@
     "meetingInformation": "$t(copy.baseMeetingInformation, {\"context\": \"{{baseMeetingInformationContext}}\"})$t(copy.phoneInfo)",
     "phoneInfo": "Zur <b>Teilnahme über das Telefon</b> verwenden Sie bitte den folgende Einwahlnummer: <b>{{phone_number}}</b></br>\nKonferenz ID: <b>{{conference_pin}}</b>",
     "roomkit": "Zur <b>Teilnahme mit einem Cisco Roomkit</b> verwenden Sie bitte den folgenden Cisco Roomkit (Video) Link: <b>{{sip_jibri_link}}</b></br>\nKonferenz ID: <b>{{conference_pin}}</b>",
-    "clipboardSuccess": "In die Zwischenablage kopiert"
+    "clipboardSuccess": "In die Zwischenablage kopiert",
+    "buttonTooltip": "Zugangsdaten kopieren",
+    "buttonLabel": "Zugangsdaten kopieren"
   },
   "meetingCard": {
     "meetingStart": "Meeting starten",
@@ -23,5 +25,9 @@
   "common": {
     "cancel": "Abbrechen",
     "close": "Schließen"
+  },
+  "videoTest": {
+    "buttonLabel": "Audio & Video Testen",
+    "buttonTooltip": "Audio & Video Testen"
   }
 }

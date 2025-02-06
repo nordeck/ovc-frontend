@@ -58,7 +58,7 @@ export default function Popup({ anchor, onClose, isLoading, meeting, error }: Pr
 
   const handleJoinMeeting = () => {
 
-    const link: string = NEXT_PUBLIC_JITSI_LINK + meeting?.id;
+    const link: string = NEXT_PUBLIC_JITSI_LINK + '/' + meeting?.id;
 
     if (link) {
       const w = window.open(link, '_blank');

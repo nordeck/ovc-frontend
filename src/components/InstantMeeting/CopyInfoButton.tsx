@@ -77,7 +77,7 @@ export function CopyInfoButton({
   return (
     <>
       <Tooltip
-        title={t('conference.start_label', 'conference.start_label')}
+        title={t('copy.buttonTooltip', 'copy.buttonTooltip')}
         placement="top"
       >
         <Stack>
