@@ -54,6 +54,8 @@ export default function InstantMeetingButton() {
                 sx={{
                     width: '100%',
                     minWidth: '20%',
+                    height:'60px',
+                    fontSize:'medium'
                 }}
                 disabled={!!anchorEl}
             >
