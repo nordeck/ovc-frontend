@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Nordeck IT + Consulting GmbH
+ * Copyright 2025 Nordeck IT + Consulting GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,8 @@
 import { encodeParams } from '@/lib/encodeParams';
 import { API, CatchAxiosError, Response } from '@/utils/api/api';
 import {
-  BasicMeeting,
   Meeting,
-  MeetingPermissions,
   MeetingType,
-  ParticipantNew,
-  Role,
 } from '@/types/types';
 
 export async function getMeetingById(
@@ -30,14 +26,6 @@ export async function getMeetingById(
 ): Promise<Response<Meeting>> {
   return await CatchAxiosError(() =>
     API.get<Meeting>(`/meetings/${meetingId}`),
-  );
-}
-
-export async function getBasicMeeting(
-  meetingId: string,
-): Promise<Response<BasicMeeting>> {
-  return await CatchAxiosError(() =>
-    API.get<BasicMeeting>(`/meetings/${meetingId}/basic`),
   );
 }
 
@@ -96,43 +84,6 @@ export async function createMeeting(
   return await CatchAxiosError(() => API.post<Meeting>('/meetings', meeting));
 }
 
-export async function updateParticipant(
-  meetingId: string,
-  participantId: string,
-  participant: { role: Role; email: string },
-): Promise<Response<void>> {
-  return await CatchAxiosError(() =>
-    API.put<void>(
-      `/meetings/${meetingId}/participants/${participantId}`,
-      participant,
-    ),
-  );
-}
-
-export async function createParticipant(
-  meetingId: string,
-  participant: {
-    role: Role;
-    email: string;
-  },
-): Promise<Response<ParticipantNew>> {
-  return await CatchAxiosError(() =>
-    API.post<ParticipantNew>(
-      `/meetings/${meetingId}/participants`,
-      participant,
-    ),
-  );
-}
-
-export async function deleteParticipant(
-  meetingId: string,
-  participantId: string,
-): Promise<Response<void>> {
-  return await CatchAxiosError(() =>
-    API.delete<void>(`/meetings/${meetingId}/participants/${participantId}`),
-  );
-}
-
 export async function getJitsiLink(
   meetingId: string,
   data: {
@@ -144,29 +95,5 @@ export async function getJitsiLink(
 ): Promise<Response<string>> {
   return await CatchAxiosError(() =>
     API.post<string>(`/meetings/${meetingId}/jitsi-link`, data),
-  );
-}
-
-export async function updateLastVisitDate(
-  meetingId: string,
-): Promise<Response<void>> {
-  return await CatchAxiosError(() =>
-    API.patch<void>(`/meetings/${meetingId}/last-visit-date`),
-  );
-}
-
-export async function getMeetingPermissions(
-  meetingId: string,
-): Promise<Response<MeetingPermissions>> {
-  return await CatchAxiosError(() =>
-    API.get<MeetingPermissions>(`/meetings/${meetingId}/permissions`),
-  );
-}
-
-export async function getNextOfSeries(
-  meetingId: string,
-): Promise<Response<BasicMeeting>> {
-  return await CatchAxiosError(() =>
-    API.get<Meeting>(`/meetings/${meetingId}/next-of-series`),
   );
 }

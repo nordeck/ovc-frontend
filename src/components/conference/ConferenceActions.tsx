@@ -16,7 +16,7 @@
 
 'use client'
 
-import {useEffect, useState} from 'react'
+import { useEffect } from 'react'
 import StartConferenceButton from "@/components/conference/StartConferenceButton";
 import CopyConferenceInfoButton from "@/components/conference/CopyConferenceInfoButton";
 import {useGetOrCreateInstantMeeting} from "@/components/conference/useGetOrCreateInstantMeeting";
