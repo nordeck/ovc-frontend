@@ -16,17 +16,21 @@
 
 'use client';
 
-import { SessionProvider as NextAuthSessionProvider } from 'next-auth/react';
-import { ReactNode } from 'react';
+import { CssBaseline } from '@mui/material';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { PropsWithChildren } from 'react';
+import { themeOptions } from './themeOptions';
 
-interface Props {
-  children: ReactNode;
+const theme = createTheme(themeOptions);
+
+export function ThemeRegistry({ children }: PropsWithChildren) {
+    return (
+        <AppRouterCacheProvider>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                {children}
+            </ThemeProvider>
+        </AppRouterCacheProvider>
+    );
 }
-
-export const SessionProvider = ({ children }: Props) => {
-  return (
-    <NextAuthSessionProvider refetchOnWindowFocus={false} refetchInterval={55}>
-      {children}
-    </NextAuthSessionProvider>
-  );
-};

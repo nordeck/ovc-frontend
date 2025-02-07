@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Nordeck IT + Consulting GmbH
+ * Copyright 2025 Nordeck IT + Consulting GmbH
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import { LocalizationProvider } from "@/utils/localization/LocalizationProvider"
 import { SnackbarProvider } from "@/contexts/Snackbar/SnackbarContext";
 import { SessionProvider } from "@/contexts/Session/SessionContext";
 import "../../i18n";
+import {ThemeRegistry} from "../../theme/ThemeRegistry";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -33,15 +34,17 @@ const inter = Inter({ subsets: ['latin'] });
 export default function RootLayout({ children, }: { children: React.ReactNode; }) {
   return (
     <html>
-      <body className={inter.className}>
-        <LocalizationProvider>
-          <SnackbarProvider>
-            <SessionProvider>
-              <AuthProvider>{children}</AuthProvider>
-            </SessionProvider>
-          </SnackbarProvider>
-        </LocalizationProvider>
-      </body>
+      <ThemeRegistry>
+        <body className={inter.className}>
+          <LocalizationProvider>
+            <SnackbarProvider>
+              <SessionProvider>
+                <AuthProvider>{children}</AuthProvider>
+              </SessionProvider>
+            </SnackbarProvider>
+          </LocalizationProvider>
+        </body>
+      </ThemeRegistry>
     </html>
   );
 }
