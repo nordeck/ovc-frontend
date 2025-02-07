@@ -33,10 +33,6 @@ export type Meeting = {
   participants: ParticipantNew[];
 };
 
-export type BasicMeeting = Pick<
-  Meeting,
-  'id' | 'type' | 'name' | 'start_time' | 'end_time' | 'recurrence'
->;
 
 export enum MeetingType {
   Normal = 'NORMAL',
@@ -78,36 +74,6 @@ export enum Frequency {
   Monthly = 'MONTHLY',
 }
 
-export type MeetingPermissions = {
-  meeting_id: string;
-  user_id: string;
-  user_can_read?: boolean;
-  user_can_edit?: boolean;
-  user_is_participant?: boolean;
-};
-
-export enum NotificationType {
-  DeleteCandidate = 'delete-candidate',
-  PasswordChangeCandidate = 'password-change-candidate',
-  ParticipantAdded = 'participant-added',
-  ParticipantDeleted = 'participant-deleted',
-  PasswordChanged = 'password-changed',
-}
-
-export type Notification = {
-  id: string;
-  message: string;
-  user_id: string;
-  type: NotificationType;
-  viewed: boolean;
-  created_at: string;
-  viewed_at?: string;
-  meeting_id: string;
-  room_name: string;
-  password_change_due_date?: string;
-  room_deletion_due_date?: string;
-};
-
 export type ResponseError = {
   message: string;
   apiError?: ApiError;
@@ -135,13 +101,6 @@ export type SessionType = {
 export type UserType = {
   name: string;
   email: string;
-};
-
-export type SendEventOpts<T> = {
-  clientIds?: string[];
-  type: string;
-  sender: string;
-  content: T;
 };
 
 /**
