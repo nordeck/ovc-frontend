@@ -1,5 +1,20 @@
 # Changelog
 
+# [1.4.0](https://github.com/nordeck/ovc-frontend/compare/v1.3.0...v1.4.0) (2025-02-07)
+
+
+### Bug Fixes
+
+* added copyright info to themeRegstry ([36de422](https://github.com/nordeck/ovc-frontend/commit/36de4222606d66eb7af2fe52d22fdc360bb42e02))
+* adjusted copyright year ([e602465](https://github.com/nordeck/ovc-frontend/commit/e60246545114abc3c88b50b9b02cc8f8ed0dd511))
+* removed unnecessary types ([7ad7238](https://github.com/nordeck/ovc-frontend/commit/7ad72380b7e2e933e881715d05f0020b4dc63ab1))
+* theme options added ([3ea3717](https://github.com/nordeck/ovc-frontend/commit/3ea3717c3e7f10fc4b593d173817c393ab9f8527))
+
+
+### Features
+
+* add copy conference info button to main page ([7a1ee3a](https://github.com/nordeck/ovc-frontend/commit/7a1ee3a3a855e9ce453804b3a0ca33512257dfe1))
+
 # [1.3.0](https://github.com/nordeck/ovc-frontend/compare/v1.2.3...v1.3.0) (2025-02-06)
 
 
