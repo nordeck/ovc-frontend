@@ -36,7 +36,7 @@ function ConferenceActions() {
 
     const isVideoTestEnabled = isVarTrue(NEXT_PUBLIC_VIDEO_TEST_ENABLED);
 
-    const {meeting, isLoading, error, getOrCreateMeeting} = useGetOrCreateInstantMeeting();
+    const { meeting, isLoading, error, getOrCreateMeeting } = useGetOrCreateInstantMeeting();
 
     const { showSnackbar } = useSnackbar();
 
@@ -56,14 +56,15 @@ function ConferenceActions() {
     return (
         <>
             <Stack className="space-y-6 w-full items-center justify-center">
-                <Stack className="w-1/3">
+                <Stack className="w-1/4">
                     <StartConferenceButton meeting={meeting} />
                 </Stack>
-                <Stack className="w-1/4">
+                <Stack className={""}></Stack>
+                <Stack className="w-1/6">
                     <CopyConferenceInfoButton meeting={meeting} />
                 </Stack>
                 { isVideoTestEnabled &&
-                    <Stack className="w-1/4">
+                    <Stack className="w-1/6">
                         <VideoTestButton />
                     </Stack>
                 }
