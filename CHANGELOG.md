@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/nordeck/ovc-frontend/compare/v1.4.0...v1.4.1) (2025-02-07)
+
+
+### Bug Fixes
+
+* try GITHUB_TOKEN as login ([af1c642](https://github.com/nordeck/ovc-frontend/commit/af1c6422f7cbdaf639465a59ebdd6e84cceaeeb9))
+
 # [1.4.0](https://github.com/nordeck/ovc-frontend/compare/v1.3.0...v1.4.0) (2025-02-07)
 
 
