@@ -37,7 +37,7 @@ export default function StartConferenceButton({ meeting }: Props) {
     } = useAuth();
 
     const handleJoinMeeting = () => {
-        const url = new URL(NEXT_PUBLIC_JITSI_LINK + '/' + meeting?.id);
+        const url = new URL(NEXT_PUBLIC_JITSI_LINK + '/' + meeting?.id + '#config.localSubject=" "');
         if (url) {
             const w = window.open(url, '_blank');
             if (isPopupBlocked(w)) {
