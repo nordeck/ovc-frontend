@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.3](https://github.com/nordeck/ovc-frontend/compare/v1.4.2...v1.4.3) (2025-02-11)
+
+
+### Bug Fixes
+
+* added empty space as room name to jitsi link ([4ac3898](https://github.com/nordeck/ovc-frontend/commit/4ac38989e55220b3987eea89824fe9b7646ede7e))
+* navigator language detector fixed ([bb9e73f](https://github.com/nordeck/ovc-frontend/commit/bb9e73f01be12fc055adfd3d803ebddb90220c52))
+
 ## [1.4.2](https://github.com/nordeck/ovc-frontend/compare/v1.4.1...v1.4.2) (2025-02-07)
 
 
