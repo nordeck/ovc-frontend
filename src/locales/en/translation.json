@@ -8,7 +8,7 @@
     "phoneInfo": "To <b>participate by telephone</b> please use the following dial-in number: <b>{{phone_number}}</b></br>\nConference ID: <b>{{conference_pin}}</b>",
     "roomkit": "To <b>participate with a Cisco Roomkit</b> please use the following Cisco Roomkit (Video) link: <b>{{sip_jibri_link}}</b></br>\nConference ID: <b>{{conference_pin}}</b>",
     "clipboardSuccess": "Copied to clipboard",
-    "buttonTooltip": "Copy conference information",
+    "buttonTooltip": "Copy information",
     "buttonLabel": "Copy information"
   },
   "meetingCard": {
@@ -27,7 +27,7 @@
     "close": "close"
   },
   "videoTest": {
-    "buttonLabel": "Audio & Video Test",
-    "buttonTooltip": "Audio & Video Test"
+    "buttonLabel": "Audio & video test",
+    "buttonTooltip": "Audio & video test"
   }
 }

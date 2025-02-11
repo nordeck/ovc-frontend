@@ -19,7 +19,6 @@
 import {Button} from "@mui/material";
 import { useTranslation } from "react-i18next";
 import {useAuth} from "@/contexts/Auth/AuthProvider";
-import "../../../i18n"
 
 export default function VideoTestButton() {
 
@@ -48,7 +47,9 @@ export default function VideoTestButton() {
                     backgroundColor: 'slategrey',
                 }}
             >
-                {t('videoTest.buttonLabel', 'videoTest.buttonLabel')}
+                <span className={'text-sm'}>
+                    {t('videoTest.buttonLabel', 'videoTest.buttonLabel')}
+                </span>
             </Button>
     )
 };
