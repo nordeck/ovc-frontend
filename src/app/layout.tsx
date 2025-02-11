@@ -16,13 +16,12 @@
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
 import { AuthProvider } from "@/contexts/Auth/AuthProvider";
-import { LocalizationProvider } from "@/utils/localization/LocalizationProvider";
 import { SnackbarProvider } from "@/contexts/Snackbar/SnackbarContext";
 import { SessionProvider } from "@/contexts/Session/SessionContext";
+import { ThemeRegistry } from "../../theme/ThemeRegistry";
+import "./globals.css";
 import "../../i18n";
-import {ThemeRegistry} from "../../theme/ThemeRegistry";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -36,13 +35,11 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
     <html>
       <ThemeRegistry>
         <body className={inter.className}>
-          <LocalizationProvider>
             <SnackbarProvider>
               <SessionProvider>
                 <AuthProvider>{children}</AuthProvider>
               </SessionProvider>
             </SnackbarProvider>
-          </LocalizationProvider>
         </body>
       </ThemeRegistry>
     </html>

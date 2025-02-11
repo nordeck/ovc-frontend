@@ -21,7 +21,6 @@ import { useTranslation } from "react-i18next";
 import {isPopupBlocked} from "@/lib/isPopupBlocked";
 import {useAuth} from "@/contexts/Auth/AuthProvider";
 import {Meeting} from "@/types/types";
-import "../../../i18n"
 
 interface Props {
     meeting?:Meeting,
@@ -56,7 +55,6 @@ export default function StartConferenceButton({ meeting }: Props) {
                 width: '100%',
                 minWidth: '20%',
                 height:'60px',
-                fontSize:'medium'
             }}
         >
             {t('conference.start_label', 'conference.start_label')}

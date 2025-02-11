@@ -25,6 +25,7 @@ import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
 import {useAuth} from "@/contexts/Auth/AuthProvider";
 import {isVarTrue} from "@/lib/isVarTrue";
 import {Stack} from "@mui/material";
+import "../../../i18n"
 
 function ConferenceActions() {
 

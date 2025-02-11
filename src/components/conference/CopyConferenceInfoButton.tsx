@@ -70,7 +70,9 @@ function CopyConferenceInfoButton({ meeting }: Props) {
                         backgroundColor: 'slategrey'}}
                     onClick={handleCopy}
                     disabled={meeting === undefined}>
-                {t('copy.buttonTooltip', 'copy.buttonTooltip')}
+                <span className={'text-sm'}>
+                    {t('copy.buttonTooltip', 'copy.buttonTooltip')}
+                </span>
             </Button>
         </Stack>
     )
