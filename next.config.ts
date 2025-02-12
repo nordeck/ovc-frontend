@@ -21,6 +21,15 @@ const nextConfig: NextConfig = {
 };
 
 module.exports = {
+    async redirects() {
+        return [
+            {
+                source: '/',
+                permanent: true,
+                destination: '/conference',
+            },
+        ];
+    },
     images: {
         remotePatterns: [
 
