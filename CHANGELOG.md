@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.4](https://github.com/nordeck/ovc-frontend/compare/v1.4.3...v1.4.4) (2025-02-12)
+
+
+### Bug Fixes
+
+* set "conference" as app landing page ([e9ec007](https://github.com/nordeck/ovc-frontend/commit/e9ec00750306664e493f07823cb83cd8386f2c13))
+
 ## [1.4.3](https://github.com/nordeck/ovc-frontend/compare/v1.4.2...v1.4.3) (2025-02-11)
 
 
