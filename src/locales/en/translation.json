@@ -20,7 +20,8 @@
   },
   "conference": {
     "start_label": "Start conference",
-    "info_text": "The instant conference can only be started by you. Anyone can join the conference using the conference information."
+    "info_text": "The instant conference can only be started by you. Anyone can join the conference using the conference information.",
+    "name_label": "Conference name"
   },
   "common": {
     "cancel": "cancel",

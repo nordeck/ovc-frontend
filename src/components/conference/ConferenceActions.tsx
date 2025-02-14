@@ -16,16 +16,19 @@
 
 'use client'
 
-import { useEffect } from 'react'
-import StartConferenceButton from "@/components/conference/StartConferenceButton";
-import CopyConferenceInfoButton from "@/components/conference/CopyConferenceInfoButton";
+import {createContext, useEffect, useState} from 'react'
 import {useGetOrCreateInstantMeeting} from "@/components/conference/useGetOrCreateInstantMeeting";
-import VideoTestButton from "@/components/conference/VideoTestButton";
 import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
 import {useAuth} from "@/contexts/Auth/AuthProvider";
 import {isVarTrue} from "@/lib/isVarTrue";
-import {Stack} from "@mui/material";
+import {Card, Stack} from "@mui/material";
+import ConferenceNameField from "@/components/conference/ConferenceNameField";
+import StartConferenceButton from "@/components/conference/StartConferenceButton";
+import CopyConferenceInfoButton from "@/components/conference/CopyConferenceInfoButton";
+import VideoTestButton from "@/components/conference/VideoTestButton";
 import "../../../i18n"
+
+export const ConferenceContext = createContext({});
 
 function ConferenceActions() {
 
@@ -35,9 +38,12 @@ function ConferenceActions() {
         },
     } = useAuth();
 
+
     const isVideoTestEnabled = isVarTrue(NEXT_PUBLIC_VIDEO_TEST_ENABLED);
 
     const { meeting, isLoading, error, getOrCreateMeeting } = useGetOrCreateInstantMeeting();
+
+    const [ nameHasChanged, setNameHasChanged ] = useState(false);
 
     const { showSnackbar } = useSnackbar();
 
@@ -56,20 +62,26 @@ function ConferenceActions() {
 
     return (
         <>
-            <Stack className="space-y-6 w-full items-center justify-center">
-                <Stack className="w-1/4">
-                    <StartConferenceButton meeting={meeting} />
-                </Stack>
-                <Stack className={""}></Stack>
-                <Stack className="w-1/6">
-                    <CopyConferenceInfoButton meeting={meeting} />
-                </Stack>
-                { isVideoTestEnabled &&
-                    <Stack className="w-1/6">
-                        <VideoTestButton />
+            <ConferenceContext.Provider value={{ meeting, nameHasChanged, setNameHasChanged }}>
+                <Card variant="outlined" className={'w-2/3 p-4'}>
+                    <Stack className="space-y-6 w-full items-center justify-center">
+                        <Stack className="w-1/3">
+                            <ConferenceNameField />
+                        </Stack>
+                        <Stack className="w-1/3">
+                            <StartConferenceButton />
+                        </Stack>
+                        <Stack className="w-1/4">
+                            <CopyConferenceInfoButton meeting={meeting} />
+                        </Stack>
+                        { isVideoTestEnabled &&
+                            <Stack className="w-1/4">
+                                <VideoTestButton />
+                            </Stack>
+                        }
                     </Stack>
-                }
-            </Stack>
+                </Card>
+            </ConferenceContext.Provider>
         </>
     )
 }
