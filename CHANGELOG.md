@@ -1,5 +1,18 @@
 # Changelog
 
+# [1.5.0](https://github.com/nordeck/ovc-frontend/compare/v1.4.4...v1.5.0) (2025-02-18)
+
+
+### Bug Fixes
+
+* adjusted linting issues ([747da91](https://github.com/nordeck/ovc-frontend/commit/747da91c2ebe02b4c59f06f7b62d9d04bb7f1912))
+* sanitize and remove special chars from input ([afe77dc](https://github.com/nordeck/ovc-frontend/commit/afe77dc64401b1af552ae43fb88c337da3a6e8c4))
+
+
+### Features
+
+* room name entering and saving added ([de924a7](https://github.com/nordeck/ovc-frontend/commit/de924a725a893a891bcd2cee6b5f84b2d3ed9698))
+
 ## [1.4.4](https://github.com/nordeck/ovc-frontend/compare/v1.4.3...v1.4.4) (2025-02-12)
 
 
