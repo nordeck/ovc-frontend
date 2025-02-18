@@ -20,15 +20,20 @@ import { Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import {isPopupBlocked} from "@/lib/isPopupBlocked";
 import {useAuth} from "@/contexts/Auth/AuthProvider";
+import {ConferenceContext, MeetingContext} from "@/components/conference/ConferenceActions";
+import {useCallback, useContext} from "react";
+import {updateMeeting} from "@/utils/api/requests/meeting.api";
+import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
 import {Meeting} from "@/types/types";
 
-interface Props {
-    meeting?:Meeting,
-}
 
-export default function StartConferenceButton({ meeting }: Props) {
+export default function StartConferenceButton() {
 
     const { t } = useTranslation();
+
+    const { showSnackbar } = useSnackbar();
+
+    const {meeting, nameHasChanged } = useContext(ConferenceContext) as MeetingContext;
 
     const {
         clientEnv: {
@@ -36,15 +41,48 @@ export default function StartConferenceButton({ meeting }: Props) {
         },
     } = useAuth();
 
-    const handleJoinMeeting = () => {
-        const url = new URL(NEXT_PUBLIC_JITSI_LINK + '/' + meeting?.id + '#config.localSubject=" "');
+    async function saveConference(meeting: Meeting) {
+        const { error } = await updateMeeting(
+            {
+                type: meeting.type,
+                name: meeting.name,
+                info: meeting.info,
+                start_time: meeting.start_time,
+                end_time: meeting.end_time,
+                recurrence: meeting.recurrence,
+                password: meeting.password,
+                lobby_enabled: meeting.lobby_enabled,
+            },
+            meeting.id);
+        if (error) {
+            showSnackbar({
+                message: error.message,
+                type: 'error',
+            });
+            return;
+        }
+    }
+
+    async function openJitsiConference(meeting: Meeting) {
+        const conferenceName = meeting.name ? encodeURI(meeting.name) : ' ';
+        const url = new URL(NEXT_PUBLIC_JITSI_LINK + '/' + meeting?.id + `#config.localSubject="${conferenceName}"`);
         if (url) {
             const w = window.open(url, '_blank');
             if (isPopupBlocked(w)) {
                 window.location.href = url.href;
             }
         }
-    };
+    }
+
+    const handleJoinMeeting = useCallback( async () => {
+
+        if (nameHasChanged) {
+            await saveConference(meeting as Meeting);
+        }
+
+        await  openJitsiConference(meeting as Meeting);
+
+    }, [meeting, nameHasChanged]);
 
     return (
         <Button
