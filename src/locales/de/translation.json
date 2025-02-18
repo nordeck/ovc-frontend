@@ -21,7 +21,7 @@
   "conference": {
     "start_label": "Konferenz starten",
     "info_text": "Das Sofortmeeting kann nur von Ihnen gestartet werden. Am Sofortmeeting kann jeder mit Hilfe der Meetinginformationen teilnehmen.",
-    "name_label": "Konferenzname"
+    "name_label": "Konferenzname (optional)"
   },
   "common": {
     "cancel": "Abbrechen",

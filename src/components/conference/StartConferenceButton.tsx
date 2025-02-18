@@ -64,7 +64,7 @@ export default function StartConferenceButton() {
     }
 
     async function openJitsiConference(meeting: Meeting) {
-        const conferenceName = meeting.name ? meeting.name : ' ';
+        const conferenceName = meeting.name ? encodeURI(meeting.name) : ' ';
         const url = new URL(NEXT_PUBLIC_JITSI_LINK + '/' + meeting?.id + `#config.localSubject="${conferenceName}"`);
         if (url) {
             const w = window.open(url, '_blank');

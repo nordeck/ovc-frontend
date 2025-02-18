@@ -50,7 +50,7 @@ export function makeMeetingText(t: TFunction, meeting: Meeting, jitsiDomain: str
         ? DateTime.fromISO(start_time).toFormat(FORMAT)
         : undefined,
       end: end_time ? DateTime.fromISO(end_time).toFormat(FORMAT) : undefined,
-      meetingLink: `${jitsiDomain}${id}`,
+      meetingLink: `${jitsiDomain}/${id}`,
       phone_number,
       sip_jibri_link,
       conference_pin,
