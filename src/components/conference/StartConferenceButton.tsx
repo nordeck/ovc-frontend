@@ -20,7 +20,7 @@ import { Button } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import {isPopupBlocked} from "@/lib/isPopupBlocked";
 import {useAuth} from "@/contexts/Auth/AuthProvider";
-import {ConferenceContext} from "@/components/conference/ConferenceActions";
+import {ConferenceContext, MeetingContext} from "@/components/conference/ConferenceActions";
 import {useCallback, useContext} from "react";
 import {updateMeeting} from "@/utils/api/requests/meeting.api";
 import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
@@ -33,7 +33,7 @@ export default function StartConferenceButton() {
 
     const { showSnackbar } = useSnackbar();
 
-    const { meeting, nameHasChanged } = useContext(ConferenceContext);
+    const {meeting, nameHasChanged } = useContext(ConferenceContext) as MeetingContext;
 
     const {
         clientEnv: {
@@ -77,10 +77,10 @@ export default function StartConferenceButton() {
     const handleJoinMeeting = useCallback( async () => {
 
         if (nameHasChanged) {
-            await saveConference(meeting);
+            await saveConference(meeting as Meeting);
         }
 
-        await  openJitsiConference(meeting);
+        await  openJitsiConference(meeting as Meeting);
 
     }, [meeting, nameHasChanged]);
 

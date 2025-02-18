@@ -19,21 +19,21 @@
 import {TextField} from "@mui/material";
 import {t} from "i18next";
 import {ChangeEvent, useContext, useState} from "react";
-import {ConferenceContext} from "@/components/conference/ConferenceActions";
+import {ConferenceContext, MeetingContext} from "@/components/conference/ConferenceActions";
 import {stripHtml} from "string-strip-html"
 import {removeSpecialChars} from "@/lib/removeSpecialChars";
 
 
 function ConferenceNameField() {
 
-    const { meeting, setNameHasChanged } = useContext(ConferenceContext);
+    const { meeting, setNameHasChanged } = useContext(ConferenceContext) as MeetingContext;
     const [value, setValue] = useState('');
 
     function updateName(evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const result = stripHtml(evt.target.value).result;
         const cleanText = removeSpecialChars(result);
         setValue(cleanText);
-        meeting.name = cleanText;
+        if (meeting !== undefined) meeting.name = cleanText;
         setNameHasChanged(true);
     }
 

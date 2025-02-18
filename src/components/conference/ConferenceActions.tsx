@@ -26,9 +26,17 @@ import ConferenceNameField from "@/components/conference/ConferenceNameField";
 import StartConferenceButton from "@/components/conference/StartConferenceButton";
 import CopyConferenceInfoButton from "@/components/conference/CopyConferenceInfoButton";
 import VideoTestButton from "@/components/conference/VideoTestButton";
+import {Meeting} from "@/types/types";
 import "../../../i18n"
 
-export const ConferenceContext = createContext({});
+export type MeetingContext = {
+    meeting: Meeting | undefined,
+    nameHasChanged: boolean,
+    setNameHasChanged: (val: boolean) => void,
+}
+
+
+export const ConferenceContext = createContext<MeetingContext | null>(null);
 
 function ConferenceActions() {
 
