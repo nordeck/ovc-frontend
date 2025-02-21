@@ -17,6 +17,8 @@ export const COLORS = {
   STAR_COMMAND_BLUE_14: '#0077B614',
   WHITE: '#FFFFFF',
   ZINC: '#BEC5C9',
+  LILA: '#571EFA',
+  LILA_DARK: '#3A13A9FF',
 };
 
 export const STANDART_HEIGHT = 56;

@@ -60,21 +60,15 @@ function CopyConferenceInfoButton({ meeting }: Props) {
     };
 
     return (
-        <Stack>
-            <Button id={meeting?.id}
-                    variant="contained"
-                    sx={{
-                        alignSelf: 'center',
-                        minWidth: '20%',
-                        width: '100%',
-                        backgroundColor: 'slategrey'}}
-                    onClick={handleCopy}
-                    disabled={meeting === undefined}>
-                <span className={'text-sm'}>
-                    {t('copy.buttonTooltip', 'copy.buttonTooltip')}
-                </span>
-            </Button>
-        </Stack>
+        <Button id={meeting?.id}
+                variant="contained"
+                sx={{ backgroundColor: 'dimgrey' }}
+                onClick={handleCopy}
+                >
+            <span className={'text-sm'}>
+                {t('copy.buttonTooltip', 'copy.buttonTooltip')}
+            </span>
+        </Button>
     )
 }
 

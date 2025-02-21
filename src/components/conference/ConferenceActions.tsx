@@ -71,24 +71,18 @@ function ConferenceActions() {
     return (
         <>
             <ConferenceContext.Provider value={{ meeting, nameHasChanged, setNameHasChanged }}>
-                <Card variant="outlined" className={'w-2/3 p-4'}>
-                    <Stack className="space-y-6 w-full items-center justify-center">
-                        <Stack className="w-1/3">
-                            <ConferenceNameField />
-                        </Stack>
-                        <Stack className="w-1/3">
-                            <StartConferenceButton />
-                        </Stack>
-                        <Stack className="w-1/4">
-                            <CopyConferenceInfoButton meeting={meeting} />
-                        </Stack>
+                <Stack className="space-y-6 w-full items-center justify-center m-4">
+                    <Stack className="w-2/5 items-center justify-center" direction={'row'} spacing={1}>
+                        <ConferenceNameField />
+                        <StartConferenceButton />
+                    </Stack>
+                    <Stack className="w-2/5 items-center justify-center" direction={'row'} spacing={2}>
+                        <CopyConferenceInfoButton meeting={meeting} />
                         { isVideoTestEnabled &&
-                            <Stack className="w-1/4">
                                 <VideoTestButton />
-                            </Stack>
                         }
                     </Stack>
-                </Card>
+                </Stack>
             </ConferenceContext.Provider>
         </>
     )

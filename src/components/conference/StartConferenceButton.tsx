@@ -25,6 +25,7 @@ import {useCallback, useContext} from "react";
 import {updateMeeting} from "@/utils/api/requests/meeting.api";
 import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
 import {Meeting} from "@/types/types";
+import {borderRadius} from "@mui/system";
 
 
 export default function StartConferenceButton() {
@@ -88,12 +89,7 @@ export default function StartConferenceButton() {
         <Button
             variant="contained"
             onClick={handleJoinMeeting}
-            disabled={meeting === undefined}
-            sx={{
-                width: '100%',
-                minWidth: '20%',
-                height:'60px',
-            }}
+            className={'w-2/5'}
         >
             {t('conference.start_label', 'conference.start_label')}
         </Button>

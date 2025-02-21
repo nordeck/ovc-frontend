@@ -38,7 +38,7 @@ function ConferenceNameField() {
     }
 
     return (
-        <TextField size="small"
+        <TextField className={"bg-white w-4/5"}
                    value={value}
                    label={t('conference.name_label', 'conference.name_label')}
                    onChange={ (e) => updateName(e)}

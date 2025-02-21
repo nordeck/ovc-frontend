@@ -40,12 +40,7 @@ export default function VideoTestButton() {
             <Button
                 variant="contained"
                 onClick={handleClick}
-                sx={{
-                    alignSelf: 'center',
-                    minWidth: '20%',
-                    width: '100%',
-                    backgroundColor: 'slategrey',
-                }}
+                sx={{ backgroundColor: 'dimgrey', }}
             >
                 <span className={'text-sm'}>
                     {t('videoTest.buttonLabel', 'videoTest.buttonLabel')}

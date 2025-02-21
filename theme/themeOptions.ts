@@ -50,20 +50,26 @@ export const themeOptions: ThemeOptions = {
         MuiButton: {
             styleOverrides: {
                 outlined: {
-                    color: COLORS.INDIGO_DUE,
-                    borderColor: COLORS.INDIGO_DUE,
+                    color: COLORS.LILA,
+                    borderColor: COLORS.LILA,
                     ':hover': {
-                        backgroundColor: COLORS.STAR_COMMAND_BLUE_14,
-                        borderColor: COLORS.INDIGO_DUE,
+                        backgroundColor: COLORS.LILA_DARK,
+                        borderColor: COLORS.LILA_DARK,
+                    },
+                },
+                contained: {
+                    backgroundColor: COLORS.LILA,
+                    ':hover': {
+                        backgroundColor: COLORS.LILA_DARK,
                     },
                 },
             },
             defaultProps: {
                 style: {
-                    paddingLeft: 24,
-                    paddingRight: 24,
+                    paddingLeft: 16,
+                    paddingRight: 16,
                     borderWidth: 2,
-                    borderRadius: 100,
+                    borderRadius: 10,
                     fontSize: '1rem',
                     lineHeight: '1rem',
                     fontWeight: 700,
@@ -97,6 +103,11 @@ export const themeOptions: ThemeOptions = {
                         fontWeight: 700,
                         color: COLORS.EERIE_BLACK,
                     },
+                },
+            },
+            defaultProps: {
+                style: {
+                    borderRadius: 10,
                 },
             },
         },
@@ -179,6 +190,11 @@ export const themeOptions: ThemeOptions = {
                     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                         borderWidth: 3,
                     },
+                },
+            },
+            defaultProps: {
+                style: {
+                    borderRadius: 10,
                 },
             },
         },

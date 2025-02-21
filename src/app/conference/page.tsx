@@ -27,9 +27,9 @@ export default function Conference() {
     return (
         <>
             <NavigationTopBar />
-            <main className="flex flex-col h-screen max-h-[80vh] items-center justify-center m-4">
+            <section className="flex flex-col h-screen max-h-[50vh] items-center justify-center main-section">
                 <ConferenceActions />
-            </main>
+            </section>
         </>
     );
 }
