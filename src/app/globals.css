@@ -30,8 +30,3 @@ body {
   background-image: url(../../public/images/welcome-background.jpg) !important;
   background-size: cover;
 }
-
-.start-meeting-bt {
-  border-radius: 0px 10px 10px 0px;
-  margin-left: -5px
-}

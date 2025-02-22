@@ -22,6 +22,7 @@ import {ChangeEvent, useContext, useState} from "react";
 import {ConferenceContext, MeetingContext} from "@/components/conference/ConferenceActions";
 import {stripHtml} from "string-strip-html"
 import {removeSpecialChars} from "@/lib/removeSpecialChars";
+import {COLORS} from "@/utils/constants/theme.constants";
 
 
 function ConferenceNameField() {
@@ -38,7 +39,20 @@ function ConferenceNameField() {
     }
 
     return (
-        <TextField className={"bg-white w-4/5"}
+        <TextField variant={'filled'} className={"bg-white w-4/5"}
+                   sx={{
+                       borderRadius: '10px 0px 0px 10px !important',
+                       '& .MuiOutlinedInput-root': {
+                           '& fieldset': {
+                               borderColor: COLORS.WHITE,
+                           },
+                       },
+                   }}
+                   slotProps={{
+                       input: {
+                           disableUnderline: true,
+                       },
+                   }}
                    value={value}
                    label={t('conference.name_label', 'conference.name_label')}
                    onChange={ (e) => updateName(e)}

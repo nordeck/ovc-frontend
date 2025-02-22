@@ -21,12 +21,13 @@ import {useGetOrCreateInstantMeeting} from "@/components/conference/useGetOrCrea
 import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
 import {useAuth} from "@/contexts/Auth/AuthProvider";
 import {isVarTrue} from "@/lib/isVarTrue";
-import {Card, Stack} from "@mui/material";
+import {Stack, Typography} from "@mui/material";
 import ConferenceNameField from "@/components/conference/ConferenceNameField";
 import StartConferenceButton from "@/components/conference/StartConferenceButton";
 import CopyConferenceInfoButton from "@/components/conference/CopyConferenceInfoButton";
 import VideoTestButton from "@/components/conference/VideoTestButton";
 import {Meeting} from "@/types/types";
+import {t} from "i18next";
 import "../../../i18n"
 
 export type MeetingContext = {
@@ -45,7 +46,6 @@ function ConferenceActions() {
             NEXT_PUBLIC_VIDEO_TEST_ENABLED,
         },
     } = useAuth();
-
 
     const isVideoTestEnabled = isVarTrue(NEXT_PUBLIC_VIDEO_TEST_ENABLED);
 
@@ -71,8 +71,29 @@ function ConferenceActions() {
     return (
         <>
             <ConferenceContext.Provider value={{ meeting, nameHasChanged, setNameHasChanged }}>
+
+                <Typography className={'text-white'}
+                    sx={{
+                        fontSize: 30,
+                        fontWeight: 'bold',
+                        marginTop: 2,
+                        marginBottom: 6,
+                    }}
+                >
+                    {t('main.title', 'main.title')}
+                </Typography>
+
+                <Typography className={'text-white'}
+                            sx={{
+                                fontSize: 17,
+                                fontWeight: '700',
+                            }}
+                >
+                    {t('main.nameRequest', 'main.nameRequest')}
+                </Typography>
+
                 <Stack className="space-y-6 w-full items-center justify-center m-4">
-                    <Stack className="w-2/5 items-center justify-center" direction={'row'} spacing={1}>
+                    <Stack className="w-2/5 items-center justify-center" direction={'row'} spacing={0}>
                         <ConferenceNameField />
                         <StartConferenceButton />
                     </Stack>

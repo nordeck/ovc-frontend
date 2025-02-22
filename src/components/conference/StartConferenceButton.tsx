@@ -88,6 +88,9 @@ export default function StartConferenceButton() {
     return (
         <Button
             variant="contained"
+            sx={{
+                borderRadius: '0px 10px 10px 0px !important',
+            }}
             onClick={handleJoinMeeting}
             className={'w-2/5'}
         >

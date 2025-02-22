@@ -62,7 +62,12 @@ function CopyConferenceInfoButton({ meeting }: Props) {
     return (
         <Button id={meeting?.id}
                 variant="contained"
-                sx={{ backgroundColor: 'dimgrey' }}
+                sx={{
+                    backgroundColor: 'dimgrey',
+                    '&:hover': {
+                        backgroundColor: '#4d4d4d',
+                    }
+                }}
                 onClick={handleCopy}
                 >
             <span className={'text-sm'}>

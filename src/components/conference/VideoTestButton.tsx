@@ -40,7 +40,12 @@ export default function VideoTestButton() {
             <Button
                 variant="contained"
                 onClick={handleClick}
-                sx={{ backgroundColor: 'dimgrey', }}
+                sx={{
+                    backgroundColor: 'dimgrey',
+                    '&:hover': {
+                        backgroundColor: '#4d4d4d',
+                    }
+                }}
             >
                 <span className={'text-sm'}>
                     {t('videoTest.buttonLabel', 'videoTest.buttonLabel')}

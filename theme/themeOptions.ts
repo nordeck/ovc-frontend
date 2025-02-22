@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { COLORS, STANDART_HEIGHT } from '@/utils/constants/theme.constants';
+import { COLORS, STANDARD_HEIGHT } from '@/utils/constants/theme.constants';
 import { type ThemeOptions } from '@mui/material';
 import { Open_Sans } from 'next/font/google';
 
@@ -74,7 +74,7 @@ export const themeOptions: ThemeOptions = {
                     lineHeight: '1rem',
                     fontWeight: 700,
                     textTransform: 'none',
-                    height: STANDART_HEIGHT,
+                    height: STANDARD_HEIGHT,
                 },
             },
         },
@@ -90,14 +90,6 @@ export const themeOptions: ThemeOptions = {
         MuiTextField: {
             styleOverrides: {
                 root: {
-                    '& .MuiSvgIcon-root': {
-                        color: COLORS.EERIE_BLACK,
-                    },
-                    '& .MuiOutlinedInput-root': {
-                        '& fieldset': {
-                            borderColor: COLORS.ALUMINIUM,
-                        },
-                    },
                     '& .MuiInputBase-input': {
                         fontSize: '1rem',
                         fontWeight: 700,
@@ -114,14 +106,14 @@ export const themeOptions: ThemeOptions = {
         MuiSelect: {
             defaultProps: {
                 style: {
-                    height: STANDART_HEIGHT,
+                    height: STANDARD_HEIGHT,
                 },
             },
         },
         MuiAlert: {
             styleOverrides: {
                 standardInfo: {
-                    backgroundColor: COLORS.STAR_COMMAND_BLUE,
+                    backgroundColor: COLORS.WHITE,
                 },
                 standardError: {
                     backgroundColor: COLORS.PERSIAN_RED,
@@ -174,7 +166,7 @@ export const themeOptions: ThemeOptions = {
                     },
                     '&.Mui-expanded': {
                         margin: 0,
-                        backgroundColor: COLORS.STAR_COMMAND_BLUE,
+                        backgroundColor: COLORS.WHITE,
                         borderRadius: '16px 16px 0 0',
                         color: COLORS.WHITE,
                     },
@@ -205,14 +197,14 @@ export const themeOptions: ThemeOptions = {
         },
         primary: {
             dark: COLORS.INDIGO_DUE,
-            main: COLORS.STAR_COMMAND_BLUE,
-            light: COLORS.ANTI_FLASH_WHITE,
+            main: COLORS.SMOKY_BLACK,
+            light: COLORS.WHITE,
         },
         info: {
-            main: COLORS.BEAU_BLUE,
+            main: COLORS.INDIGO_DUE,
         },
         secondary: {
-            main: COLORS.ANTI_FLASH_WHITE,
+            main: COLORS.WHITE,
         },
         text: {
             primary: COLORS.SMOKY_BLACK,
