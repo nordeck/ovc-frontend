@@ -16,10 +16,8 @@
 
 'use client'
 
-import {createContext, useEffect, useState} from 'react'
-import {useGetOrCreateInstantMeeting} from "@/components/conference/useGetOrCreateInstantMeeting";
-import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
-import {useAuth} from "@/contexts/Auth/AuthProvider";
+import {createContext, useState} from 'react'
+import {useAuth, useAuthLoggedUser} from "@/contexts/Auth/AuthProvider";
 import {isVarTrue} from "@/lib/isVarTrue";
 import {Stack, Typography} from "@mui/material";
 import ConferenceNameField from "@/components/conference/ConferenceNameField";
@@ -31,13 +29,14 @@ import {t} from "i18next";
 import "../../../i18n"
 
 export type MeetingContext = {
+    loggedUser: string,
     meeting: Meeting | undefined,
-    nameHasChanged: boolean,
-    setNameHasChanged: (val: boolean) => void,
+    setMeeting: (meeting: Meeting | undefined) => void,
+    meetingName: string,
+    setMeetingName: (meetingName: string) => void,
 }
 
-
-export const ConferenceContext = createContext<MeetingContext | null>(null);
+export const ConferenceContext= createContext<MeetingContext | null>(null);
 
 function ConferenceActions() {
 
@@ -48,29 +47,20 @@ function ConferenceActions() {
     } = useAuth();
 
     const isVideoTestEnabled = isVarTrue(NEXT_PUBLIC_VIDEO_TEST_ENABLED);
+    const { email: loggedUser} = useAuthLoggedUser();
 
-    const { meeting, isLoading, error, getOrCreateMeeting } = useGetOrCreateInstantMeeting();
-
-    const [ nameHasChanged, setNameHasChanged ] = useState(false);
-
-    const { showSnackbar } = useSnackbar();
-
-    useEffect(() => {
-        if (meeting === undefined) {
-            getOrCreateMeeting();
-        }
-        if (!isLoading && error) {
-            showSnackbar({
-                message: error.message,
-                type: 'error',
-            });
-        }
-    }, [isLoading, error, showSnackbar]);
-
+    const [ meetingName, setMeetingName ] = useState('');
+    const [ meeting, setMeeting ] = useState<Meeting | undefined>();
 
     return (
         <>
-            <ConferenceContext.Provider value={{ meeting, nameHasChanged, setNameHasChanged }}>
+            <ConferenceContext.Provider value={{
+                loggedUser,
+                meeting,
+                setMeeting,
+                meetingName,
+                setMeetingName
+            }}>
 
                 <Typography className={'text-white'}
                     sx={{
@@ -98,7 +88,7 @@ function ConferenceActions() {
                         <StartConferenceButton />
                     </Stack>
                     <Stack className="w-2/5 items-center justify-center" direction={'row'} spacing={2}>
-                        <CopyConferenceInfoButton meeting={meeting} />
+                        <CopyConferenceInfoButton />
                         { isVideoTestEnabled &&
                                 <VideoTestButton />
                         }

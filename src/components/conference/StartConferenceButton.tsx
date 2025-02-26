@@ -16,16 +16,14 @@
 
 'use client'
 
-import { Button } from "@mui/material";
-import { useTranslation } from "react-i18next";
+import {Button} from "@mui/material";
+import {useTranslation} from "react-i18next";
 import {isPopupBlocked} from "@/lib/isPopupBlocked";
 import {useAuth} from "@/contexts/Auth/AuthProvider";
 import {ConferenceContext, MeetingContext} from "@/components/conference/ConferenceActions";
-import {useCallback, useContext} from "react";
-import {updateMeeting} from "@/utils/api/requests/meeting.api";
 import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
-import {Meeting} from "@/types/types";
-import {borderRadius} from "@mui/system";
+import createInstantMeeting from "@/components/conference/createInstantMeeting";
+import {useContext} from "react";
 
 
 export default function StartConferenceButton() {
@@ -34,7 +32,7 @@ export default function StartConferenceButton() {
 
     const { showSnackbar } = useSnackbar();
 
-    const {meeting, nameHasChanged } = useContext(ConferenceContext) as MeetingContext;
+    const { loggedUser, meeting, setMeeting, meetingName, setMeetingName } = useContext(ConferenceContext) as MeetingContext;
 
     const {
         clientEnv: {
@@ -42,30 +40,24 @@ export default function StartConferenceButton() {
         },
     } = useAuth();
 
-    async function saveConference(meeting: Meeting) {
-        const { error } = await updateMeeting(
-            {
-                type: meeting.type,
-                name: meeting.name,
-                info: meeting.info,
-                start_time: meeting.start_time,
-                end_time: meeting.end_time,
-                recurrence: meeting.recurrence,
-                password: meeting.password,
-                lobby_enabled: meeting.lobby_enabled,
-            },
-            meeting.id);
-        if (error) {
-            showSnackbar({
-                message: error.message,
-                type: 'error',
-            });
-            return;
+    const handleJoinMeeting = async () => {
+        if (meeting === undefined || meeting === null) {
+            const { meeting, error } = await createInstantMeeting(loggedUser, meetingName, true)
+            setMeeting(meeting);
+            if (error) {
+                showSnackbar({
+                    message: error.message,
+                    type: 'error',
+                });
+            }
         }
-    }
+        await openJitsiConference();
+        setMeeting(undefined);
+        setMeetingName('');
+    };
 
-    async function openJitsiConference(meeting: Meeting) {
-        const conferenceName = meeting.name ? encodeURI(meeting.name) : ' ';
+    async function openJitsiConference() {
+        const conferenceName = meetingName ? encodeURI(meetingName) : ' ';
         const url = new URL(NEXT_PUBLIC_JITSI_LINK + '/' + meeting?.id + `#config.localSubject="${conferenceName}"`);
         if (url) {
             const w = window.open(url, '_blank');
@@ -74,16 +66,6 @@ export default function StartConferenceButton() {
             }
         }
     }
-
-    const handleJoinMeeting = useCallback( async () => {
-
-        if (nameHasChanged) {
-            await saveConference(meeting as Meeting);
-        }
-
-        await  openJitsiConference(meeting as Meeting);
-
-    }, [meeting, nameHasChanged]);
 
     return (
         <Button
