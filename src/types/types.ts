@@ -30,6 +30,8 @@ export type Meeting = {
   conference_pin: string;
   phone_number: string;
   sip_jibri_link: string;
+  started: boolean;
+  started_at?: string;
   participants: ParticipantNew[];
 };
 
