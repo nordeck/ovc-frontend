@@ -110,33 +110,6 @@ export const themeOptions: ThemeOptions = {
                 },
             },
         },
-        MuiAlert: {
-            styleOverrides: {
-                standardInfo: {
-                    backgroundColor: COLORS.WHITE,
-                },
-                standardError: {
-                    backgroundColor: COLORS.PERSIAN_RED,
-                },
-                standardSuccess: {
-                    backgroundColor: COLORS.OFFICE_GREEN,
-                },
-                standardWarning: {
-                    backgroundColor: COLORS.MANGO_TANGO,
-                },
-                root: {
-                    borderRadius: 8,
-                    color: COLORS.WHITE,
-                    fontWeight: 700,
-                    fontSize: 14,
-                    '& .MuiAlert-icon': {
-                        color: COLORS.WHITE,
-                        fontSize: 20,
-                        padding: '8px 0',
-                    },
-                },
-            },
-        },
         MuiAccordion: {
             styleOverrides: {
                 root: {
