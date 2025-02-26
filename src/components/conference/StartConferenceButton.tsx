@@ -24,6 +24,8 @@ import {ConferenceContext, MeetingContext} from "@/components/conference/Confere
 import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
 import createInstantMeeting from "@/components/conference/createInstantMeeting";
 import {useContext} from "react";
+import {updateMeeting} from "@/utils/api/requests/meeting.api";
+import {MeetingType} from "@/types/types";
 
 
 export default function StartConferenceButton() {
@@ -50,6 +52,21 @@ export default function StartConferenceButton() {
                     type: 'error',
                 });
             }
+        }
+        else {
+            // set existing meeting as started and save it
+            meeting.started = true;
+            meeting.started_at = new Date().toISOString();
+            await updateMeeting(
+            {
+                        type: meeting.type,
+                        name: meetingName,
+                        password: meeting.password,
+                        lobby_enabled: meeting.lobby_enabled,
+                        started: true,
+                        started_at: new Date().toISOString()
+                    },
+                    meeting.id);
         }
         await openJitsiConference();
         setMeeting(undefined);
