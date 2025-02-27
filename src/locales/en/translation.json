@@ -11,15 +11,8 @@
     "buttonTooltip": "Copy information",
     "buttonLabel": "Copy information"
   },
-  "meetingCard": {
-    "meetingStart": "Start conference",
-    "meOrganiserTooltip": "I am the organiser",
-    "open": "Open",
-    "protectedByPasswordTooltip": "Protected by password",
-    "seriesTooltip": "Series meeting"
-  },
   "conference": {
-    "start_label": "Start conference",
+    "start_label": "Start meeting",
     "info_text": "The instant conference can only be started by you. Anyone can join the conference using the conference information.",
     "name_label": "Conference name (optional)"
   },
@@ -30,5 +23,9 @@
   "videoTest": {
     "buttonLabel": "Audio & video test",
     "buttonTooltip": "Audio & video test"
+  },
+  "main": {
+    "title": "Video Conference",
+    "nameRequest": "Please enter a name for the conference (optional)"
   }
 }

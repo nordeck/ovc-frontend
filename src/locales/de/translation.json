@@ -11,15 +11,8 @@
     "buttonTooltip": "Zugangsdaten kopieren",
     "buttonLabel": "Zugangsdaten kopieren"
   },
-  "meetingCard": {
-    "meetingStart": "Meeting starten",
-    "meOrganiserTooltip": "Ich bin Organisator",
-    "open": "Öffne",
-    "protectedByPasswordTooltip": "Meeting durch Passwort geschützt",
-    "seriesTooltip": "Serientermin"
-  },
   "conference": {
-    "start_label": "Konferenz starten",
+    "start_label": "Meeting starten",
     "info_text": "Das Sofortmeeting kann nur von Ihnen gestartet werden. Am Sofortmeeting kann jeder mit Hilfe der Meetinginformationen teilnehmen.",
     "name_label": "Konferenzname (optional)"
   },
@@ -30,5 +23,9 @@
   "videoTest": {
     "buttonLabel": "Audio & Video testen",
     "buttonTooltip": "Audio & Video testen"
+  },
+  "main": {
+    "title": "Videokonferenz",
+    "nameRequest": "Bitte Namen für die Videokonferenz eingeben (optional)"
   }
 }

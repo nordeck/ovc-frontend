@@ -16,15 +16,15 @@
 
 'use client'
 
-import { Button } from "@mui/material";
-import { useTranslation } from "react-i18next";
+import {Button} from "@mui/material";
+import {useTranslation} from "react-i18next";
 import {isPopupBlocked} from "@/lib/isPopupBlocked";
 import {useAuth} from "@/contexts/Auth/AuthProvider";
 import {ConferenceContext, MeetingContext} from "@/components/conference/ConferenceActions";
-import {useCallback, useContext} from "react";
-import {updateMeeting} from "@/utils/api/requests/meeting.api";
 import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
-import {Meeting} from "@/types/types";
+import createInstantMeeting from "@/components/conference/createInstantMeeting";
+import {useContext} from "react";
+import {updateMeeting} from "@/utils/api/requests/meeting.api";
 
 
 export default function StartConferenceButton() {
@@ -33,7 +33,7 @@ export default function StartConferenceButton() {
 
     const { showSnackbar } = useSnackbar();
 
-    const {meeting, nameHasChanged } = useContext(ConferenceContext) as MeetingContext;
+    const { loggedUser, meeting, setMeeting, meetingName, setMeetingName } = useContext(ConferenceContext) as MeetingContext;
 
     const {
         clientEnv: {
@@ -41,30 +41,37 @@ export default function StartConferenceButton() {
         },
     } = useAuth();
 
-    async function saveConference(meeting: Meeting) {
-        const { error } = await updateMeeting(
-            {
-                type: meeting.type,
-                name: meeting.name,
-                info: meeting.info,
-                start_time: meeting.start_time,
-                end_time: meeting.end_time,
-                recurrence: meeting.recurrence,
-                password: meeting.password,
-                lobby_enabled: meeting.lobby_enabled,
-            },
-            meeting.id);
-        if (error) {
-            showSnackbar({
-                message: error.message,
-                type: 'error',
-            });
-            return;
+    const handleJoinMeeting = async () => {
+        if (!meeting) {
+            const { meeting, error } = await createInstantMeeting(loggedUser, meetingName, true)
+            setMeeting(meeting);
+            if (error) {
+                showSnackbar({
+                    message: error.message,
+                    type: 'error',
+                });
+            }
         }
-    }
+        else {
+            // set existing meeting as started and save it
+            meeting.started_at = new Date().toISOString();
+            await updateMeeting(
+            {
+                        type: meeting.type,
+                        name: meetingName,
+                        password: meeting.password,
+                        lobby_enabled: meeting.lobby_enabled,
+                        started_at: meeting.started_at,
+                    },
+                    meeting.id);
+        }
+        await openJitsiConference();
+        setMeeting(undefined);
+        setMeetingName('');
+    };
 
-    async function openJitsiConference(meeting: Meeting) {
-        const conferenceName = meeting.name ? encodeURI(meeting.name) : ' ';
+    async function openJitsiConference() {
+        const conferenceName = meetingName ? encodeURIComponent(meetingName) : ' ';
         const url = new URL(NEXT_PUBLIC_JITSI_LINK + '/' + meeting?.id + `#config.localSubject="${conferenceName}"`);
         if (url) {
             const w = window.open(url, '_blank');
@@ -74,26 +81,14 @@ export default function StartConferenceButton() {
         }
     }
 
-    const handleJoinMeeting = useCallback( async () => {
-
-        if (nameHasChanged) {
-            await saveConference(meeting as Meeting);
-        }
-
-        await  openJitsiConference(meeting as Meeting);
-
-    }, [meeting, nameHasChanged]);
-
     return (
         <Button
             variant="contained"
-            onClick={handleJoinMeeting}
-            disabled={meeting === undefined}
             sx={{
-                width: '100%',
-                minWidth: '20%',
-                height:'60px',
+                borderRadius: '0px 10px 10px 0px !important',
             }}
+            onClick={handleJoinMeeting}
+            className={'w-2/5'}
         >
             {t('conference.start_label', 'conference.start_label')}
         </Button>

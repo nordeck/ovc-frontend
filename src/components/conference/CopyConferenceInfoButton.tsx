@@ -14,22 +14,23 @@
  * limitations under the License.
  */
 
-import {Meeting} from "@/types/types";
 import {makeMeetingText} from "@/components/conference/makeMeetingText";
 import {useTranslation} from "react-i18next";
 import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
 import {useAuth} from "@/contexts/Auth/AuthProvider";
-import {Button, Stack} from "@mui/material";
+import {Button} from "@mui/material";
+import {useContext} from "react";
+import {ConferenceContext, MeetingContext} from "@/components/conference/ConferenceActions";
+import createInstantMeeting from "@/components/conference/createInstantMeeting";
 
-interface Props {
-    meeting?: Meeting,
-}
-
-function CopyConferenceInfoButton({ meeting }: Props) {
+function CopyConferenceInfoButton() {
 
     const { t } = useTranslation();
 
     const { showSnackbar } = useSnackbar();
+
+    const { loggedUser, meeting, setMeeting, meetingName } = useContext(ConferenceContext) as MeetingContext;
+
 
     const {
         clientEnv: {
@@ -38,6 +39,19 @@ function CopyConferenceInfoButton({ meeting }: Props) {
     } = useAuth();
 
     const handleCopy = async () => {
+
+        if (!meeting) {
+            const { meeting, error } = await createInstantMeeting(loggedUser, meetingName, false);
+            setMeeting(meeting);
+
+            if (error) {
+                showSnackbar({
+                    message: error.message,
+                    type: 'error',
+                });
+                return;
+            }
+        }
 
         const { plain, html } = meeting ? makeMeetingText(t, meeting, NEXT_PUBLIC_JITSI_LINK) : { plain: '', html: '' };
 
@@ -55,26 +69,25 @@ function CopyConferenceInfoButton({ meeting }: Props) {
         showSnackbar({
             message: t('copy.clipboardSuccess', 'copy.clipboardSuccess'),
             autoHideDuration: 3000,
-            type: 'info',
+            type: 'success',
         });
     };
 
     return (
-        <Stack>
-            <Button id={meeting?.id}
-                    variant="contained"
-                    sx={{
-                        alignSelf: 'center',
-                        minWidth: '20%',
-                        width: '100%',
-                        backgroundColor: 'slategrey'}}
-                    onClick={handleCopy}
-                    disabled={meeting === undefined}>
-                <span className={'text-sm'}>
-                    {t('copy.buttonTooltip', 'copy.buttonTooltip')}
-                </span>
-            </Button>
-        </Stack>
+        <Button
+                variant="contained"
+                sx={{
+                    backgroundColor: 'dimgrey',
+                    '&:hover': {
+                        backgroundColor: '#4d4d4d',
+                    }
+                }}
+                onClick={handleCopy}
+                >
+            <span className={'text-sm'}>
+                {t('copy.buttonTooltip', 'copy.buttonTooltip')}
+            </span>
+        </Button>
     )
 }
 

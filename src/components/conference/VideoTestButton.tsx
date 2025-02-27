@@ -41,10 +41,10 @@ export default function VideoTestButton() {
                 variant="contained"
                 onClick={handleClick}
                 sx={{
-                    alignSelf: 'center',
-                    minWidth: '20%',
-                    width: '100%',
-                    backgroundColor: 'slategrey',
+                    backgroundColor: 'dimgrey',
+                    '&:hover': {
+                        backgroundColor: '#4d4d4d',
+                    }
                 }}
             >
                 <span className={'text-sm'}>

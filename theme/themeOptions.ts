@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { COLORS, STANDART_HEIGHT } from '@/utils/constants/theme.constants';
+import { COLORS, STANDARD_HEIGHT } from '@/utils/constants/theme.constants';
 import { type ThemeOptions } from '@mui/material';
 import { Open_Sans } from 'next/font/google';
 
@@ -50,25 +50,31 @@ export const themeOptions: ThemeOptions = {
         MuiButton: {
             styleOverrides: {
                 outlined: {
-                    color: COLORS.INDIGO_DUE,
-                    borderColor: COLORS.INDIGO_DUE,
+                    color: COLORS.LILA,
+                    borderColor: COLORS.LILA,
                     ':hover': {
-                        backgroundColor: COLORS.STAR_COMMAND_BLUE_14,
-                        borderColor: COLORS.INDIGO_DUE,
+                        backgroundColor: COLORS.LILA_DARK,
+                        borderColor: COLORS.LILA_DARK,
+                    },
+                },
+                contained: {
+                    backgroundColor: COLORS.LILA,
+                    ':hover': {
+                        backgroundColor: COLORS.LILA_DARK,
                     },
                 },
             },
             defaultProps: {
                 style: {
-                    paddingLeft: 24,
-                    paddingRight: 24,
+                    paddingLeft: 16,
+                    paddingRight: 16,
                     borderWidth: 2,
-                    borderRadius: 100,
+                    borderRadius: 10,
                     fontSize: '1rem',
                     lineHeight: '1rem',
                     fontWeight: 700,
                     textTransform: 'none',
-                    height: STANDART_HEIGHT,
+                    height: STANDARD_HEIGHT,
                 },
             },
         },
@@ -84,14 +90,6 @@ export const themeOptions: ThemeOptions = {
         MuiTextField: {
             styleOverrides: {
                 root: {
-                    '& .MuiSvgIcon-root': {
-                        color: COLORS.EERIE_BLACK,
-                    },
-                    '& .MuiOutlinedInput-root': {
-                        '& fieldset': {
-                            borderColor: COLORS.ALUMINIUM,
-                        },
-                    },
                     '& .MuiInputBase-input': {
                         fontSize: '1rem',
                         fontWeight: 700,
@@ -99,38 +97,16 @@ export const themeOptions: ThemeOptions = {
                     },
                 },
             },
+            defaultProps: {
+                style: {
+                    borderRadius: 10,
+                },
+            },
         },
         MuiSelect: {
             defaultProps: {
                 style: {
-                    height: STANDART_HEIGHT,
-                },
-            },
-        },
-        MuiAlert: {
-            styleOverrides: {
-                standardInfo: {
-                    backgroundColor: COLORS.STAR_COMMAND_BLUE,
-                },
-                standardError: {
-                    backgroundColor: COLORS.PERSIAN_RED,
-                },
-                standardSuccess: {
-                    backgroundColor: COLORS.OFFICE_GREEN,
-                },
-                standardWarning: {
-                    backgroundColor: COLORS.MANGO_TANGO,
-                },
-                root: {
-                    borderRadius: 8,
-                    color: COLORS.WHITE,
-                    fontWeight: 700,
-                    fontSize: 14,
-                    '& .MuiAlert-icon': {
-                        color: COLORS.WHITE,
-                        fontSize: 20,
-                        padding: '8px 0',
-                    },
+                    height: STANDARD_HEIGHT,
                 },
             },
         },
@@ -163,7 +139,7 @@ export const themeOptions: ThemeOptions = {
                     },
                     '&.Mui-expanded': {
                         margin: 0,
-                        backgroundColor: COLORS.STAR_COMMAND_BLUE,
+                        backgroundColor: COLORS.WHITE,
                         borderRadius: '16px 16px 0 0',
                         color: COLORS.WHITE,
                     },
@@ -181,6 +157,11 @@ export const themeOptions: ThemeOptions = {
                     },
                 },
             },
+            defaultProps: {
+                style: {
+                    borderRadius: 10,
+                },
+            },
         },
     },
     palette: {
@@ -189,14 +170,14 @@ export const themeOptions: ThemeOptions = {
         },
         primary: {
             dark: COLORS.INDIGO_DUE,
-            main: COLORS.STAR_COMMAND_BLUE,
-            light: COLORS.ANTI_FLASH_WHITE,
+            main: COLORS.SMOKY_BLACK,
+            light: COLORS.WHITE,
         },
         info: {
-            main: COLORS.BEAU_BLUE,
+            main: COLORS.INDIGO_DUE,
         },
         secondary: {
-            main: COLORS.ANTI_FLASH_WHITE,
+            main: COLORS.WHITE,
         },
         text: {
             primary: COLORS.SMOKY_BLACK,
