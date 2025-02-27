@@ -1,5 +1,18 @@
 # Changelog
 
+# [1.6.0](https://github.com/nordeck/ovc-frontend/compare/v1.5.0...v1.6.0) (2025-02-27)
+
+
+### Bug Fixes
+
+* adjusted layout details ([d0e1d8e](https://github.com/nordeck/ovc-frontend/commit/d0e1d8e2aed37e14b47cc2b85a584581218dfd8c))
+* first layout changes ([d52a5b8](https://github.com/nordeck/ovc-frontend/commit/d52a5b87e71a96dfd8325b547999d29009b2b939))
+
+
+### Features
+
+* ZO-189 - ovc page with design like meet.opendesk.family ([c430135](https://github.com/nordeck/ovc-frontend/commit/c4301352a46f330ed1272c3ec715af0951ca98b7))
+
 # [1.5.0](https://github.com/nordeck/ovc-frontend/compare/v1.4.4...v1.5.0) (2025-02-18)
 
 
