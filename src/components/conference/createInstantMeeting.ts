@@ -29,7 +29,6 @@ export default async function createInstantMeeting(loggedUser: string, name: str
         name: name,
         password: '',
         lobby_enabled: false,
-        started: started,
         started_at: started ? new Date().toISOString() : undefined,
         participants: [
             {

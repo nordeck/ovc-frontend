@@ -75,7 +75,6 @@ export type CreateMeeting = Pick<
   | 'recurrence'
   | 'password'
   | 'lobby_enabled'
-  | 'started'
   | 'started_at'
   | 'participants'
 >;

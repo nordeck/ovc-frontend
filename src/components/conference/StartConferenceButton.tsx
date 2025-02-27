@@ -25,7 +25,6 @@ import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
 import createInstantMeeting from "@/components/conference/createInstantMeeting";
 import {useContext} from "react";
 import {updateMeeting} from "@/utils/api/requests/meeting.api";
-import {MeetingType} from "@/types/types";
 
 
 export default function StartConferenceButton() {
@@ -43,7 +42,7 @@ export default function StartConferenceButton() {
     } = useAuth();
 
     const handleJoinMeeting = async () => {
-        if (meeting === undefined || meeting === null) {
+        if (!meeting) {
             const { meeting, error } = await createInstantMeeting(loggedUser, meetingName, true)
             setMeeting(meeting);
             if (error) {
@@ -55,7 +54,6 @@ export default function StartConferenceButton() {
         }
         else {
             // set existing meeting as started and save it
-            meeting.started = true;
             meeting.started_at = new Date().toISOString();
             await updateMeeting(
             {
@@ -63,8 +61,7 @@ export default function StartConferenceButton() {
                         name: meetingName,
                         password: meeting.password,
                         lobby_enabled: meeting.lobby_enabled,
-                        started: true,
-                        started_at: new Date().toISOString()
+                        started_at: meeting.started_at,
                     },
                     meeting.id);
         }
@@ -74,7 +71,7 @@ export default function StartConferenceButton() {
     };
 
     async function openJitsiConference() {
-        const conferenceName = meetingName ? encodeURI(meetingName) : ' ';
+        const conferenceName = meetingName ? encodeURIComponent(meetingName) : ' ';
         const url = new URL(NEXT_PUBLIC_JITSI_LINK + '/' + meeting?.id + `#config.localSubject="${conferenceName}"`);
         if (url) {
             const w = window.open(url, '_blank');

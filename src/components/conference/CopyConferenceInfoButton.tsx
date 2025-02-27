@@ -40,7 +40,7 @@ function CopyConferenceInfoButton() {
 
     const handleCopy = async () => {
 
-        if (meeting === undefined || meeting === null) {
+        if (!meeting) {
             const { meeting, error } = await createInstantMeeting(loggedUser, meetingName, false);
             setMeeting(meeting);
 
