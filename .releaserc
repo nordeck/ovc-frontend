@@ -5,24 +5,10 @@
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
-    [
-      "@semantic-release/changelog",
-      {
-        "changelogFile": "CHANGELOG.md",
-        "changelogTitle": "# Changelog"
-      }
-    ],
     "@semantic-release/npm",
     ["@semantic-release/exec", {
       "publishCmd": "echo RELEASE_VERSION=${nextRelease.version} >> $GITHUB_OUTPUT"
     }],
-    [
-      "@semantic-release/git",
-      {
-        "message":
-          "chore(release): ${nextRelease.version} \n\n${nextRelease.notes}"
-      }
-    ],
     [
       "@semantic-release/github",
       {
