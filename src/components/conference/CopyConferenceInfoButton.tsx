@@ -20,8 +20,8 @@ import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
 import {useAuth} from "@/contexts/Auth/AuthProvider";
 import {Button} from "@mui/material";
 import {useContext} from "react";
-import {ConferenceContext, MeetingContext} from "@/components/conference/ConferenceActions";
 import createInstantMeeting from "@/components/conference/createInstantMeeting";
+import {ConferenceAppProps, ConferenceContext} from "@/contexts/Conference/ConferenceAppContext";
 
 function CopyConferenceInfoButton() {
 
@@ -29,8 +29,7 @@ function CopyConferenceInfoButton() {
 
     const { showSnackbar } = useSnackbar();
 
-    const { loggedUser, meeting, setMeeting, meetingName } = useContext(ConferenceContext) as MeetingContext;
-
+    const { loggedUser, meeting, setMeeting, meetingName } = useContext(ConferenceContext) as ConferenceAppProps;
 
     const {
         clientEnv: {

@@ -37,9 +37,6 @@ export default async function createInstantMeeting(loggedUser: string, name: str
             },
         ],
     });
-
-    console.log('Created meeting: ' + JSON.stringify(meeting));
-
     return {
         meeting,
         error,
