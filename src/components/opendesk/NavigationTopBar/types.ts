@@ -15,7 +15,7 @@
  */
 
 export interface Navigation {
-    categories: Category[];
+    categories?: Category[];
 }
 
 export interface Category {
