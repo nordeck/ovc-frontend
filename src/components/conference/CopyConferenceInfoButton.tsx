@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-import {makeMeetingText} from "@/components/conference/makeMeetingText";
 import {useTranslation} from "react-i18next";
 import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
-import {useAuth} from "@/contexts/Auth/AuthProvider";
 import {Button} from "@mui/material";
 import {useContext} from "react";
-import createInstantMeeting from "@/components/conference/createInstantMeeting";
+import createInstantMeeting from "@/lib/createInstantMeeting";
 import {ConferenceAppProps, ConferenceContext} from "@/contexts/Conference/ConferenceAppContext";
+import {copyConferenceInfo} from "@/lib/copyConferenceInfo";
+import {Meeting} from "@/types/types";
 
 function CopyConferenceInfoButton() {
 
@@ -29,13 +29,7 @@ function CopyConferenceInfoButton() {
 
     const { showSnackbar } = useSnackbar();
 
-    const { loggedUser, meeting, setMeeting, meetingName } = useContext(ConferenceContext) as ConferenceAppProps;
-
-    const {
-        clientEnv: {
-            NEXT_PUBLIC_JITSI_LINK,
-        },
-    } = useAuth();
+    const { loggedUser, meeting, setMeeting, meetingName, jitsiLink } = useContext(ConferenceContext) as ConferenceAppProps;
 
     const handleCopy = async () => {
 
@@ -52,24 +46,7 @@ function CopyConferenceInfoButton() {
             }
         }
 
-        const { plain, html } = meeting ? makeMeetingText(t, meeting, NEXT_PUBLIC_JITSI_LINK) : { plain: '', html: '' };
-
-        const textBlob = new Blob([plain], { type: 'text/plain', });
-
-        const htmlBlob = new Blob([html], { type: 'text/html', });
-
-        const clipboardItem = new ClipboardItem({
-            [textBlob.type]: textBlob,
-            [htmlBlob.type]: htmlBlob,
-        });
-
-        await navigator.clipboard.write([clipboardItem]);
-
-        showSnackbar({
-            message: t('copy.clipboardSuccess', 'copy.clipboardSuccess'),
-            autoHideDuration: 3000,
-            type: 'success',
-        });
+        await copyConferenceInfo(meeting as Meeting, jitsiLink, showSnackbar);
     };
 
     return (

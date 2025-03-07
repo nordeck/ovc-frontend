@@ -16,15 +16,19 @@
 
 'use client'
 
-import {DataGrid, GridColDef} from '@mui/x-data-grid';
+import {DataGrid, GridActionsCellItem, GridColDef, GridRowId} from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import {COLORS} from "@/utils/constants/theme.constants";
 import {t} from "i18next";
 import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
 import {useEvent} from "@/components/conference/useEvent";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {Meeting, MeetingType, ResponseError} from "@/types/types";
-import {getMeetings} from "@/utils/api/requests/meeting.api";
+import {deleteMeeting, getMeetings} from "@/utils/api/requests/meeting.api";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import {ConferenceAppProps, ConferenceContext} from "@/contexts/Conference/ConferenceAppContext";
+import {copyConferenceInfo} from "@/lib/copyConferenceInfo";
 
 const ConferenceHistory = () => {
 
@@ -35,9 +39,25 @@ const ConferenceHistory = () => {
     const [data, setData] = useState<Meeting[] | undefined>();
     const [error, setError] = useState<ResponseError>();
 
+    const { jitsiLink } = useContext(ConferenceContext) as ConferenceAppProps;
+
+    const handleDelete = (id: GridRowId) => async () => {
+        console.log(`delete conference with id [${id}]`);
+        await deleteMeeting(id.toString());
+        setReload(!reload);
+    };
+
+    const handleCopyInfo = (id: GridRowId) => async () => {
+
+        const conference = data?.filter((meeting) => meeting.id === id).at(0);
+
+        if (conference) {
+            await copyConferenceInfo(conference, jitsiLink, showSnackbar);
+        }
+    };
+
     useEvent("onReloadHistory", () => {
         setReload(!reload);
-        console.log('Received [onReloadHistory] event.')
     });
 
     /* load user meetings from api */
@@ -60,7 +80,7 @@ const ConferenceHistory = () => {
         }
         setIsLoading(true);
         fetchData();
-    }, [reload]);
+    }, [reload])
 
     if (error) {
         showSnackbar({
@@ -75,12 +95,39 @@ const ConferenceHistory = () => {
             width: 300,
             editable: false,
             cellClassName: 'default-grid-cell',
+            valueFormatter: value => new Date(value).toLocaleString(),
         },
         {
             field: 'name',
             width: 150,
             editable: false,
             cellClassName: 'default-grid-cell',
+        },
+        {
+            field: 'actions',
+            type: 'actions',
+            headerName: 'Actions',
+            width: 100,
+            editable: false,
+            cellClassName: 'default-grid-cell',
+            getActions: ({ id }) => {
+                return [
+                    <GridActionsCellItem
+                        key={id}
+                        icon={<ContentCopyIcon />}
+                        label="Delete"
+                        onClick={handleCopyInfo(id)}
+                        color="inherit"
+                    />,
+                    <GridActionsCellItem
+                        key={id}
+                        icon={<DeleteIcon />}
+                        label="Delete"
+                        onClick={handleDelete(id)}
+                        color="inherit"
+                    />,
+                ];
+            }
         }
     ];
 
@@ -107,29 +154,18 @@ const ConferenceHistory = () => {
                     columnHeaderHeight={0}
                     hideFooter={true}
                     loading={isLoading}
+                    getRowId={(row) => row.id}
                     slots={{
                         columnHeaders: () => null,
                     }}
                     sx={{
                         border: 0,
                         color: COLORS.CADET,
-                        '& .MuiDataGrid-filler': {
-                            border: 0,
-                            display: 'none'
-                        },
-                        '& .MuiDataGrid-cellEmpty': {
-                            border: 0
-                        },
                         '& .default-grid-cell': {
                             fontWeight: '700',
                             fontSize: 13,
                             borderTop: 0,
                         },
-                        '& .MuiDataGrid-overlay': {
-                            fontSize: 14,
-                            textAlign: 'center',
-                            padding: 4,
-                        }
                     }}
                 />
             </Box>

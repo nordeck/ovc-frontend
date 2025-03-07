@@ -20,7 +20,7 @@ import {Button} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import {isPopupBlocked} from "@/lib/isPopupBlocked";
 import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
-import createInstantMeeting from "@/components/conference/createInstantMeeting";
+import createInstantMeeting from "@/lib/createInstantMeeting";
 import {useContext} from "react";
 import {updateMeeting} from "@/utils/api/requests/meeting.api";
 import {ConferenceAppProps, ConferenceContext} from "@/contexts/Conference/ConferenceAppContext";
@@ -50,20 +50,20 @@ export default function StartConferenceButton() {
         }
         else {
             // set existing meeting as started and save it
-            meeting.started_at = new Date().toISOString();
+            const startedAt = new Date().toISOString()
+            meeting.started_at = startedAt;
             await updateMeeting(
             {
                         type: meeting.type,
                         name: meetingName,
                         password: meeting.password,
                         lobby_enabled: meeting.lobby_enabled,
-                        started_at: meeting.started_at,
+                        started_at: startedAt,
                     },
                     meeting.id);
         }
         dispatch('');
-        console.log('dispatched [onReloadHistory] event')
-        //await openJitsiConference();
+        await openJitsiConference();
         setMeeting(undefined);
         setMeetingName('');
     };

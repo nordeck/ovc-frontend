@@ -11,8 +11,8 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@mui/icons-material": "^6.4.0",
-    "@mui/material": "^6.4.0",
+    "@mui/icons-material": "^6.4.7",
+    "@mui/material": "^6.4.7",
     "@mui/material-nextjs": "^6.4.3",
     "@mui/x-data-grid": "^7.27.2",
     "@mui/x-date-pickers": "^7.23.6",
@@ -31,7 +31,6 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-i18next": "^15.4.0",
-    "string-strip-html": "^13.4.8",
     "uuid": "^11.0.5"
   },
   "devDependencies": {

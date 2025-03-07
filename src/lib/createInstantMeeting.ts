@@ -17,7 +17,6 @@
 import {Meeting, MeetingType, ResponseError, Role} from "@/types/types";
 import {createMeeting} from "@/utils/api/requests/meeting.api";
 
-
 export default async function createInstantMeeting(loggedUser: string, name: string, started: boolean):
     Promise<{
         meeting: Meeting | undefined;
@@ -32,7 +31,7 @@ export default async function createInstantMeeting(loggedUser: string, name: str
         started_at: started ? new Date().toISOString() : undefined,
         participants: [
             {
-                role: Role.Moderator,
+                role: Role.Organizer,
                 email: loggedUser,
             },
         ],
