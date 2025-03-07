@@ -17,6 +17,7 @@
 import { COLORS, STANDARD_HEIGHT } from '@/utils/constants/theme.constants';
 import { type ThemeOptions } from '@mui/material';
 import { Open_Sans } from 'next/font/google';
+import type {} from '@mui/x-data-grid/themeAugmentation';
 
 const openSans = Open_Sans({
     weight: ['300', '400', '500', '600', '700'],
@@ -160,6 +161,30 @@ export const themeOptions: ThemeOptions = {
             defaultProps: {
                 style: {
                     borderRadius: 10,
+                },
+            },
+        },
+        MuiDataGrid: {
+            styleOverrides: {
+                root: {
+                    '& .MuiDataGrid-cell:focus': {
+                        outline: 'none'
+                    },
+                    '& .MuiDataGrid-cell:focus-within': {
+                        outline: 'none'
+                    },
+                    '& .MuiDataGrid-filler': {
+                        border: 0,
+                        display: 'none'
+                    },
+                    '& .MuiDataGrid-cellEmpty': {
+                        border: 0
+                    },
+                    '& .MuiDataGrid-overlay': {
+                        fontSize: 13,
+                        textAlign: 'center',
+                        padding: 4,
+                    }
                 },
             },
         },

@@ -17,6 +17,8 @@
 import { Metadata } from "next";
 import NavigationTopBar from "@/components/opendesk/NavigationTopBar/NavigationTopBar";
 import ConferenceActions from "@/components/conference/ConferenceActions";
+import ConferenceHistory from "@/components/conference/ConferenceHistory";
+import {ConferenceAppContext} from "@/contexts/Conference/ConferenceAppContext";
 
 export const metadata: Metadata = {
     title: 'openDesk Video Conference',
@@ -27,9 +29,10 @@ export default function Conference() {
     return (
         <>
             <NavigationTopBar />
-            <section className="flex flex-col h-screen max-h-[50vh] items-center justify-center main-section">
+            <ConferenceAppContext>
                 <ConferenceActions />
-            </section>
+                <ConferenceHistory />
+            </ConferenceAppContext>
         </>
     );
 }

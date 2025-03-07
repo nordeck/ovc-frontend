@@ -16,59 +16,31 @@
 
 'use client'
 
-import {createContext, useState} from 'react'
-import {useAuth, useAuthLoggedUser} from "@/contexts/Auth/AuthProvider";
-import {isVarTrue} from "@/lib/isVarTrue";
 import {Stack, Typography} from "@mui/material";
 import ConferenceNameField from "@/components/conference/ConferenceNameField";
 import StartConferenceButton from "@/components/conference/StartConferenceButton";
 import CopyConferenceInfoButton from "@/components/conference/CopyConferenceInfoButton";
 import VideoTestButton from "@/components/conference/VideoTestButton";
-import {Meeting} from "@/types/types";
 import {t} from "i18next";
 import "../../../i18n"
+import {useContext} from "react";
+import {ConferenceAppProps, ConferenceContext} from "@/contexts/Conference/ConferenceAppContext";
 
-export type MeetingContext = {
-    loggedUser: string,
-    meeting: Meeting | undefined,
-    setMeeting: (meeting: Meeting | undefined) => void,
-    meetingName: string,
-    setMeetingName: (meetingName: string) => void,
-}
-
-export const ConferenceContext= createContext<MeetingContext | null>(null);
 
 function ConferenceActions() {
 
-    const {
-        clientEnv: {
-            NEXT_PUBLIC_VIDEO_TEST_ENABLED,
-        },
-    } = useAuth();
-
-    const isVideoTestEnabled = isVarTrue(NEXT_PUBLIC_VIDEO_TEST_ENABLED);
-    const { email: loggedUser} = useAuthLoggedUser();
-
-    const [ meetingName, setMeetingName ] = useState('');
-    const [ meeting, setMeeting ] = useState<Meeting | undefined>();
+    const { isVideoTestEnabled } = useContext(ConferenceContext)  as ConferenceAppProps;
 
     return (
         <>
-            <ConferenceContext.Provider value={{
-                loggedUser,
-                meeting,
-                setMeeting,
-                meetingName,
-                setMeetingName
-            }}>
-
+            <section className="flex flex-col h-screen max-h-[48vh] items-center justify-center main-section">
                 <Typography className={'text-white'}
-                    sx={{
-                        fontSize: 30,
-                        fontWeight: 'bold',
-                        marginTop: 2,
-                        marginBottom: 6,
-                    }}
+                            sx={{
+                                fontSize: 40,
+                                fontWeight: '700',
+                                marginTop: 2,
+                                marginBottom: 4,
+                            }}
                 >
                     {t('main.title', 'main.title')}
                 </Typography>
@@ -84,19 +56,19 @@ function ConferenceActions() {
 
                 <Stack className="space-y-6 w-full items-center justify-center m-4">
                     <Stack className="w-2/5 items-center justify-center" direction={'row'} spacing={0}>
-                        <ConferenceNameField />
-                        <StartConferenceButton />
+                        <ConferenceNameField/>
+                        <StartConferenceButton/>
                     </Stack>
                     <Stack className="w-2/5 items-center justify-center" direction={'row'} spacing={2}>
-                        <CopyConferenceInfoButton />
-                        { isVideoTestEnabled &&
-                                <VideoTestButton />
+                        <CopyConferenceInfoButton/>
+                        {isVideoTestEnabled &&
+                            <VideoTestButton/>
                         }
                     </Stack>
                 </Stack>
-            </ConferenceContext.Provider>
+            </section>
         </>
-    )
+    );
 }
 
 export default ConferenceActions

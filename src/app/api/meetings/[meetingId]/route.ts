@@ -30,3 +30,16 @@ export async function PUT(
         },
     });
 }
+
+export async function DELETE(
+    request: NextRequest,
+    props: { params: Promise<{ meetingId: string }> },
+) {
+    const params = await props.params;
+    return fetchWithAuth({
+        relativeUrl: `api/v1.0/meetings/${params.meetingId}`,
+        requestInit: {
+            method: 'DELETE',
+        },
+    });
+}
