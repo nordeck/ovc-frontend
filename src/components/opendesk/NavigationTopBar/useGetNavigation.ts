@@ -16,12 +16,10 @@
 
 import {useEffect, useState} from "react";
 
-export default function useGetNavigation(environment: string, icsDomain: string) {
+export default function useGetNavigation(icsDomain: string) {
 
     const [ icsUrl, setIcsUrl ] = useState("");
     const [ json, setJson ] = useState({});
-
-    const isDevelopment = environment === "development";
 
     // Get the browser language.
     let lang = navigator.language || "de-DE";
@@ -29,7 +27,6 @@ export default function useGetNavigation(environment: string, icsDomain: string)
     if (lang === "en") lang = "en-US";
 
     useEffect(() => {
-        if (isDevelopment) return;
         const url = icsDomain + "/static/url-ics";
         try {
             fetch(url)
@@ -39,10 +36,9 @@ export default function useGetNavigation(environment: string, icsDomain: string)
         catch (error){
             console.log(error);
         }
-    })
+    }, [lang]);
 
     useEffect(() => {
-        if (isDevelopment) return;
         const url = `${icsUrl}/navigation.json?language=${lang}`;
         try {
             fetch(url, {
@@ -55,7 +51,7 @@ export default function useGetNavigation(environment: string, icsDomain: string)
         catch (error) {
             console.log(error);
         }
-    }, [icsUrl, isDevelopment, json, lang]);
+    }, [lang]);
 
     return json;
 }

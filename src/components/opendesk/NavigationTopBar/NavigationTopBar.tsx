@@ -26,20 +26,21 @@ import {useAuth} from "@/contexts/Auth/AuthProvider";
 import {CategoryEntry, Navigation} from "@/components/opendesk/NavigationTopBar/types";
 import useGetNavigation from "@/components/opendesk/NavigationTopBar/useGetNavigation";
 import jsonFile from './navigation.json';
+import {isVarTrue} from "@/lib/isVarTrue";
 
 export default function NavigationTopBar() {
 
     const {
         clientEnv: {
             NEXT_PUBLIC_ICS_DOMAIN,
-            NEXT_PUBLIC_PORTAL_DOMAIN,
+            NEXT_PUBLIC_NAVIGATION_FORCE_LOCAL_JSON,
         },
     } = useAuth();
 
-    const environment = process.env.NODE_ENV;
-    const loadedJson = useGetNavigation(environment, NEXT_PUBLIC_ICS_DOMAIN, NEXT_PUBLIC_PORTAL_DOMAIN);
-    const navigation: Navigation = (environment === 'development') ? jsonFile : loadedJson;
-
+    const loadedJson = useGetNavigation(NEXT_PUBLIC_ICS_DOMAIN);
+    const navigationLocalJson = isVarTrue(NEXT_PUBLIC_NAVIGATION_FORCE_LOCAL_JSON);
+    const navigation: Navigation = navigationLocalJson ? jsonFile : loadedJson;
+    const navigationIsEmpty = Object.keys(navigation).length === 0;
 
     const [ menuOpen, setMenuOpen ] = useState(false);
 
@@ -59,6 +60,7 @@ export default function NavigationTopBar() {
             <Button id={"opendeskMenuButton"} tabIndex={0} onClick={toggleMenu}
                     aria-label={"Toogle menu"} className={"bg-none border-none"}
                     data-collapse-toggle="opendeskMenu"
+                    style={ navigationIsEmpty ? { display: 'none' } : {} }
             >
                 <Image src={menuIcon} alt={'openDesk menu'} className={'align-center'} loading={"lazy"}/>
                 <div id="opendeskMenu"
