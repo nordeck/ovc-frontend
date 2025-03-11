@@ -16,7 +16,7 @@
 
 'use client'
 
-import {DataGrid, GridActionsCellItem, GridColDef, GridRowId} from '@mui/x-data-grid';
+import {DataGrid, GridActionsCellItem, GridColDef, GridEventListener, GridRowId} from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import {COLORS} from "@/utils/constants/theme.constants";
 import {t} from "i18next";
@@ -24,16 +24,16 @@ import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
 import {useEvent} from "@/components/conference/useEvent";
 import {useContext, useEffect, useState} from "react";
 import {Meeting, MeetingType, ResponseError} from "@/types/types";
-import {deleteMeeting, getMeetings} from "@/utils/api/requests/meeting.api";
+import {deleteMeeting, getMeetings, updateMeeting} from "@/utils/api/requests/meeting.api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import {ConferenceAppProps, ConferenceContext} from "@/contexts/Conference/ConferenceAppContext";
 import {copyConferenceInfo} from "@/lib/copyConferenceInfo";
+import {openJitsiConference} from "@/lib/openJitsiConference";
 
 const ConferenceHistory = () => {
 
     const {showSnackbar} = useSnackbar();
-
     const [reload, setReload] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState<Meeting[] | undefined>();
@@ -42,9 +42,25 @@ const ConferenceHistory = () => {
     const { jitsiLink } = useContext(ConferenceContext) as ConferenceAppProps;
 
     const handleDelete = (id: GridRowId) => async () => {
-        console.log(`delete conference with id [${id}]`);
         await deleteMeeting(id.toString());
         setReload(!reload);
+    };
+
+    const handleRowClick: GridEventListener<'rowClick'> = async (params) => {
+        const meeting = params.row;
+        const startedAt = new Date().toISOString();
+        meeting.started_at = startedAt;
+        await updateMeeting(
+            {
+                type: meeting.type,
+                name: meeting.name,
+                password: meeting.password,
+                lobby_enabled: meeting.lobby_enabled,
+                started_at: startedAt,
+            },
+            meeting.id);
+        setReload(!reload);
+        await openJitsiConference(meeting.id, meeting.name, jitsiLink);
     };
 
     const handleCopyInfo = (id: GridRowId) => async () => {
@@ -73,7 +89,8 @@ const ConferenceHistory = () => {
                 return;
             }
             if (meetings) {
-                const filtered = meetings.filter(meeting => meeting.started_at !== null);
+                const filtered: Meeting[] = meetings.filter(meeting => meeting.started_at !== null);
+                filtered.sort((a, b) => (a.started_at as string) > (b.started_at as string) ? -1 : 1)
                 setData(filtered);
             }
             setIsLoading(false);
@@ -167,6 +184,7 @@ const ConferenceHistory = () => {
                             borderTop: 0,
                         },
                     }}
+                    onRowClick={handleRowClick}
                 />
             </Box>
         </section>

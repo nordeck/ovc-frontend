@@ -18,7 +18,7 @@
 
 import {Button} from "@mui/material";
 import {useTranslation} from "react-i18next";
-import {isPopupBlocked} from "@/lib/isPopupBlocked";
+import {openJitsiConference} from "@/lib/openJitsiConference";
 import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
 import createInstantMeeting from "@/lib/createInstantMeeting";
 import {useContext} from "react";
@@ -63,21 +63,10 @@ export default function StartConferenceButton() {
                     meeting.id);
         }
         dispatch('');
-        await openJitsiConference();
+        await openJitsiConference(meeting?.id as string, meetingName, jitsiLink);
         setMeeting(undefined);
         setMeetingName('');
     };
-
-    async function openJitsiConference() {
-        const conferenceName = meetingName ? encodeURIComponent(meetingName) : ' ';
-        const url = new URL(jitsiLink + '/' + meeting?.id + `#config.localSubject="${conferenceName}"`);
-        if (url) {
-            const w = window.open(url, '_blank');
-            if (isPopupBlocked(w)) {
-                window.location.href = url.href;
-            }
-        }
-    }
 
     return (
         <Button
