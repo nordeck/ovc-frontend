@@ -44,9 +44,9 @@ function CopyConferenceInfoButton() {
                 });
                 return;
             }
-        }
 
-        await copyConferenceInfo(meeting as Meeting, jitsiLink, showSnackbar);
+            await copyConferenceInfo(meeting as Meeting, jitsiLink, showSnackbar);
+        }
     };
 
     return (
