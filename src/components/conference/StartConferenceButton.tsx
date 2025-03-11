@@ -19,12 +19,12 @@
 import {Button} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import {isPopupBlocked} from "@/lib/isPopupBlocked";
-import {useAuth} from "@/contexts/Auth/AuthProvider";
-import {ConferenceContext, MeetingContext} from "@/components/conference/ConferenceActions";
 import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
-import createInstantMeeting from "@/components/conference/createInstantMeeting";
+import createInstantMeeting from "@/lib/createInstantMeeting";
 import {useContext} from "react";
 import {updateMeeting} from "@/utils/api/requests/meeting.api";
+import {ConferenceAppProps, ConferenceContext} from "@/contexts/Conference/ConferenceAppContext";
+import {useEvent} from "@/components/conference/useEvent";
 
 
 export default function StartConferenceButton() {
@@ -33,13 +33,9 @@ export default function StartConferenceButton() {
 
     const { showSnackbar } = useSnackbar();
 
-    const { loggedUser, meeting, setMeeting, meetingName, setMeetingName } = useContext(ConferenceContext) as MeetingContext;
+    const { loggedUser, jitsiLink, meeting, setMeeting, meetingName, setMeetingName } = useContext(ConferenceContext) as ConferenceAppProps;
 
-    const {
-        clientEnv: {
-            NEXT_PUBLIC_JITSI_LINK,
-        },
-    } = useAuth();
+    const { dispatch } = useEvent('onReloadHistory');
 
     const handleJoinMeeting = async () => {
         if (!meeting) {
@@ -54,17 +50,19 @@ export default function StartConferenceButton() {
         }
         else {
             // set existing meeting as started and save it
-            meeting.started_at = new Date().toISOString();
+            const startedAt = new Date().toISOString()
+            meeting.started_at = startedAt;
             await updateMeeting(
             {
                         type: meeting.type,
                         name: meetingName,
                         password: meeting.password,
                         lobby_enabled: meeting.lobby_enabled,
-                        started_at: meeting.started_at,
+                        started_at: startedAt,
                     },
                     meeting.id);
         }
+        dispatch('');
         await openJitsiConference();
         setMeeting(undefined);
         setMeetingName('');
@@ -72,7 +70,7 @@ export default function StartConferenceButton() {
 
     async function openJitsiConference() {
         const conferenceName = meetingName ? encodeURIComponent(meetingName) : ' ';
-        const url = new URL(NEXT_PUBLIC_JITSI_LINK + '/' + meeting?.id + `#config.localSubject="${conferenceName}"`);
+        const url = new URL(jitsiLink + '/' + meeting?.id + `#config.localSubject="${conferenceName}"`);
         if (url) {
             const w = window.open(url, '_blank');
             if (isPopupBlocked(w)) {

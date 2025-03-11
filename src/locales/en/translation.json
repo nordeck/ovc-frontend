@@ -14,7 +14,8 @@
   "conference": {
     "start_label": "Start meeting",
     "info_text": "The instant conference can only be started by you. Anyone can join the conference using the conference information.",
-    "name_label": "Conference name (optional)"
+    "name_label": "Conference name (optional)",
+    "empty_list_text": "Your recent list is empty. \nMeetings you've held will be displayed here."
   },
   "common": {
     "cancel": "cancel",
