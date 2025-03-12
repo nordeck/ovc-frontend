@@ -23,27 +23,24 @@ import domainIcon from '../../../../public/icons/opendesk-domain.svg';
 import NavigationMenuItem from "@/components/opendesk/NavigationTopBar/NavigationMenuItem";
 import React, { useState } from "react";
 import {useAuth} from "@/contexts/Auth/AuthProvider";
-import {CategoryEntry} from "@/components/opendesk/NavigationTopBar/types";
-import useNavigationJson from "@/components/opendesk/NavigationTopBar/useNavigationJson";
-
+import {CategoryEntry, Navigation} from "@/components/opendesk/NavigationTopBar/types";
+import useGetNavigation from "@/components/opendesk/NavigationTopBar/useGetNavigation";
+import jsonFile from './navigation.json';
+import {isVarTrue} from "@/lib/isVarTrue";
 
 export default function NavigationTopBar() {
 
     const {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        user: isAuth,
         clientEnv: {
             NEXT_PUBLIC_ICS_DOMAIN,
-            NEXT_PUBLIC_PORTAL_DOMAIN,
+            NEXT_PUBLIC_NAVIGATION_FORCE_LOCAL_JSON,
         },
     } = useAuth();
 
-    const navigation = useNavigationJson();
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const ICS_DOMAIN: string = NEXT_PUBLIC_ICS_DOMAIN;          //"https://ics.nightly.opendesk.qa"
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const PORTAL_DOMAIN: string = NEXT_PUBLIC_PORTAL_DOMAIN;    //"https://portal.nightly.opendesk.qa"
+    const loadedJson = useGetNavigation(NEXT_PUBLIC_ICS_DOMAIN);
+    const navigationLocalJson = isVarTrue(NEXT_PUBLIC_NAVIGATION_FORCE_LOCAL_JSON);
+    const navigation: Navigation = navigationLocalJson ? jsonFile : loadedJson;
+    const navigationIsEmpty = Object.keys(navigation).length === 0;
 
     const [ menuOpen, setMenuOpen ] = useState(false);
 
@@ -63,6 +60,7 @@ export default function NavigationTopBar() {
             <Button id={"opendeskMenuButton"} tabIndex={0} onClick={toggleMenu}
                     aria-label={"Toogle menu"} className={"bg-none border-none"}
                     data-collapse-toggle="opendeskMenu"
+                    style={ navigationIsEmpty ? { display: 'none' } : {} }
             >
                 <Image src={menuIcon} alt={'openDesk menu'} className={'align-center'} loading={"lazy"}/>
                 <div id="opendeskMenu"
@@ -70,7 +68,7 @@ export default function NavigationTopBar() {
                 >
                     {
                         // loop over categories
-                        navigation.categories.map((category, key) => {
+                        navigation.categories?.map((category, key) => {
                             return (
                                 <div className="text-xs font-bold tracking-wider pt-4 pr-16 pb-2 pl-2" key={key}>
                                     { category.display_name }
