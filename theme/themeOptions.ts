@@ -170,6 +170,9 @@ export const themeOptions: ThemeOptions = {
                     '& .MuiDataGrid-cell:focus': {
                         outline: 'none'
                     },
+                    '& .MuiDataGrid-cell:hover': {
+                        cursor: 'pointer'
+                    },
                     '& .MuiDataGrid-cell:focus-within': {
                         outline: 'none'
                     },
@@ -184,7 +187,7 @@ export const themeOptions: ThemeOptions = {
                         fontSize: 13,
                         textAlign: 'center',
                         padding: 4,
-                    }
+                    },
                 },
             },
         },
