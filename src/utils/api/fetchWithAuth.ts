@@ -35,7 +35,10 @@ export async function fetchWithAuth({
 
   const token = session?.access_token;
 
-  const fetchUrl = `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/${relativeUrl}`;
+  const varName = 'NEXT_PUBLIC_BACKEND_BASE_URL';
+  const baseUrl = process.env[varName]; // so it's not inlined during build
+
+  const fetchUrl = `${baseUrl}/${relativeUrl}`;
   let response;
 
   try {
