@@ -30,6 +30,7 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import {ConferenceAppProps, ConferenceContext} from "@/contexts/Conference/ConferenceAppContext";
 import {copyConferenceInfo} from "@/lib/copyConferenceInfo";
 import {openJitsiConference} from "@/lib/openJitsiConference";
+import Tooltip from '@mui/material/Tooltip/Tooltip';
 
 const ConferenceHistory = () => {
 
@@ -109,14 +110,15 @@ const ConferenceHistory = () => {
     const columns: GridColDef[] = [
         {
             field: 'started_at',
-            width: 300,
+            width: 200,
             editable: false,
             cellClassName: 'default-grid-cell',
             valueFormatter: value => new Date(value).toLocaleString(),
         },
         {
             field: 'name',
-            width: 150,
+            minWidth: 150,
+            flex: 1,
             editable: false,
             cellClassName: 'default-grid-cell',
         },
@@ -131,15 +133,23 @@ const ConferenceHistory = () => {
                 return [
                     <GridActionsCellItem
                         key={id}
-                        icon={<ContentCopyIcon />}
-                        label="Delete"
+                        icon={
+                            <Tooltip  title={t("copy.meetingInfoCopy")} >
+                                <ContentCopyIcon />
+                            </Tooltip>
+                        }
+                        label={t("copy.meetingInfoCopy")}
                         onClick={handleCopyInfo(id)}
                         color="inherit"
                     />,
                     <GridActionsCellItem
                         key={id}
-                        icon={<DeleteIcon />}
-                        label="Delete"
+                        icon={
+                            <Tooltip  title={t("common.delete")} >
+                                <DeleteIcon />
+                            </Tooltip>
+                        }
+                        label={t("common.delete")}
                         onClick={handleDelete(id)}
                         color="inherit"
                     />,
@@ -149,9 +159,9 @@ const ConferenceHistory = () => {
     ];
 
     return (
-        <section className="flex flex-col items-center justify-center">
+        <section className="flex flex-col items-center justify-center ">
             <Box
-                className={'mt-4'}
+                className={'mt-4 min-w-[550px]'}
                 sx={{
                     height: 270,
                     width: '40%',

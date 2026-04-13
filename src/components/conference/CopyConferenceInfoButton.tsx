@@ -22,6 +22,7 @@ import createInstantMeeting from "@/lib/createInstantMeeting";
 import {ConferenceAppProps, ConferenceContext} from "@/contexts/Conference/ConferenceAppContext";
 import {copyConferenceInfo} from "@/lib/copyConferenceInfo";
 import {Meeting} from "@/types/types";
+import {useEvent} from "./useEvent";
 
 function CopyConferenceInfoButton() {
 
@@ -29,24 +30,24 @@ function CopyConferenceInfoButton() {
 
     const { showSnackbar } = useSnackbar();
 
-    const { loggedUser, meeting, setMeeting, meetingName, jitsiLink } = useContext(ConferenceContext) as ConferenceAppProps;
+    const { loggedUser, setMeeting, meetingName, jitsiLink } = useContext(ConferenceContext) as ConferenceAppProps;
+
+    const { dispatch:reloadHistory } = useEvent('onReloadHistory');
 
     const handleCopy = async () => {
+        const { meeting, error } = await createInstantMeeting(loggedUser, meetingName, true);
+        setMeeting(meeting);
 
-        if (!meeting) {
-            const { meeting, error } = await createInstantMeeting(loggedUser, meetingName, false);
-            setMeeting(meeting);
-
-            if (error) {
-                showSnackbar({
-                    message: error.message,
-                    type: 'error',
-                });
-                return;
-            }
-
-            await copyConferenceInfo(meeting as Meeting, jitsiLink, showSnackbar);
+        if (error) {
+            showSnackbar({
+                message: error.message,
+                type: 'error',
+            });
+            return;
         }
+
+        await copyConferenceInfo(meeting as Meeting, jitsiLink, showSnackbar);
+        reloadHistory('');
     };
 
     return (

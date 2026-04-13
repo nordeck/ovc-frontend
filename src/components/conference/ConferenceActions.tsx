@@ -33,7 +33,7 @@ function ConferenceActions() {
 
     return (
         <>
-            <section className="flex flex-col h-screen max-h-[48vh] items-center justify-center main-section">
+            <section className="flex flex-col   items-center justify-center main-section">
                 <Typography className={'text-white'}
                             sx={{
                                 fontSize: 40,
@@ -45,16 +45,17 @@ function ConferenceActions() {
                     {t('main.title', 'main.title')}
                 </Typography>
 
-                <Typography className={'text-white'}
-                            sx={{
-                                fontSize: 17,
-                                fontWeight: '700',
-                            }}
-                >
-                    {t('main.nameRequest', 'main.nameRequest')}
-                </Typography>
-
                 <Stack className="space-y-6 w-full items-center justify-center m-4">
+                    <Stack className="w-2/5 items-center justify-center" direction={'row'} spacing={0}>
+                        <Typography className={'text-white'}
+                                    sx={{
+                                        fontSize: 17,
+                                        fontWeight: '700',
+                                    }}
+                        >
+                            {t('main.nameRequest', 'main.nameRequest')}
+                        </Typography>
+                    </Stack>
                     <Stack className="w-2/5 items-center justify-center" direction={'row'} spacing={0}>
                         <ConferenceNameField/>
                         <StartConferenceButton/>
