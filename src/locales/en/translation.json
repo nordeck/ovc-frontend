@@ -5,11 +5,11 @@
     "baseMeetingInformation_static": "{{owner_id}} has invited you to a room.</br></br>\n\n<b>Title</b>: {{name}}</br></br>\n\nTo participate please use the following room link: <a href=\"{{meetingLink}}\">{{meetingLink}}</a></br></br>\n\n",
     "meetingInfoCopy": "Copy meeting information",
     "meetingInformation": "$t(copy.baseMeetingInformation, {\"context\": \"{{baseMeetingInformationContext}}\"})$t(copy.phoneInfo)",
-    "phoneInfo": "To <b>participate by telephone</b> please use the following dial-in number: <b>{{phone_number}}</b></br>\nConference ID: <b>{{conference_pin}}</b>",
+    "phoneInfo": "To <b>participate by telephone</b> please use the following dial-in number: <b>{{phone_number}}</b></br>\nConference PIN: <b>{{conference_pin}}</b>",
     "roomkit": "To <b>participate with a Cisco Roomkit</b> please use the following Cisco Roomkit (Video) link: <b>{{sip_jibri_link}}</b></br>\nConference ID: <b>{{conference_pin}}</b>",
     "clipboardSuccess": "Copied to clipboard",
-    "buttonTooltip": "Copy information",
-    "buttonLabel": "Copy information"
+    "buttonTooltip": "Create Jitsi Meeting and copy information into Clipboard",
+    "buttonLabel": "Create Jitsi Meeting and copy information into Clipboard"
   },
   "conference": {
     "start_label": "Start meeting",
@@ -19,7 +19,8 @@
   },
   "common": {
     "cancel": "cancel",
-    "close": "close"
+    "close": "close",
+    "delete": "Delete"
   },
   "videoTest": {
     "buttonLabel": "Audio & video test",
@@ -27,6 +28,6 @@
   },
   "main": {
     "title": "Video Conference",
-    "nameRequest": "Please enter a name for the conference (optional)"
+    "nameRequest": "You can start a meeting immediately by entering a name and click on start meeting button. Or you can create a meeting and share the meeting information with other participants by copying the meeting information into Mail, calendar invitation, etc."
   }
 }

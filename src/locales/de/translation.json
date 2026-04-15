@@ -5,11 +5,11 @@
     "baseMeetingInformation_static": "{{owner_id}} hat Sie zu einem Raum eingeladen.</br></br>\n\n<b>Titel</b>: {{name}}</br></br>\n\nZur Teilnahme verwenden Sie bitte den folgenden Raum Link: <a href=\"{{meetingLink}}\">{{meetingLink}}</a></br></br>\n\n",
     "meetingInfoCopy": "Meetinginformationen kopieren",
     "meetingInformation": "$t(copy.baseMeetingInformation, {\"context\": \"{{baseMeetingInformationContext}}\"})$t(copy.phoneInfo)",
-    "phoneInfo": "Zur <b>Teilnahme über das Telefon</b> verwenden Sie bitte den folgende Einwahlnummer: <b>{{phone_number}}</b></br>\nKonferenz ID: <b>{{conference_pin}}</b>",
+    "phoneInfo": "Zur <b>Teilnahme über das Telefon</b> verwenden Sie bitte den folgende Einwahlnummer: <b>{{phone_number}}</b></br>\nKonferenz PIN: <b>{{conference_pin}}</b>",
     "roomkit": "Zur <b>Teilnahme mit einem Cisco Roomkit</b> verwenden Sie bitte den folgenden Cisco Roomkit (Video) Link: <b>{{sip_jibri_link}}</b></br>\nKonferenz ID: <b>{{conference_pin}}</b>",
     "clipboardSuccess": "In die Zwischenablage kopiert",
-    "buttonTooltip": "Zugangsdaten kopieren",
-    "buttonLabel": "Zugangsdaten kopieren"
+    "buttonTooltip": "Jitsi-Meeting erstellen und Informationen in die Zwischenablage kopieren",
+    "buttonLabel": "Jitsi-Meeting erstellen und Informationen in die Zwischenablage kopieren"
   },
   "conference": {
     "start_label": "Meeting starten",
@@ -19,7 +19,8 @@
   },
   "common": {
     "cancel": "Abbrechen",
-    "close": "Schließen"
+    "close": "Schließen",
+    "delete": "Löschen"
   },
   "videoTest": {
     "buttonLabel": "Audio & Video testen",
@@ -27,6 +28,6 @@
   },
   "main": {
     "title": "Videokonferenz",
-    "nameRequest": "Bitte Namen für die Videokonferenz eingeben (optional)"
+    "nameRequest": "Sie können ein Meeting sofort starten, indem Sie einen Namen eingeben und auf „Meeting starten“ klicken. Alternativ können Sie ein Meeting erstellen und die Meeting-Informationen mit anderen Teilnehmern teilen, indem Sie die Informationen in eine E-Mail, eine Kalendereinladung usw. kopieren."
   }
 }
