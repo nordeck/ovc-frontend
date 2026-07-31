@@ -38,9 +38,12 @@ export default function StartConferenceButton() {
     const { dispatch } = useEvent('onReloadHistory');
 
     const handleJoinMeeting = async () => {
+        let meetingId = meeting?.id;
+
         if (!meeting) {
             const { meeting, error } = await createInstantMeeting(loggedUser, meetingName, true)
             setMeeting(meeting);
+            meetingId = meeting?.id;
             if (error) {
                 showSnackbar({
                     message: error.message,
@@ -50,7 +53,7 @@ export default function StartConferenceButton() {
         }
         else {
             // set existing meeting as started and save it
-            const startedAt = new Date().toISOString()
+            const startedAt = new Date().toISOString();
             meeting.started_at = startedAt;
             await updateMeeting(
             {
@@ -63,7 +66,7 @@ export default function StartConferenceButton() {
                     meeting.id);
         }
         dispatch('');
-        await openJitsiConference(meeting?.id as string, meetingName, jitsiLink);
+        await openJitsiConference(meetingId as string, meetingName, jitsiLink);
         setMeeting(undefined);
         setMeetingName('');
     };
