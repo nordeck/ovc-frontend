@@ -14,21 +14,14 @@
  * limitations under the License.
  */
 
-export interface Navigation {
-    categories?: Category[];
-}
-
-export interface Category {
-    identifier: string,
-    display_name: string,
-    entries: CategoryEntry[],
-}
-
-export interface CategoryEntry {
-    identifier: string,
-    icon_url: string,
-    display_name: string,
-    link: string,
-    target: string,
-    keywords: Record<string, unknown>,
+// fill="currentColor" so it tracks the button's own text color.
+export default function MenuCloseIcon() {
+    return (
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path
+                d="M7.04167 13.9999L6 12.9583L8.9375 9.99992L6 7.06242L7.04167 6.02075L10 8.95825L12.9375 6.02075L13.9792 7.06242L11.0417 9.99992L13.9792 12.9583L12.9375 13.9999L10 11.0624L7.04167 13.9999Z"
+                fill="currentColor"
+            />
+        </svg>
+    );
 }

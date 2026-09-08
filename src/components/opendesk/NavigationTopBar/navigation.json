@@ -99,6 +99,28 @@
           "keywords": {}
         }
       ]
+    },
+    {
+      "identifier": "od.test_category",
+      "display_name": "Test Category",
+      "entries": [
+        {
+          "identifier": "test.entry_one",
+          "icon_url": "https://portal.nightly.opendesk.qa/univention/portal/icons/entries/swp.notes.svg",
+          "display_name": "Fake Entry One",
+          "link": "https://example.com/fake-entry-one",
+          "target": "tab_test_category",
+          "keywords": {}
+        },
+        {
+          "identifier": "test.entry_two",
+          "icon_url": "https://portal.nightly.opendesk.qa/univention/portal/icons/entries/swp.fileshare_files.svg",
+          "display_name": "Fake Entry Two",
+          "link": "https://example.com/fake-entry-two",
+          "target": "tab_test_category",
+          "keywords": {}
+        }
+      ]
     }
   ]
 }

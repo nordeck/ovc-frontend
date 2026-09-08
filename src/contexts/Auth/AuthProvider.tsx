@@ -32,6 +32,7 @@ import {
   useState,
 } from 'react';
 import {SessionType, UserType} from "@/types/types";
+import {COLORS} from "@/utils/constants/theme.constants";
 
 function isPagePublic(page: string): boolean {
   return ['/login', '/meetings/meeting/join/'].some((path) =>
@@ -103,6 +104,8 @@ export function AuthProvider({ children }: PropsWithChildren<object>) {
     (user || (isPagePublic(pathname) && !isUserLoading)) &&
     !isEnvironmentLoading;
 
+  const primaryColor = environment.NEXT_PUBLIC_PRIMARY_COLOR || COLORS.LILA;
+
   return (
     <AuthContext.Provider value={authContext}>
       {isShowChildren ? (
@@ -116,7 +119,7 @@ export function AuthProvider({ children }: PropsWithChildren<object>) {
             transform: 'translate(-50%, -50%)',
           }}
         >
-          <CircularProgress size={100} />
+          <CircularProgress size={100} sx={{color: primaryColor}} />
         </div>
       )}
     </AuthContext.Provider>

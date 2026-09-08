@@ -16,7 +16,7 @@
 
 'use client'
 
-import {Button} from "@mui/material";
+import {Button, darken} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import {openJitsiConference} from "@/lib/openJitsiConference";
 import {useSnackbar} from "@/contexts/Snackbar/SnackbarContext";
@@ -25,6 +25,8 @@ import {useContext} from "react";
 import {updateMeeting} from "@/utils/api/requests/meeting.api";
 import {ConferenceAppProps, ConferenceContext} from "@/contexts/Conference/ConferenceAppContext";
 import {useEvent} from "@/components/conference/useEvent";
+import {useAuth} from "@/contexts/Auth/AuthProvider";
+import {COLORS} from "@/utils/constants/theme.constants";
 
 
 export default function StartConferenceButton() {
@@ -33,11 +35,28 @@ export default function StartConferenceButton() {
 
     const { showSnackbar } = useSnackbar();
 
-    const { loggedUser, jitsiLink, meeting, setMeeting, meetingName, setMeetingName } = useContext(ConferenceContext) as ConferenceAppProps;
+    const {
+        clientEnv: {
+            NEXT_PUBLIC_PRIMARY_COLOR,
+        },
+    } = useAuth();
+
+    const primaryColor = NEXT_PUBLIC_PRIMARY_COLOR || COLORS.LILA;
+
+    const { loggedUser, jitsiLink, meeting, setMeeting, meetingName, setMeetingName, setMeetingNameError } = useContext(ConferenceContext) as ConferenceAppProps;
 
     const { dispatch } = useEvent('onReloadHistory');
 
     const handleJoinMeeting = async () => {
+        if (!meetingName.trim()) {
+            setMeetingNameError(true);
+            showSnackbar({
+                message: t('conference.name_required', 'conference.name_required'),
+                type: 'error',
+            });
+            return;
+        }
+
         let meetingId = meeting?.id;
 
         if (!meeting) {
@@ -76,6 +95,10 @@ export default function StartConferenceButton() {
             variant="contained"
             sx={{
                 borderRadius: '0px 10px 10px 0px !important',
+                backgroundColor: primaryColor,
+                '&:hover': {
+                    backgroundColor: darken(primaryColor, 0.15),
+                },
             }}
             onClick={handleJoinMeeting}
             className={'w-2/5'}

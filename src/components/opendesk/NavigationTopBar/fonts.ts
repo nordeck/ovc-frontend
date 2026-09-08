@@ -14,21 +14,6 @@
  * limitations under the License.
  */
 
-export interface Navigation {
-    categories?: Category[];
-}
+import {Inter} from "next/font/google";
 
-export interface Category {
-    identifier: string,
-    display_name: string,
-    entries: CategoryEntry[],
-}
-
-export interface CategoryEntry {
-    identifier: string,
-    icon_url: string,
-    display_name: string,
-    link: string,
-    target: string,
-    keywords: Record<string, unknown>,
-}
+export const inter = Inter({subsets: ['latin'], weight: ['400', '500', '600', '700']});

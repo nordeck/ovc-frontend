@@ -46,7 +46,7 @@ function ConferenceActions() {
                 </Typography>
 
                 <Stack className="space-y-6 w-full items-center justify-center m-4">
-                    <Stack className="w-2/5 items-center justify-center" direction={'row'} spacing={0}>
+                    <Stack className="w-2/5 max-[800px]:w-[95%] items-center justify-center" direction={'row'} spacing={0}>
                         <Typography className={'text-white'}
                                     sx={{
                                         fontSize: 17,
@@ -56,11 +56,11 @@ function ConferenceActions() {
                             {t('main.nameRequest', 'main.nameRequest')}
                         </Typography>
                     </Stack>
-                    <Stack className="w-2/5 items-center justify-center" direction={'row'} spacing={0}>
+                    <Stack className="w-2/5 max-[800px]:w-[95%] items-center justify-center" direction={'row'} spacing={0}>
                         <ConferenceNameField/>
                         <StartConferenceButton/>
                     </Stack>
-                    <Stack className="w-2/5 items-center justify-center" direction={'row'} spacing={2}>
+                    <Stack className="w-2/5 max-[800px]:w-[95%] items-center justify-center" direction={'row'} spacing={2}>
                         <CopyConferenceInfoButton/>
                         {isVideoTestEnabled &&
                             <VideoTestButton/>

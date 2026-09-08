@@ -31,10 +31,19 @@ import {ConferenceAppProps, ConferenceContext} from "@/contexts/Conference/Confe
 import {copyConferenceInfo} from "@/lib/copyConferenceInfo";
 import {openJitsiConference} from "@/lib/openJitsiConference";
 import Tooltip from '@mui/material/Tooltip/Tooltip';
+import {useAuth} from "@/contexts/Auth/AuthProvider";
 
 const ConferenceHistory = () => {
 
     const {showSnackbar} = useSnackbar();
+
+    const {
+        clientEnv: {
+            NEXT_PUBLIC_PRIMARY_COLOR,
+        },
+    } = useAuth();
+
+    const primaryColor = NEXT_PUBLIC_PRIMARY_COLOR || COLORS.LILA;
     const [reload, setReload] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState<Meeting[] | undefined>();
@@ -161,10 +170,15 @@ const ConferenceHistory = () => {
     return (
         <section className="flex flex-col items-center justify-center ">
             <Box
-                className={'mt-4 min-w-[550px]'}
+                className={'mt-4'}
                 sx={{
                     height: 270,
                     width: '40%',
+                    minWidth: '550px',
+                    '@media (max-width: 800px)': {
+                        width: '95%',
+                        minWidth: 0,
+                    },
                     borderTop: 3,
                     borderBottom: 3,
                     borderLeft: 0,
@@ -192,6 +206,12 @@ const ConferenceHistory = () => {
                             fontWeight: '700',
                             fontSize: 13,
                             borderTop: 0,
+                        },
+                        '& .MuiCircularProgress-root': {
+                            color: primaryColor,
+                        },
+                        '& .MuiLinearProgress-bar': {
+                            backgroundColor: primaryColor,
                         },
                     }}
                     onRowClick={handleRowClick}

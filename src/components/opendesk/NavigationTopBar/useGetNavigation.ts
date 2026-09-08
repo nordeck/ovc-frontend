@@ -15,11 +15,22 @@
  */
 
 import {useEffect, useState} from "react";
+import {Navigation} from "@/components/opendesk/NavigationTopBar/types";
 
-export default function useGetNavigation(icsDomain: string) {
+interface NavigationState {
+    data: Navigation;
+    error?: Error;
+    isLoading: boolean;
+}
+
+const empty: Navigation = {};
+
+export default function useGetNavigation(icsDomain: string): NavigationState {
 
     const [ icsUrl, setIcsUrl ] = useState("");
-    const [ json, setJson ] = useState({});
+    const [ data, setData ] = useState<Navigation>(empty);
+    const [ error, setError ] = useState<Error>();
+    const [ isLoading, setIsLoading ] = useState(true);
 
     // Get the browser language.
     let lang = navigator.language || "de-DE";
@@ -28,30 +39,34 @@ export default function useGetNavigation(icsDomain: string) {
 
     useEffect(() => {
         const url = icsDomain + "/static/url-ics";
-        try {
-            fetch(url)
-                .then(response => response.text())
-                .then(text => { setIcsUrl(text) })
-        }
-        catch (error){
-            console.log(error);
-        }
-    }, [lang]);
+        fetch(url)
+            .then(response => {
+                if (!response.ok) throw new Error(`Failed to resolve the ICS url: ${response.status}`);
+                return response.text();
+            })
+            .then(text => setIcsUrl(text))
+            .catch(error => setError(error));
+    }, [icsDomain]);
 
     useEffect(() => {
-        const url = `${icsUrl}/navigation.json?language=${lang}`;
-        try {
-            fetch(url, {
-                credentials: "include",
-                headers: {Accept: "application/json",},
-            })
-                .then(response => response.json())
-                .then(response => { setJson(response) })
-        }
-        catch (error) {
-            console.log(error);
-        }
-    }, [lang]);
+        if (!icsUrl) return;
 
-    return json;
+        setIsLoading(true);
+        setError(undefined);
+
+        const url = `${icsUrl}/navigation.json?language=${lang}`;
+        fetch(url, {
+            credentials: "include",
+            headers: {Accept: "application/json"},
+        })
+            .then(response => {
+                if (!response.ok) throw new Error(`Failed to load navigation.json: ${response.status}`);
+                return response.json();
+            })
+            .then(response => setData(response))
+            .catch(error => setError(error))
+            .finally(() => setIsLoading(false));
+    }, [icsUrl, lang]);
+
+    return {data, error, isLoading};
 }

@@ -1,0 +1,24 @@
+NEXT_PUBLIC_BACKEND_BASE_URL=http://localhost:8080
+NEXT_PUBLIC_JITSI_LINK=https://meet.jit.si
+KEYCLOAK_CLIENT_ID=clientId
+KEYCLOAK_CLIENT_SECRET=clientSecret
+KEYCLOAK_ISSUER=http://localhost:8070/realms/master  
+END_SESSION_URL=http://localhost:8070/realms/master/protocol/openid-connect/logout  
+REFRESH_TOKEN_URL=http://localhost:8070/realms/master/protocol/openid-connect/token  
+NEXTAUTH_SECRET=someSecret
+
+NEXT_PUBLIC_ICS_DOMAIN=https://ics
+NEXT_PUBLIC_PORTAL_DOMAIN=https://portal
+NEXT_PUBLIC_NAVIGATION_FORCE_LOCAL_JSON=true
+NEXT_PUBLIC_NAVIGATION_TITLE=Videoconference
+# LOGO_URL can be  data URI (e.g. "data:image/svg+xml;base64,..."); falls back to a bundled icon if unset
+#NEXT_PUBLIC_NAVIGATION_LOGO_URL=
+#NEXT_PUBLIC_NAVIGATION_LOGO_LINK_URL=
+#NEXT_PUBLIC_NAVIGATION_MENU_LOGO_URL=
+#NEXT_PUBLIC_NAVIGATION_MENU_LOGO_LINK_URL=
+#NEXT_PUBLIC_NAVIGATION_MENU_LOGO_HEIGHT=32
+#NEXT_PUBLIC_PRIMARY_COLOR=#571EFA
+#NEXT_PUBLIC_NAVIGATION_BACKGROUND_COLOR=
+
+NEXT_PUBLIC_VIDEO_TEST_ENABLED=false
+NEXT_PUBLIC_VIDEO_TEST_LINK=https://video-test.dev/

@@ -14,16 +14,53 @@
  * limitations under the License.
  */
 
+import {Link} from "@mui/material";
 import {CategoryEntry} from "@/components/opendesk/NavigationTopBar/types";
-import Image from "next/image";
 
 export default function NavigationMenuItem ({ icon_url, display_name, link, target } : CategoryEntry) {
     return (
-        <div className="flex align-center gap-1 p-1 text-sx">
-            <Image src={icon_url} height={0} width={0} alt={display_name} style={{width: "30px", height: "30px"}}/>
-            <a href={link} target={target} className={'no-underline font-normal text-slate-900 pl-1 pt-2'}>
-                {display_name}
-            </a>
-        </div>
+        <Link
+            href={link}
+            target={target}
+            underline="none"
+            sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                borderRadius: '8px',
+                padding: '8px',
+                fontSize: '14px',
+                fontWeight: 500,
+                color: '#1B1D22',
+                '&:hover, &:focus': {
+                    backgroundColor: 'rgba(54, 104, 129, 0.04)',
+                },
+                '&:active': {
+                    backgroundColor: 'rgba(5, 38, 87, 0.06)',
+                },
+            }}
+        >
+            {/* eslint-disable-next-line @next/next/no-img-element -- remote icons are served from arbitrary portal domains */}
+            <img
+                src={icon_url}
+                alt=""
+                aria-hidden
+                width={24}
+                height={24}
+                style={{
+                    // Explicit display/size/flexShrink so the box stays a fixed 24x24 square even if the
+                    // image fails to load.
+                    display: 'block',
+                    width: '24px',
+                    height: '24px',
+                    flexShrink: 0,
+                    objectFit: 'contain',
+                    borderRadius: '4px',
+                    border: '1px solid rgba(5, 38, 87, 0.06)',
+                    backgroundColor: '#fff',
+                }}
+            />
+            {display_name}
+        </Link>
     )
 };
