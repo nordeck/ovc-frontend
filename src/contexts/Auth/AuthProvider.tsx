@@ -78,26 +78,29 @@ export function AuthProvider({ children }: PropsWithChildren<object>) {
   );
 
   useEffect(() => {
-    if (
-      (status !== 'loading' &&
-        session &&
-        (session as SessionType).refresh_token_expired &&
-        !pathname.startsWith('/login')) ||
-      (status === 'unauthenticated' && !isPagePublic(pathname))
-    ) {
-      login(window.location.pathname);
-      return;
-    }
+    function sync() {
+      if (
+        (status !== 'loading' &&
+          session &&
+          (session as SessionType).refresh_token_expired &&
+          !pathname.startsWith('/login')) ||
+        (status === 'unauthenticated' && !isPagePublic(pathname))
+      ) {
+        login(window.location.pathname);
+        return;
+      }
 
-    if (status === 'unauthenticated' && isPagePublic(pathname)) {
-      setIsUserLoading(false);
-    }
+      if (status === 'unauthenticated' && isPagePublic(pathname)) {
+        setIsUserLoading(false);
+      }
 
-    if (status === 'authenticated' && session) {
-      const sessionUser = session?.user as UserType;
-      setUser((prev) => (isEqual(prev, sessionUser) ? prev : sessionUser));
-      setIsUserLoading(false);
+      if (status === 'authenticated' && session) {
+        const sessionUser = session?.user as UserType;
+        setUser((prev) => (isEqual(prev, sessionUser) ? prev : sessionUser));
+        setIsUserLoading(false);
+      }
     }
+    sync();
   }, [login, pathname, session, status]);
 
   const isShowChildren =

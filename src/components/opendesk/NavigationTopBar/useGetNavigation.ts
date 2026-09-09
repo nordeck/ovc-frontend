@@ -51,6 +51,7 @@ export default function useGetNavigation(icsDomain: string): NavigationState {
     useEffect(() => {
         if (!icsUrl) return;
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setIsLoading(true);
         setError(undefined);
 

@@ -73,7 +73,6 @@ export default function StartConferenceButton() {
         else {
             // set existing meeting as started and save it
             const startedAt = new Date().toISOString();
-            meeting.started_at = startedAt;
             await updateMeeting(
             {
                         type: meeting.type,
