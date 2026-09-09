@@ -89,6 +89,7 @@ const ConferenceHistory = () => {
     /* load user meetings from api */
     useEffect(() => {
         async function fetchData() {
+            setIsLoading(true);
             const {data, error} = await getMeetings({
                 type: MeetingType.Instant,
             });
@@ -105,7 +106,6 @@ const ConferenceHistory = () => {
             }
             setIsLoading(false);
         }
-        setIsLoading(true);
         fetchData();
     }, [reload])
 

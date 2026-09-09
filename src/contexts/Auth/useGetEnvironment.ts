@@ -31,13 +31,13 @@ export function useGetEnvironment(): {
 
   useEffect(() => {
     async function fetchData() {
+      setIsLoading(true);
       const { data, error } = await getEnvironment();
       setData(data ?? empty);
       setError(error);
       setIsLoading(false);
     }
 
-    setIsLoading(true);
     fetchData();
   }, []);
 
