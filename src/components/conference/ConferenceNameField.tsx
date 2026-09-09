@@ -26,22 +26,34 @@ import {ConferenceAppProps, ConferenceContext} from "@/contexts/Conference/Confe
 
 function ConferenceNameField() {
 
-    const { meetingName, setMeetingName } = useContext(ConferenceContext) as ConferenceAppProps;
+    const { meetingName, setMeetingName, meetingNameError, setMeetingNameError } = useContext(ConferenceContext) as ConferenceAppProps;
 
     function updateName(evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const result = evt.target.value.replace(/(<([^>]+)>)/gi, "");
         const cleanText = removeSpecialChars(result);
         setMeetingName(cleanText);
+        setMeetingNameError(false);
     }
 
     return (
         <TextField variant={'filled'} className={"bg-white w-4/5"}
+                   required
+                   error={meetingNameError}
                    sx={{
                        borderRadius: '10px 0px 0px 10px !important',
                        '& .MuiOutlinedInput-root': {
                            '& fieldset': {
                                borderColor: COLORS.WHITE,
                            },
+                       },
+                       // Shrink the input box with an outline so that the red error border looks better
+                       '& .MuiFilledInput-root': {
+                           outline: '2px solid transparent',
+                           outlineOffset: '-2px',
+                           borderRadius: '10px 0px 0px 10px',
+                       },
+                       '& .MuiFilledInput-root.Mui-error': {
+                           outline: `2px solid ${COLORS.PERSIAN_RED}`,
                        },
                    }}
                    slotProps={{

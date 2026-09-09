@@ -30,6 +30,8 @@ export type ConferenceAppProps = {
     setMeeting: (meeting: Meeting | undefined) => void,
     meetingName: string,
     setMeetingName: (meetingName: string) => void,
+    meetingNameError: boolean,
+    setMeetingNameError: (meetingNameError: boolean) => void,
 }
 
 interface Props {
@@ -50,6 +52,7 @@ export const ConferenceAppContext = ({ children }: Props) => {
     const isVideoTestEnabled = isVarTrue(NEXT_PUBLIC_VIDEO_TEST_ENABLED);
     const { email: loggedUser} = useAuthLoggedUser();
     const [ meetingName, setMeetingName ] = useState('');
+    const [ meetingNameError, setMeetingNameError ] = useState(false);
     const [ meeting, setMeeting ] = useState<Meeting | undefined>();
 
 
@@ -62,6 +65,8 @@ export const ConferenceAppContext = ({ children }: Props) => {
             setMeeting,
             meetingName,
             setMeetingName,
+            meetingNameError,
+            setMeetingNameError,
         }}>
             {children}
         </ConferenceContext.Provider>

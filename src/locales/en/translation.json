@@ -14,7 +14,8 @@
   "conference": {
     "start_label": "Start meeting",
     "info_text": "The instant conference can only be started by you. Anyone can join the conference using the conference information.",
-    "name_label": "Conference name (optional)",
+    "name_label": "Conference name",
+    "name_required": "Please enter a conference name.",
     "empty_list_text": "Your recent list is empty. \nMeetings you've held will be displayed here."
   },
   "common": {
@@ -29,5 +30,14 @@
   "main": {
     "title": "Video Conference",
     "nameRequest": "You can start a meeting immediately by entering a name and click on start meeting button. Or you can create a meeting and share the meeting information with other participants by copying the meeting information into Mail, calendar invitation, etc."
+  },
+  "navigation": {
+    "menuLabel": "Menu",
+    "triggerLabel": "Show menu",
+    "closeLabel": "Close menu",
+    "logoAlt": "OpenDesk",
+    "logoLinkLabel": "Show portal",
+    "homeLinkLabel": "Video Conference home",
+    "menuError": "The menu could not be loaded."
   }
 }

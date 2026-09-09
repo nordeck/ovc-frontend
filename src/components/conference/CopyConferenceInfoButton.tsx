@@ -30,11 +30,20 @@ function CopyConferenceInfoButton() {
 
     const { showSnackbar } = useSnackbar();
 
-    const { loggedUser, setMeeting, meetingName, jitsiLink } = useContext(ConferenceContext) as ConferenceAppProps;
+    const { loggedUser, setMeeting, meetingName, setMeetingNameError, jitsiLink } = useContext(ConferenceContext) as ConferenceAppProps;
 
     const { dispatch:reloadHistory } = useEvent('onReloadHistory');
 
     const handleCopy = async () => {
+        if (!meetingName.trim()) {
+            setMeetingNameError(true);
+            showSnackbar({
+                message: t('conference.name_required', 'conference.name_required'),
+                type: 'error',
+            });
+            return;
+        }
+
         const { meeting, error } = await createInstantMeeting(loggedUser, meetingName, true);
         setMeeting(meeting);
 
