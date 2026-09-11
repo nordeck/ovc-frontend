@@ -1,4 +1,8 @@
 {
+  "auth": {
+    "backendErrorTitle": "Serverkonfigurationsproblem",
+    "backendErrorMessage": "Der Server ist nicht korrekt konfiguriert. Bitte wenden Sie sich an Ihre Administratoren."
+  },
   "copy": {
     "baseMeetingInformation_instant": "Ihre Zugangsdaten für das Sofortmeeting von {{owner_id}}:</br></br>\n\nMeeting Link: <a href=\"{{meetingLink}}\">{{meetingLink}}</a></br></br>\n\n",
     "baseMeetingInformation_normal": "{{owner_id}} hat Sie zu einem Meeting eingeladen.</br></br>\n\n<b>Titel</b>: {{name}}</br></br>\n\n<b>Zeit</b>: von {{start}} Uhr bis {{end}} Uhr</br></br>\n\nZur Teilnahme verwenden Sie bitte den folgenden Meeting Link: <a href=\"{{meetingLink}}\">{{meetingLink}}</a></br></br>\n\n",
