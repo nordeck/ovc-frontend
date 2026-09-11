@@ -18,7 +18,8 @@
 
 import { useGetEnvironment } from '@/contexts/Auth/useGetEnvironment';
 import { authLogin, authLogout } from '@/utils/api/requests/auth.api';
-import { CircularProgress } from '@mui/material';
+import { BACKEND_AUTH_ERROR_EVENT } from '@/utils/api/authErrorBus';
+import { CircularProgress, Typography } from '@mui/material';
 import { isEqual } from 'lodash';
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
@@ -29,8 +30,10 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import {SessionType, UserType} from "@/types/types";
 import {COLORS} from "@/utils/constants/theme.constants";
 
@@ -51,6 +54,7 @@ export const AuthContext = createContext<AuthState | undefined>(undefined);
 
 export function AuthProvider({ children }: PropsWithChildren<object>) {
   const pathname = usePathname();
+  const { t } = useTranslation();
 
   const { data: session, status } = useSession();
   const { isLoading: isEnvironmentLoading, data: environment } =
@@ -58,6 +62,17 @@ export function AuthProvider({ children }: PropsWithChildren<object>) {
 
   const [isUserLoading, setIsUserLoading] = useState<boolean>(true);
   const [user, setUser] = useState<UserType | undefined>();
+  const [backendAuthError, setBackendAuthError] = useState<boolean>(false);
+  const isLoggingInRef = useRef(false);
+
+  useEffect(() => {
+    function onBackendAuthError() {
+      setBackendAuthError(true);
+    }
+    window.addEventListener(BACKEND_AUTH_ERROR_EVENT, onBackendAuthError);
+    return () =>
+      window.removeEventListener(BACKEND_AUTH_ERROR_EVENT, onBackendAuthError);
+  }, []);
 
   const login = useCallback(async (callbackUrl: string) => {
     await authLogin(callbackUrl);
@@ -86,15 +101,21 @@ export function AuthProvider({ children }: PropsWithChildren<object>) {
           !pathname.startsWith('/login')) ||
         (status === 'unauthenticated' && !isPagePublic(pathname))
       ) {
-        login(window.location.pathname);
+        // Guard added for the React's strict mode breaking the login by useEffect 2nd invocation
+        if (!isLoggingInRef.current) {
+          isLoggingInRef.current = true;
+          login(window.location.pathname);
+        }
         return;
       }
 
       if (status === 'unauthenticated' && isPagePublic(pathname)) {
+        isLoggingInRef.current = false;
         setIsUserLoading(false);
       }
 
       if (status === 'authenticated' && session) {
+        isLoggingInRef.current = false;
         const sessionUser = session?.user as UserType;
         setUser((prev) => (isEqual(prev, sessionUser) ? prev : sessionUser));
         setIsUserLoading(false);
@@ -111,7 +132,23 @@ export function AuthProvider({ children }: PropsWithChildren<object>) {
 
   return (
     <AuthContext.Provider value={authContext}>
-      {isShowChildren ? (
+      {backendAuthError ? (
+        <div
+          style={{
+            top: '50%',
+            left: '50%',
+            position: 'absolute',
+            transform: 'translate(-50%, -50%)',
+            textAlign: 'center',
+            maxWidth: 480,
+          }}
+        >
+          <Typography variant="h6" gutterBottom>
+            {t('auth.backendErrorTitle')}
+          </Typography>
+          <Typography>{t('auth.backendErrorMessage')}</Typography>
+        </div>
+      ) : isShowChildren ? (
         children
       ) : (
         <div
